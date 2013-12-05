@@ -1,0 +1,39 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+*.ilk
+*.pdb
+*.db
+
+#Visual Studio
+*.sdf
+*.sln
+*.suo
+*.vcxproj
+*.filters
+*.user
+*.ipch
+
+#others
+.cproject
+.project
+
+#folder
+LAIG3_T1_G07/ipch
+LAIG3_T1_G07/.settings

@@ -1,0 +1,843 @@
+<yaf> 
+
+    <globals background="0.05 0.05 0.05 1" drawmode="fill" shading="gouraud" cullface="back" cullorder="CCW" /> 
+     
+    <cameras initial="camerap1" > 
+        <perspective id="camera1" near="0.1" far="50" angle="40" pos="20.0 7.5 25.0" target="3 0 0" /> 
+        <perspective id="camerap1" near="0.1" far="50" angle="40" pos="11.8 3.8 13.5" target="11.8 2.05 11.75" /> 
+        <perspective id="camerap2" near="0.1" far="50" angle="40" pos="11.8 3.8 10" target="11.8 2.05 11.75" /> 
+		<ortho id="camera2" near="-15" far="50" left="-5" right="20" top="15" bottom="-10" /> 
+	</cameras> 
+   
+    <lighting doublesided="true" local="true" enabled="true" ambient="0.3 0.3 0.3 1"> 
+            <omni id="light1" enabled="false" 
+				location="10 2 6.5"
+                ambient="1 0.55 0.2 1" 
+                diffuse="1 0.55 0.2 1" 
+                specular="1 0.55 0.2 1" 
+            /> 
+			<spot id="light2" enabled="false" 
+                location="0 7 0" 
+                ambient="0.1 0.2 0.3 1" 
+                diffuse="1 1 1 1" 
+                specular="1 1 1 1" 
+                angle="60" 
+                exponent="2" 
+                direction="2 0 2" 
+            />
+			<spot id="light3" enabled="false" 
+                location="10 1 2" 
+                ambient="0.1 0.2 0.3 1" 
+                diffuse="1 1 1 1" 
+                specular="1 1 1 1" 
+                angle="60" 
+                exponent="2" 
+                direction="0 1 -1" 
+            />
+			
+			<spot id="game" enabled="true" 
+                location="11.8 5 11.75" 
+                ambient="1 0.55 0.2 1" 
+                diffuse="1 0.55 0.2 1" 
+                specular="1 0.55 0.2 1" 
+                angle="20" 
+                exponent="5" 
+                direction="0 -2 0" 
+            />
+			
+    </lighting> 
+
+    <textures>        
+        <texture id="tx_pedra" file="../data/pedra.png" /> 
+		<texture id="tx_tronco" file="../data/tronco.png" /> 
+		<texture id="tx_copa" file="../data/relva.png" /> 
+		<texture id="tx_tenda" file="../data/tenda.png" /> 
+		<texture id="tx_chama" file="../data/chama.png" />
+		<texture id="tx_relva" file="../data/relva.png" />
+		<texture id="tx_agua" file="../data/water.jpg" />
+		<texture id="tx_taca" file="../data/glass2.png" /> 
+		<texture id="tx_board" file="../data/board.png" /> 
+		<texture id="tx_board_side" file="../data/board_side2.png" /> 
+		<texture id="tx_white_piece" file="../data/white.png" /> 
+		<texture id="tx_black_piece" file="../data/black.png" /> 
+    </textures> 
+
+    <appearances> 
+        <appearance id="ap_pedra" 
+            emissive="0 0 0 1" 
+            ambient="0.4 0.4 0.4 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0.2 0.2 0.2 1" 
+            shininess="0.8" 
+            textureref="tx_pedra" 
+            texlength_s="0.25" 
+            texlength_t="0.5" /> 
+		<appearance id="ap_relva" 
+            emissive="0 0 0 1" 
+            ambient="0.4 0.4 0.4 1" 
+            diffuse="0.4 0.4 0.4 1" 
+            specular="0 0 0 1" 
+            shininess="0" 
+            textureref="tx_relva" 
+            texlength_s="0.2" 
+            texlength_t="0.2" /> 
+		<appearance id="ap_tronco" 
+            emissive="0 0 0 1" 
+            ambient="0.4 0.4 0.4 1" 
+            diffuse="0.6 0.6 0.6 1" 
+            specular="0 0 0 1" 
+            shininess="0"
+			textureref="tx_tronco" 
+            texlength_s="1" 
+            texlength_t="1"	/>
+		<appearance id="ap_copa" 
+            emissive="0 0 0 1" 
+            ambient="0.4 0.4 0.4 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0 0 0 1" 
+            shininess="0"
+			textureref="tx_copa" 
+            texlength_s="1" 
+            texlength_t="1" />		
+		<appearance id="ap_tenda" 
+            emissive="0 0 0 1" 
+            ambient="0.1 0 0 1" 
+            diffuse="1.0 0.0 0.0 1" 
+            specular="0.5 0.0 0.0 1" 
+            shininess="1"  
+			textureref="tx_tenda"  
+            texlength_s="1" 
+            texlength_t="1"	/> 
+		<appearance id="ap_chama" 
+            emissive="1 1 1 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0.1 0.1 0.1 1" 
+            shininess="0.9"
+			textureref="tx_chama" 
+            texlength_s="1" 
+            texlength_t="1"	/>
+		<appearance id="ap_agua" 
+            emissive="0 0 0 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0.1 0.1 0.1 1" 
+            shininess="0.9"
+			textureref="tx_agua" 
+            texlength_s="1" 
+            texlength_t="0.25"	/> 
+		<appearance id="ap_taca" 
+            emissive="0 0 0 0.7" 
+            ambient="0.4 0.4 0.4 0.7" 
+            diffuse="0.4 0.4 0.4 0.7" 
+            specular="0.8 0.8 0.8 0.7" 
+            shininess="1"
+			textureref="tx_taca" 
+            texlength_s="1" 
+            texlength_t="1"	/>
+		<appearance id="ap_board" 
+            emissive="0 0 0 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0.1 0.1 0.1 1" 
+            shininess="0.9"
+			textureref="tx_board" 
+            texlength_s="0.25" 
+            texlength_t="0.25"	/>
+		<appearance id="ap_board_side" 
+            emissive="0 0 0 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="0.1 0.1 0.1 1" 
+            shininess="0.9"
+			textureref="tx_board_side" 
+            texlength_s="0.1" 
+            texlength_t="0.1"	/>
+		<appearance id="ap_white_piece" 
+            emissive="0 0 0 1" 
+            ambient="1 1 1 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="1 1 1 1" 
+            shininess="0.9" />
+			<!--textureref="tx_white_piece" 
+            texlength_s="0.01" 
+            texlength_t="0.01"	/> -->
+		<appearance id="ap_black_piece" 
+            emissive="0 0 0 1" 
+            ambient="0.1 0.1 0.1 1" 
+            diffuse="0 0 0 1" 
+            specular="0.1 0.1 0.1 1" 
+            shininess="1"/>
+    </appearances> 
+
+	<animations>
+		<animation id="anim1" span="15" type="linear">
+			<controlpoint xx="15" yy="3" zz="15" />
+			<controlpoint xx="15" yy="3.5" zz="13" />
+			<controlpoint xx="15" yy="3" zz="10" />
+			<controlpoint xx="15" yy="2.5" zz="1" />
+			<controlpoint xx="6" yy="2" zz="6" />
+			<controlpoint xx="6" yy="1" zz="12" />
+			<controlpoint xx="10" yy="4" zz="3.5" />
+			<controlpoint xx="4" yy="2" zz="2" />
+			<controlpoint xx="2" yy="0.6" zz="7" />
+			<controlpoint xx="12" yy="2" zz="7" />
+			<controlpoint xx="10" yy="0.5" zz="5" />
+			<controlpoint xx="10" yy="0.5" zz="1" />
+		</animation>
+		<animation id="axis" span="5" type="linear">
+			<controlpoint xx="0" yy="2" zz="0" />
+			<controlpoint xx="0" yy="2" zz="10" />
+			<controlpoint xx="0" yy="2" zz="0" />
+			<controlpoint xx="10" yy="2" zz="0" />
+			<controlpoint xx="0" yy="2" zz="0" /> 
+			<controlpoint xx="0" yy="2" zz="-10" />
+			<controlpoint xx="0" yy="2" zz="0" />
+			<controlpoint xx="-10" yy="2" zz="0" /> 
+			<controlpoint xx="0" yy="2" zz="0" /> 
+			<controlpoint xx="5" yy="2" zz="2" /> 
+		</animation>
+		<animation id="peca" span="15" type="linear">
+			<controlpoint xx="12.45625" yy="2.125" zz="12.40625" /> 
+			<controlpoint xx="11.51875" yy="2.125" zz="11.46875" />
+		</animation>
+	</animations>
+    
+    <graph rootid="cena"> 
+	
+        <node id="cena"> 
+            <transforms> 
+			</transforms>
+			<children>
+				<noderef id="tenda" />
+				<noderef id="mesa_c_bancos" />
+				<noderef id="arvore1" />
+				<noderef id="arvore2" />
+				<noderef id="fogueira" />
+				<noderef id="chao" />
+				<noderef id="abelha" />
+				<noderef id="water" />
+				<noderef id="board"/>
+				<noderef id="piece1" />
+			</children>
+		</node>
+		
+		<!-- ____Tenda____ -->
+		
+		<node id="tenda">
+			<transforms>
+				<translate to="10 0.1 2" /> 
+                <rotate axis="y" angle="90" /> 
+                <scale factor="3.5 3.5 3.5" />  
+			</transforms>
+			<appearanceref id="ap_tenda" />
+			<children>
+				<noderef id="tenda_face11" />
+				<noderef id="tenda_face12" />
+				<noderef id="tenda_face21" />
+				<noderef id="tenda_face22" />
+				<noderef id="tenda_base1" />
+				<noderef id="tenda_base2" />
+				<noderef id="tenda_traseira1" />
+				<noderef id="tenda_traseira2" />
+				<noderef id="tenda_frente1" />
+				<noderef id="tenda_frente2" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_face11">
+			<transforms>
+				<translate to="0.0 0.43 -0.25" />
+				<rotate axis="x" angle="30" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_face12">
+			<transforms>
+				<translate to="0.0 0.43 -0.25" />
+				<rotate axis="x" angle="210" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_face21">
+			<transforms>
+				<translate to="0.0 0.43 0.25" />
+				<rotate axis="x" angle="-30" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_face22">
+			<transforms>
+				<translate to="0.0 0.43 0.25" />
+				<rotate axis="x" angle="150" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_base1">
+			<transforms>
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_base2">
+			<transforms>
+				<rotate axis="z" angle="180" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_traseira1">
+			<transforms>
+			</transforms>
+			<children>
+				<triangle xyz1="0.5 0.865 0.0" xyz2="0.5 0.0 -0.5" xyz3="0.5 0.0 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_traseira2">
+			<transforms>
+			</transforms>
+			<children>
+				<triangle xyz1="0.5 0.0 0.5" xyz2="0.5 0.0 -0.5" xyz3="0.5 0.865 0.0" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_frente1">
+			<transforms>
+			</transforms>
+			<children>
+				<triangle xyz1="-0.5 0.0 0.5" xyz2="-0.5 0.7 0.1" xyz3="-0.5 0.0 0.1" /> 
+			</children>
+		</node>
+		
+		<node id="tenda_frente2">
+			<transforms>
+			</transforms>
+			<children>
+				<triangle xyz1="-0.5 0.0 -0.1" xyz2="-0.5 0.7 -0.1" xyz3="-0.5 0.0 -0.5" /> 
+			</children>
+		</node>
+		
+		<!-- ____Cubo____ -->
+		
+		<node id="cubo" displaylist="false">
+			<transforms>
+			</transforms>
+			<children>
+				<noderef id="cubo_f1" />
+				<noderef id="cubo_f2" />
+				<noderef id="cubo_f3" />
+				<noderef id="cubo_f4" />
+				<noderef id="cubo_f5" />
+				<noderef id="cubo_f6" />
+			</children>
+		</node>
+		
+		<node id="cubo_f1"> <!-- frente -->
+			<transforms>
+				<translate to="0 0 1" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="cubo_f2"> <!-- baixo -->
+			<transforms>
+				<rotate axis="x" angle="90" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="cubo_f3"> <!-- tras -->
+			<transforms>
+				<rotate axis="x" angle="-180" />
+				<translate to="0 -1 0" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="cubo_f4"> <!-- esquerda -->
+			<transforms>
+				<rotate axis="y" angle="-90" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="cubo_f5"> <!-- cima -->
+			<transforms>
+				<rotate axis="x" angle="-90" />
+				<translate to="0 -1 1" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="cubo_f6"> <!-- direita -->
+			<transforms>
+				<translate to="1 0 1" />
+				<rotate axis="y" angle="90" />
+				<translate to="0.5 0.5 0" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<!--<rectangle xy1="0.0 0.0" xy2="1.0 1.0" /> -->
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		
+		<!-- ____Mesa+bancos____ -->
+		
+		<node id="mesa_c_bancos" displaylist="true">
+			<transforms>
+				<translate to="10 0 10" />
+			</transforms>
+			<appearanceref id="ap_pedra" />
+			<children>
+				<noderef id="mesa" />
+				<noderef id="banco1" />
+				<noderef id="banco2" />
+			</children>
+		</node>
+		
+		<!-- ____Mesa____ -->
+		
+		<node id="mesa">
+			<transforms>
+				<translate to="0.0 0.0 0.75" />
+			</transforms>
+			<children>
+				<noderef id="mesa_tampo" />
+				<noderef id="mesa_perna1" />
+				<noderef id="mesa_perna2" />
+			</children>
+		</node>
+		
+		<node id="mesa_perna1">
+			<transforms>
+				<translate to="0.5 0.0 0.5" />
+			</transforms>
+			<children>
+				<noderef id="mesa_perna" />
+			</children>
+		</node>
+		
+		<node id="mesa_perna2">
+			<transforms>
+				<translate to="2.5 0.0 0.5" />
+			</transforms>
+			<children>
+				<noderef id="mesa_perna" />
+			</children>
+		</node>
+		
+		<node id="mesa_perna">
+			<transforms>
+				<scale factor="0.5 1.5 1" />
+			</transforms>
+			<children>
+				<noderef id="cubo" />
+			</children>
+		</node>
+		
+		<node id="mesa_tampo">
+			<transforms>
+				<translate to="0.0 1.5 0.0" />
+				<scale factor="3.5 0.5 2" />
+			</transforms>
+			<children>
+				<noderef id="cubo" />
+			</children>
+		</node>
+		
+		<!-- ____bancos____ -->
+		
+		<node id="banco1">
+			<transforms>
+				<translate to="0 0 3" />
+			</transforms>
+			<children>
+				<noderef id="banco" />
+			</children>
+		</node>
+		
+		<node id="banco2">
+			<transforms>
+			</transforms>
+			<children>
+				<noderef id="banco" />
+			</children>
+		</node>
+		
+		<node id="banco">
+			<transforms>	
+			</transforms>
+			<children>
+				<noderef id="banco_tampo" />
+				<noderef id="banco_perna1" />
+				<noderef id="banco_perna2" />
+			</children>
+		</node>
+		
+		<node id="banco_perna1">
+			<transforms>
+				<translate to="0.5 0.0 0.075" />
+			</transforms>
+			<children>
+				<noderef id="banco_perna" />
+			</children>
+		</node>
+		
+		<node id="banco_perna2">
+			<transforms>
+				<translate to="2.5 0.0 0.075" />
+			</transforms>
+			<children>
+				<noderef id="banco_perna" />
+			</children>
+		</node>
+		
+		<node id="banco_perna">
+			<transforms>
+				<scale factor="0.5 0.55 0.35" />
+			</transforms>
+			<children>
+				<noderef id="cubo" />
+			</children>
+		</node>
+		
+		<node id="banco_tampo">
+			<transforms>
+				<translate to="0.0 0.55 0.0" />
+				<scale factor="3.5 0.5 0.5" />
+			</transforms>
+			<children>
+				<noderef id="cubo" />
+			</children>
+		</node>
+		
+		<!-- ____arvores____ -->
+		
+		<node id="arvore" displaylist="true">
+			<transforms>
+				<rotate axis="x" angle="-90" />
+			</transforms>
+			<children>
+				<noderef id="copa" />
+				<noderef id="tronco" />
+			</children>
+		</node>
+		
+		<node id="copa"> 
+			<transforms>
+				<translate to="0 0 6" />
+			</transforms>
+			<appearanceref id="ap_copa" /> 
+			<children>
+				<sphere radius="2.3" slices="30" stacks="10" /> 
+			</children>
+		</node>
+		
+		<node id="tronco"> 
+			<transforms>
+			</transforms>
+			<appearanceref id="ap_tronco" />   
+			<children>
+				<cylinder base="0.7" top="0.7" height="7" slices="30" stacks="10" />
+			</children>
+		</node>
+		
+		<node id="arvore1">
+			<transforms>
+				<translate to="1.5 0 1.5" />
+			</transforms>
+			<children>
+				<noderef id="arvore" />
+			</children>
+		</node>
+		
+		<node id="arvore2">
+			<transforms>
+				<translate to="14 0 4" />
+			</transforms>
+			<children>
+				<noderef id="arvore" />
+			</children>
+		</node>
+		
+		<!-- ____fogueira____ -->
+		
+		<node id="fogueira">
+			<transforms>
+				<translate to="10.0 0.0 6.5" />
+				<scale factor="0.8 0.8 0.8" />
+			</transforms>
+			<children>
+				<noderef id="fogueira_tronco1" />
+				<noderef id="fogueira_tronco2" />
+				<noderef id="fogueira_chama" />
+			</children>
+		</node>
+		
+		<node id="fogueira_tronco">
+			<transforms>
+				<translate to="0 0 -1" />
+			</transforms>
+			<appearanceref id="ap_tronco" /> 
+			<children>
+				<cylinder base="0.25" top="0.25" height="2" slices="10" stacks="10" />
+			</children>
+		</node>
+		
+		<node id="fogueira_tronco1">
+			<transforms>
+			</transforms>
+			<children>
+				<noderef id="fogueira_tronco" />
+			</children>
+		</node>
+		
+		<node id="fogueira_tronco2">
+			<transforms>
+				<rotate axis="y" angle="90" />
+			</transforms>
+			<children>
+				<noderef id="fogueira_tronco" />
+			</children>
+		</node>
+		
+		<node id="fogueira_chama">
+			<transforms>
+				<translate to="0.0 0.15 0" />
+				<rotate axis="x" angle="-90" />
+			</transforms>
+			<appearanceref id="ap_chama" /> 
+			<children>
+				<cylinder base="0.7" top="0.0" height="1.5" slices="10" stacks="10" />
+			</children>
+		</node>
+		
+		<node id="abelha">
+			<transforms>
+			</transforms>
+			<appearanceref id="ap_relva" /> 
+			<animationref id="anim1" /> 
+			<children>
+				<vehicle />
+			</children>
+		</node>
+		
+		<node id="chao">
+			<transforms>
+			</transforms>
+			<appearanceref id="ap_relva" /> 
+			<children>
+				<noderef id="chao1" />
+				<noderef id="chao2" />
+			</children>
+		</node>
+		
+		<node id="chao1">
+			<transforms>
+				<translate to="6 0 0" />
+				<scale factor="9 0 15" /> 
+				<translate to="0.5 0 0.5" />
+			</transforms>
+			<children>
+				<plane parts="15" />
+			</children>
+		</node>
+		
+		<node id="chao2">
+			<transforms>
+				<scale factor="3 0 15" /> 
+				<translate to="0.5 0 0.5" />
+			</transforms>
+			<children>
+				<plane parts="15" />
+			</children>
+		</node> 
+		
+		<node id="water">
+			<transforms>
+				<translate to="3 0 0" /> 
+				<scale factor="3 1 15" /> 
+				<translate to="0.5 0 0.5" />  
+			</transforms>
+			<appearanceref id="ap_agua" />  
+			<children>
+				<waterline heightmap="../data/watermap.jpg" texturemap="../data/water.jpg" fragmentshader="../data/myshader.frag" vertexshader ="../data/myshader.vert"/>
+			</children>
+		</node>		
+		
+		<node id="board">
+			<transforms> 
+				<translate to="11.8 2.05 11.75" />
+				<scale factor="1.5 1 1.5" />
+				<!--<translate to="-0.5 -0.5 -0.5" />-->
+				<!--<translate to="11.8 2.05 11.75" />-->
+				<!--<scale factor="1.5 1 1.5" /> -->
+			</transforms>
+			<appearanceref id="ap_board" />  
+			<children>
+				<noderef id="board_top" />
+				<noderef id="board_lateral" />
+				
+			</children>
+		</node>
+		
+		<node id="board_lateral">
+			<transforms> 
+			</transforms>
+			<appearanceref id="ap_board_side" />  
+			<children>
+				<noderef id="board_front" />
+				<noderef id="board_back" />
+				<noderef id="board_right" />
+				<noderef id="board_left" />
+			</children>
+		</node>
+		<node id="board_top">
+			<transforms> 
+				<translate to="0 0.05 0" />
+			</transforms>
+			<children>
+				<plane parts="16" />
+			</children>
+		</node>
+		
+		<node id="board_back">
+			<transforms> 
+				<translate to="0 0 -0.5" />
+				<rotate axis="x" angle="-90" />
+				<scale factor="1 1 0.1" />
+			</transforms>
+			<children>
+				<plane parts="16" />
+			</children>
+		</node>
+		
+		<node id="board_front">
+			<transforms> 
+				<translate to="0 0 0.5" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" />
+			</transforms>
+			<children>
+				<plane parts="2" />
+			</children>
+		</node>
+		
+		<node id="board_left">
+			<transforms> 
+				<translate to="-0.5 0 0" />
+				<rotate axis="y" angle="-90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" />
+			</transforms>
+			<children>
+				<plane parts="2" />
+			</children>
+		</node>
+		
+		<node id="board_right">
+			<transforms> 
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" />
+			</transforms>
+			<children>
+				<plane parts="2" />
+			</children>
+		</node>
+		
+		<node id="piece1">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<!--<translate to="12.45625 2.125 12.40625" /> -->
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_white_piece" />  
+			<animationref id="peca" /> 
+			<children>
+				<cylinder base="0.06" top="0.06" height="0.025" slices="20" stacks="5" />
+			</children>
+		</node>		
+		
+		<node id="piece2">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="0.4375 0.1 0.4375" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.05" slices="20" stacks="5" />
+			</children>
+		</node>		
+		<node id="piece21">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="0.4375 0.1 0.4375" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
+		
+		
+		
+		
+    </graph> 
+</yaf> 
