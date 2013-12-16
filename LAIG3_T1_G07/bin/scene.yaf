@@ -1,5 +1,4 @@
 <yaf> 
-
     <globals background="0.05 0.05 0.05 1" drawmode="fill" shading="gouraud" cullface="back" cullorder="CCW" /> 
      
     <cameras initial="camerap1" > 
@@ -58,9 +57,11 @@
 		<texture id="tx_taca" file="../data/glass2.png" /> 
 		<texture id="tx_board" file="../data/board.png" /> 
 		<texture id="tx_board_side" file="../data/board_side2.png" /> 
-		<texture id="tx_white_piece" file="../data/white.png" /> 
+		<texture id="tx_relogio" file="../data/clock.png"/>
+		<texture id="tx_madeira" file="../data/dark_wood.jpg"/>
+    	<texture id="tx_white_piece" file="../data/white.png" /> 
 		<texture id="tx_black_piece" file="../data/black.png" /> 
-    </textures> 
+	</textures> 
 
     <appearances> 
         <appearance id="ap_pedra" 
@@ -153,6 +154,24 @@
 			textureref="tx_board_side" 
             texlength_s="0.1" 
             texlength_t="0.1"	/>
+		<appearance id="ap_relogio" 
+            emissive="0 0 0 1" 
+            ambient="1 1 1 1" 
+            diffuse="1 1 1 1" 
+            specular="1 1 1 1" 
+            shininess="1"
+			textureref="tx_relogio" 
+            texlength_s="1" 
+            texlength_t="1"	/>
+		<appearance id="ap_madeira" 
+            emissive="0 0 0 1" 
+            ambient="1 1 1 1" 
+            diffuse="1 1 1 1" 
+            specular="1 1 1 1" 
+            shininess="1"
+			textureref="tx_madeira" 
+            texlength_s="2" 
+            texlength_t="2"	/>
 		<appearance id="ap_white_piece" 
             emissive="0 0 0 1" 
             ambient="1 1 1 1" 
@@ -218,7 +237,16 @@
 				<noderef id="abelha" />
 				<noderef id="water" />
 				<noderef id="board"/>
+				<noderef id="contador_total"/>
+				<noderef id="peca_quadrada"/>
 				<noderef id="piece1" />
+				<noderef id="piece2" />
+				<noderef id="piece21" />
+				<noderef id="piece22" />
+				<noderef id="piece23" />
+				<noderef id="piece24" />
+				<noderef id="piece25" />
+				<noderef id="piece26" />
 			</children>
 		</node>
 		
@@ -711,6 +739,8 @@
 			</children>
 		</node>		
 		
+		
+		<!--   		TABULEIRO     -->
 		<node id="board">
 			<transforms> 
 				<translate to="11.8 2.05 11.75" />
@@ -723,7 +753,6 @@
 			<children>
 				<noderef id="board_top" />
 				<noderef id="board_lateral" />
-				
 			</children>
 		</node>
 		
@@ -792,10 +821,10 @@
 				<plane parts="2" />
 			</children>
 		</node>
-		
+
 		<node id="piece1">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
+			<transforms>
+			<!--<translate to="0.5 0 0" />
 				<rotate axis="y" angle="90" />
 				<rotate axis="x" angle="90" />
 				<scale factor="1 1 0.1" /> -->
@@ -807,37 +836,407 @@
 			<children>
 				<cylinder base="0.06" top="0.06" height="0.025" slices="20" stacks="5" />
 			</children>
-		</node>		
-		
+		</node>	
+
+
 		<node id="piece2">
 			<transforms> <!--
 				<translate to="0.5 0 0" />
 				<rotate axis="y" angle="90" />
 				<rotate axis="x" angle="90" />
 				<scale factor="1 1 0.1" /> -->
-				<translate to="0.4375 0.1 0.4375" />
+				<translate to="12.26875 2.125 12.40625" />
 				<rotate axis="x" angle="90" />
 			</transforms>
+			<appearanceref id="ap_black_piece" />  
 			<children>
 				<cylinder base="0.05" top="0.05" height="0.05" slices="20" stacks="5" />
 			</children>
 		</node>		
+		
 		<node id="piece21">
 			<transforms> <!--
 				<translate to="0.5 0 0" />
 				<rotate axis="y" angle="90" />
 				<rotate axis="x" angle="90" />
 				<scale factor="1 1 0.1" /> -->
-				<translate to="0.4375 0.1 0.4375" />
+				<translate to="12.08125 2.125 12.40625" />
 				<rotate axis="x" angle="90" />
 			</transforms>
+			<appearanceref id="ap_white_piece" />  
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
+		
+		<node id="piece22">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="11.89375 2.125 12.40625" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_black_piece" />  
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
+		
+		<node id="piece23">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="11.70625 2.125 12.40625" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_white_piece" />  
 			<children>
 				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
 			</children>
 		</node>
 		
 		
+		<node id="piece24">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="11.51875 2.125 12.40625" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_black_piece" />  
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
 		
 		
+		<node id="piece25">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="11.33125 2.125 12.40625" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_white_piece" />  
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
+		
+		
+		<node id="piece26">
+			<transforms> <!--
+				<translate to="0.5 0 0" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="90" />
+				<scale factor="1 1 0.1" /> -->
+				<translate to="11.14375 2.125 12.40625" />
+				<rotate axis="x" angle="90" />
+			</transforms>
+			<appearanceref id="ap_black_piece" />  
+			<children>
+				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
+			</children>
+		</node>
+		
+		<!--              MESA DOS PONTOS    -->
+		
+		<node id="contador_total">
+		<transforms>
+			<translate to ="16 0.2 14"/>
+			<rotate axis="y" angle ="-90" />
+		</transforms>
+		<children>
+			<noderef id="pontos" />
+			<noderef id="plano_invis" />
+			<noderef id="face_frontal1" />
+		</children>
+		</node>
+		
+		<node id="pontos">
+			<transforms>
+			</transforms> 
+			<children>
+				<noderef id="mesa_pontos"/>
+				<noderef id="relogio"/>
+			</children>
+		</node>
+		
+		
+		<node id="mesa_pontos">
+		<transforms>
+			</transforms>
+			<appearanceref id="ap_madeira" />  
+			<children>
+				<noderef id="face_baixo" />
+				<!--<noderef id="face_frontal1" />-->
+				<noderef id="face_frontal2" />
+				<noderef id="face_traseira1" />
+				<noderef id="face_traseira2" />
+				<noderef id="face_lateral1_ext" />
+				<noderef id="face_lateral2_ext" />
+				<noderef id="face_lateral1_int" />
+				<noderef id="face_lateral2_int" />
+				<!--<noderef id="tampa" />-->
+				<noderef id="tampa2" />
+			</children>
+		</node>
+		
+		<node id="face_baixo">
+			<transforms>
+			<rotate axis="x" angle="90" />
+			</transforms>
+			<children>
+				<rectangle xy1="-1 -0.75" xy2="1 0.75" /> 
+			</children>
+		</node>
+		
+		<node id="face_frontal1">
+			<transforms>
+			<translate to="0 0.5 0.75" />
+			</transforms>
+			<appearanceref id="ap_taca" />
+			<children>
+				<rectangle xy1="-1 -0.5" xy2="1 0.5" /> 
+			</children>
+		</node>
+		
+		<node id="face_frontal2">
+			<transforms>
+			<translate to="0 0.5 0.735" />
+			</transforms>
+			<children>
+				<rectangle xy1="-1 -0.5" xy2="1 0.3" /> 
+			</children>
+		</node>
+		
+		
+		<node id="face_traseira1">
+			<transforms>
+			<translate to="0 0.85 -0.75" />
+			</transforms>
+			<children>
+				<rectangle xy1="-1.0 -0.85" xy2="1.0 0.85" /> 
+			</children>
+		</node>
+		
+		<node id="face_traseira2">
+			<transforms>
+			<translate to="0 0.85 -0.75" />
+			</transforms>
+			<children>
+				<rectangle xy1="1.0 -0.85" xy2="-1.0 0.85" /> 
+			</children>
+		</node>
+		
+		<node id="face_lateral1_ext">
+			<transforms>
+			</transforms>
+			<children>
+				<patch order="1" partsU="10" partsV="10" compute="fill">
+					<controlpoint x="-1" y="1" z="0.75"/>
+					<controlpoint x="-1" y="1.70" z="-0.75" />
+					<controlpoint x="-1" y="0.0" z="0.75"/>
+					<controlpoint x="-1" y="0.0" z="-0.75"/>	
+				</patch>
+			</children>
+		</node>
+		
+		<node id="face_lateral2_ext">
+			<transforms>
+			</transforms>
+			<children>
+				<patch order="1" partsU="10" partsV="10" compute="fill">
+					<controlpoint x="1" y="1.70" z="-0.75" />
+					<controlpoint x="1" y="1" z="0.75"/>
+					<controlpoint x="1" y="0.0" z="-0.75"/>
+					<controlpoint x="1" y="0.0" z="0.75"/>
+				</patch>
+			</children>
+		</node>
+		
+		
+		<node id="face_lateral1_int">
+			<transforms>
+			</transforms>
+			<children>
+				<patch order="1" partsU="10" partsV="10" compute="fill">
+					<controlpoint x="-1" y="1.70" z="-0.75" />
+					<controlpoint x="-1" y="1" z="0.75"/>
+					<controlpoint x="-1" y="0.0" z="-0.75"/>	
+					<controlpoint x="-1" y="0.0" z="0.75"/>
+				</patch>
+			</children>
+		</node>
+		
+		<node id="face_lateral2_int">
+			<transforms>
+			</transforms>
+			<children>
+				<patch order="1" partsU="10" partsV="10" compute="fill">
+					<controlpoint x="1" y="1.0" z="0.75"/>
+					<controlpoint x="1" y="1.70" z="-0.75" />
+					<controlpoint x="1" y="0.0" z="0.75"/>
+					<controlpoint x="1" y="0.0" z="-0.75"/>
+				</patch>
+			</children>
+		</node>
+		
+		<!--<node id="tampa">
+			<transforms>
+			<translate to="0 2 0" />
+			</transforms>
+			<appearanceref id="ap_taca" />
+			<children>
+			<patch order="1" partsU="30" partsV="30" compute="fill">
+					<controlpoint x="1" y="1.70" z="-0.75" />
+					<controlpoint x="-1" y="1.70" z="-0.75"/>
+					<controlpoint x="1" y="1" z="0.75"/>
+					<controlpoint x="-1" y="1" z="0.75"/>
+			</patch>
+			</children>
+		</node>-->
+		
+		<node id="tampa2">
+			<transforms>
+			</transforms>
+			<children>
+			<patch order="1" partsU="10" partsV="10" compute="fill">
+					<controlpoint x="1" y="1.50" z="-0.75" />
+					<controlpoint x="-1" y="1.50" z="-0.75"/>
+					<controlpoint x="1" y="0.8" z="0.75"/>
+					<controlpoint x="-1" y="0.8" z="0.75"/>
+			</patch>
+			</children>
+		</node>
+	
+	<!--						Relogio          -->
+	
+	
+	<node id="relogio">
+		<transforms>
+		<translate to="0 1.2 0" />
+		<rotate axis="x" angle="-65" />
+		</transforms>
+		<appearanceref id ="ap_relogio"/>
+		<children>
+			<clock/>
+		</children>
+	</node>
+	
+	<node id="plano_invis">
+			<transforms>
+			</transforms>
+			<appearanceref id="ap_taca" />
+			<children>
+			<patch order="1" partsU="30" partsV="30" compute="fill">
+				<controlpoint x="1" y="1.70" z="-0.75" />
+				<controlpoint x="-1" y="1.70" z="-0.75"/>
+				<controlpoint x="1" y="1" z="0.75"/>
+				<controlpoint x="-1" y="1" z="0.75"/>
+			</patch>
+			</children>
+	</node>
+	
+	<node id="peca_quadrada">
+			<transforms>
+			</transforms>
+			<children>
+				<noderef id="topo_peca"/>
+				<noderef id="base_peca"/>
+				<noderef id="frontal_peca"/>
+				<noderef id="traseira_peca"/>
+				<noderef id="lateral_peca1"/>
+				<noderef id="lateral_peca2"/>
+			</children>
+	</node>
+
+	<node id="topo_peca">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="0.04" y="0.025" z="-0.04" />
+			<controlpoint x="-0.04" y="0.025" z="-0.04"/>
+			<controlpoint x="0.04" y="0.025" z="0.04"/>
+			<controlpoint x="-0.04" y="0.025" z="0.04"/>
+		</patch>
+		</children>
+	</node>
+	
+	<node id="base_peca">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="-0.04" y="0" z="-0.04"/>
+			<controlpoint x="0.04" y="0" z="-0.04" />
+			<controlpoint x="-0.04" y="0" z="0.04"/>
+			<controlpoint x="0.04" y="0" z="0.04"/>
+		</patch>
+		</children>
+	</node>
+	
+	<node id="frontal_peca">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="0.04" y="0.025" z="0.04" />
+			<controlpoint x="-0.04" y="0.025" z="0.04"/>
+			<controlpoint x="0.04" y="0" z="0.04"/>
+			<controlpoint x="-0.04" y="0" z="0.04"/>		
+		</patch>
+		</children>
+	</node>
+	
+	<node id="traseira_peca">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="-0.04" y="0.025" z="-0.04"/>
+			<controlpoint x="0.04" y="0.025" z="-0.04" />
+			<controlpoint x="-0.04" y="0" z="-0.04"/>		
+			<controlpoint x="0.04" y="0" z="-0.04"/>
+		</patch>
+		</children>
+	</node>
+	
+	<node id="lateral_peca1">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="0.04" y="0.025" z="-0.04"/>
+			<controlpoint x="0.04" y="0.025" z="0.04" />
+			<controlpoint x="0.04" y="0" z="-0.04"/>		
+			<controlpoint x="0.04" y="0" z="0.04"/>
+		</patch>
+		</children>
+	</node>
+	
+	<node id="lateral_peca2">
+		<transforms>
+		</transforms>
+		<children>
+		<patch order="1" partsU="30" partsV="30" compute="fill">
+			<controlpoint x="-0.04" y="0.025" z="0.04" />
+			<controlpoint x="-0.04" y="0.025" z="-0.04"/>	
+			<controlpoint x="-0.04" y="0" z="0.04"/>
+			<controlpoint x="-0.04" y="0" z="-0.04"/>	
+		</patch>
+		</children>
+	</node>
+
+	
     </graph> 
 </yaf> 

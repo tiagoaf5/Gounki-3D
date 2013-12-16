@@ -1,5 +1,7 @@
 #include "Data.h"
 #include <queue>
+#include "YAFScene.h"
+#include "MyRectangle.h"
 
 Data::Data()
 {
@@ -11,7 +13,9 @@ Data::Data()
 	defaultAppearance = new MyAppearance(amb, dif, sp, em, sh);
 	defaultAppearance->setId("default:default");
 	appearancesStack.push(defaultAppearance);
+
 }
+
 
 Data::~Data()
 {
@@ -133,8 +137,55 @@ void Data::computeNodePointers(Node * node)
 
 void Data::drawScene()
 {
+
+	//glPushMatrix();
+	/*for (int r=0; r < 8; r++)
+	{
+		glPushMatrix();
+		for (int c=0; c < 8; c++)
+		{
+			glPushMatrix();
+			glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
+			glRotatef(-90,1,0,0);
+			obj->draw();
+			glPopMatrix();
+		}
+		glPopMatrix();
+	}*/
+	//glPopMatrix();
 	clearAppearancesStack();
 	drawNode(root);
+}
+
+void Data::drawSceneSelect(){
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	(((YAFScene *)scene)->getActiveCamera())->applyView();
+	
+	
+	glPushName(-1);
+
+	//glPushMatrix();
+
+	for (int r=0; r < 8; r++)
+	{
+		glPushMatrix();
+		glLoadName(r);
+		for (int c=0; c < 8; c++)
+		{
+			glPushMatrix();
+			glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
+			glRotatef(-90,1,0,0);
+			glPushName(c);
+			obj->draw();
+			glPopName();
+			glPopMatrix();
+		}
+		glPopMatrix();
+	}
+	//glPopMatrix();
 }
 
 void Data::drawDisplayList(Node * node)
@@ -538,6 +589,10 @@ vector<MyShader *> Data::getShaders()
 };
 
 
+void Data::setScene(CGFscene* scene){
+	this->scene = scene;
+	obj = new MyRectangle(-0.091,-0.091,0.091,0.091,scene);
+}
 
 void Data::initSocket()
 {

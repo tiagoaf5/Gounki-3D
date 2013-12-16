@@ -6,6 +6,7 @@
 
 #include "tinyxml.h"
 #include "CGFscene.h"
+#include "cgfobject.h"
 
 #include "Node.h"
 #include "MyRectangle.h"
@@ -17,6 +18,7 @@
 #include "Waterline.h"
 #include "Patch.h"
 #include "Vehicle.h"
+#include "myClock.h"
 
 #include "Data.h"
 #include "OmniLight.h"
@@ -53,6 +55,7 @@ public:
 	void applyCamera();
 	CGFcamera * getActiveCamera() const;
 	map<string, CGFcamera *> getCamerasMap() const;
+	void setClock(CGFobject* relogio);
 
 protected:
 	TiXmlDocument* doc;
@@ -79,6 +82,7 @@ private:
 	bool readAnimationsBlock();
 
 	map<string, CGFcamera *> camerasMap;
+	CGFobject* relogio;
 };
 
 

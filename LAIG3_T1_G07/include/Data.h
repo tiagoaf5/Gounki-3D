@@ -15,6 +15,7 @@
 #include "MyLight.h"
 #include "cgfapplication.h"
 #include "MyShader.h"
+#include "ObjectSelect.h"
 
 #include "Socket.h"
 
@@ -26,6 +27,10 @@ private:
 	//Graph's root
 	string rootStr;
 	Node * root;
+
+	//picking
+	CGFobject* obj;
+	CGFscene* scene;
 
 	//default appearance
 	MyAppearance * defaultAppearance;
@@ -65,7 +70,7 @@ private:
 
 	//shader
 	vector<MyShader *> shaders;
-
+	//MyShader *shader;
 	//Sockets
 	Socket * socket;
 
@@ -85,6 +90,7 @@ public:
 	void setRootStr(string r);
 	void computeNodePointers();
 	void drawScene();
+	void drawSceneSelect();
 
 	//texture
 	void addTextureToMap(string id, string location);
@@ -124,6 +130,9 @@ public:
 	//shaders
 	void setShader (MyShader * sh);
 	vector<MyShader *> getShaders();
+
+	//picking
+	void setScene(CGFscene* scene);
 
 	//socket
 	void initSocket();

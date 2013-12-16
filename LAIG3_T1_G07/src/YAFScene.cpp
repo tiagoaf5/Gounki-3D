@@ -1203,6 +1203,13 @@ bool YAFScene::readGraphBlock ()
 								}
 							}
 
+							else if(strcmp(children->Value(),"clock") == 0){
+								printf("		Clock Exists\n");
+								myClock * c1 = new myClock(this);
+								mynode->addprimitive(c1);
+								setClock(c1);
+							}
+
 							if (strcmp(children->Value(), "noderef") == 0)
 							{
 
@@ -1333,6 +1340,8 @@ void YAFScene::init()
 	//enable alpha channel
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//setUpdatePeriod(100);
+	data->setScene(this);
 }
 
 void YAFScene::update(unsigned long t)
@@ -1344,6 +1353,7 @@ void YAFScene::update(unsigned long t)
 
 	for (unsigned int i = 0; i < shaders.size(); i++)
 		shaders[i]->update(t);
+	((myClock*)relogio)->update(t);
 }
 
 
@@ -1374,6 +1384,7 @@ void YAFScene::display()
 	glutSwapBuffers();
 	glFlush();
 }
+
 
 void YAFScene::addCamera(CGFcamera * cam, string camid)
 {
@@ -1427,4 +1438,9 @@ CGFcamera * YAFScene::getActiveCamera() const
 map<string, CGFcamera *> YAFScene::getCamerasMap() const
 {
 	return camerasMap;
+}
+
+void YAFScene::setClock(CGFobject* relogio){
+
+	this->relogio = relogio;
 }
