@@ -55,6 +55,8 @@ public:
 	void applyCamera();
 	CGFcamera * getActiveCamera() const;
 	map<string, CGFcamera *> getCamerasMap() const;
+	void displaySelect();
+	//para sair daqui este relógio
 	void setClock(CGFobject* relogio);
 
 protected:
@@ -81,7 +83,10 @@ private:
 	bool readGraphBlock ();
 	bool readAnimationsBlock();
 
+	
+
 	map<string, CGFcamera *> camerasMap;
+	//para sair daqui este relógio
 	CGFobject* relogio;
 };
 

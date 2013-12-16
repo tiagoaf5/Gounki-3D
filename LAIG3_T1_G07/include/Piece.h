@@ -1,14 +1,21 @@
-#ifndef _PIECE_H_
-#define _PIECE_H_
+#ifndef _PIECECIRCLE_H_
+#define _PIECECIRCLE_H_
 
-#include <vector>
 
-class Piece{
-	vector<int> nrPeças;
+
+class Piece
+{
+	MyAppearance * appearance;
+	int player;
+	bool selected;
+	vector<PieceBase *> pieces;
 public:
-	virtual string getFormattedPiece(); // obtem a peça e transforma em string
-	virtual void draw();
-
+	Piece(int player, MyAppearance * appearance);
+	Piece(int player, PieceBase * piece, MyAppearance * appearance);
+	std::string getFormattedPiece(); // obtem a peça e transforma em string
+	void draw();
+	void addPiece(PieceBase * piece);
 };
+
 
 #endif

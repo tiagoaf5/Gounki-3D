@@ -241,12 +241,6 @@
 				<noderef id="peca_quadrada"/>
 				<noderef id="piece1" />
 				<noderef id="piece2" />
-				<noderef id="piece21" />
-				<noderef id="piece22" />
-				<noderef id="piece23" />
-				<noderef id="piece24" />
-				<noderef id="piece25" />
-				<noderef id="piece26" />
 			</children>
 		</node>
 		
@@ -853,99 +847,6 @@
 				<cylinder base="0.05" top="0.05" height="0.05" slices="20" stacks="5" />
 			</children>
 		</node>		
-		
-		<node id="piece21">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="12.08125 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_white_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
-		
-		<node id="piece22">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="11.89375 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_black_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
-		
-		<node id="piece23">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="11.70625 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_white_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
-		
-		
-		<node id="piece24">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="11.51875 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_black_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
-		
-		
-		<node id="piece25">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="11.33125 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_white_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
-		
-		
-		<node id="piece26">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<translate to="11.14375 2.125 12.40625" />
-				<rotate axis="x" angle="90" />
-			</transforms>
-			<appearanceref id="ap_black_piece" />  
-			<children>
-				<cylinder base="0.05" top="0.05" height="0.001" slices="20" stacks="5" />
-			</children>
-		</node>
 		
 		<!--              MESA DOS PONTOS    -->
 		

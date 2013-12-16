@@ -157,14 +157,8 @@ void Data::drawScene()
 	drawNode(root);
 }
 
-void Data::drawSceneSelect(){
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	(((YAFScene *)scene)->getActiveCamera())->applyView();
-	
-	
+void Data::drawSceneSelect()
+{
 	glPushName(-1);
 
 	//glPushMatrix();
@@ -172,14 +166,14 @@ void Data::drawSceneSelect(){
 	for (int r=0; r < 8; r++)
 	{
 		glPushMatrix();
-		glLoadName(r);
+		glLoadName(r+1);
 		for (int c=0; c < 8; c++)
 		{
 			glPushMatrix();
 			glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
 			glRotatef(-90,1,0,0);
-			glPushName(c);
-			obj->draw();
+			glPushName(c+1);
+			pickingRetangle->draw();
 			glPopName();
 			glPopMatrix();
 		}
@@ -589,9 +583,9 @@ vector<MyShader *> Data::getShaders()
 };
 
 
-void Data::setScene(CGFscene* scene){
-	this->scene = scene;
-	obj = new MyRectangle(-0.091,-0.091,0.091,0.091,scene);
+void Data::initPicking()
+{
+	pickingRetangle = new MyRectangle(-0.091,-0.091,0.091,0.091,NULL);
 }
 
 void Data::initSocket()

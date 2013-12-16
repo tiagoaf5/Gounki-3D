@@ -8,16 +8,17 @@
 #include <stack>
 #include <iostream>
 
+#include "cgfapplication.h"
+
 #include "Node.h"
 #include "MyAppearance.h"
 #include "MyPerspectiveCamera.h"
 #include "MyOrthogonalCamera.h"
 #include "MyLight.h"
-#include "cgfapplication.h"
 #include "MyShader.h"
-#include "ObjectSelect.h"
 
 #include "Socket.h"
+#include "Board.h"
 
 using namespace std;
 
@@ -27,10 +28,6 @@ private:
 	//Graph's root
 	string rootStr;
 	Node * root;
-
-	//picking
-	CGFobject* obj;
-	CGFscene* scene;
 
 	//default appearance
 	MyAppearance * defaultAppearance;
@@ -70,9 +67,15 @@ private:
 
 	//shader
 	vector<MyShader *> shaders;
-	//MyShader *shader;
+
+	//picking
+	CGFobject* pickingRetangle;
+
 	//Sockets
 	Socket * socket;
+
+	//Board
+	Board * board;
 
 	//private functions
 	void computeNodePointers(Node * node);
@@ -132,7 +135,7 @@ public:
 	vector<MyShader *> getShaders();
 
 	//picking
-	void setScene(CGFscene* scene);
+	void initPicking();
 
 	//socket
 	void initSocket();

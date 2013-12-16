@@ -29,8 +29,19 @@ Plane::Plane(int partsU, int partsV, CGFscene * scene)
 
 void Plane::draw()
 {
-	Data * mydata = (((YAFScene*) scene)->getData());
-	pair<float,float> coord = mydata->getCurrentTextureCoord();
+	pair<float,float> coord;
+
+	if(scene != NULL)
+	{
+		Data * mydata = (((YAFScene*) scene)->getData());
+		coord = mydata->getCurrentTextureCoord();
+	}
+	else
+	{
+		coord.first = 1;
+		coord.second = 1;
+	}
+	
 
 	GLfloat textpoints[4][2] = {{ 0.0, 0.0},
 	{ 0.0, 1.0 / coord.second}, 

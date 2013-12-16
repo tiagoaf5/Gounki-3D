@@ -1320,8 +1320,11 @@ void YAFScene::init()
 	data->doBfs();
 	data->computeDisplayLists();
 
-	//init socket
+	//>init socket
 	data->initSocket();
+
+	//> Picking
+	data->initPicking();
 
 	//>test the textures
 	//data->printTexturesMap();
@@ -1333,6 +1336,7 @@ void YAFScene::init()
 	data->applyGlobals();
 	data->applyLighting(); //apply lighting options, doesn't change during display
 
+
 	glEnable(GL_COLOR_MATERIAL);
 	setUpdatePeriod(30);
 	glEnable(GL_NORMALIZE);
@@ -1341,7 +1345,6 @@ void YAFScene::init()
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//setUpdatePeriod(100);
-	data->setScene(this);
 }
 
 void YAFScene::update(unsigned long t)
@@ -1383,6 +1386,14 @@ void YAFScene::display()
 	//////////////////
 	glutSwapBuffers();
 	glFlush();
+}
+
+void YAFScene::displaySelect()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	applyCamera();
+	data->drawSceneSelect();
 }
 
 

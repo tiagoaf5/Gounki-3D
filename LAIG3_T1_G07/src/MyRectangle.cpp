@@ -13,8 +13,18 @@ MyRectangle::MyRectangle(float x1,float y1,float x2,float y2, CGFscene * scene)
 
 void MyRectangle::draw()
 {
-	Data * mydata = (((YAFScene*) scene)->getData());
-	pair<float,float> coord = mydata->getCurrentTextureCoord();
+	pair<float,float> coord;
+
+	if (scene != NULL)
+	{
+		Data * mydata = (((YAFScene*) scene)->getData());
+		coord = mydata->getCurrentTextureCoord();
+	}
+	else
+	{
+		coord.first = 1;
+		coord.second = 1;
+	}
 
 	glBegin(GL_QUADS);
 		glNormal3f(0.0,0.0,1.0);

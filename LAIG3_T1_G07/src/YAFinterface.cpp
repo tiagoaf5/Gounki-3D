@@ -57,7 +57,8 @@ void YAFinterface::performPicking(int x, int y)
 	// force scene drawing under this mode
 	// only the names of objects that fall in the 5x5 window will actually be stored in the buffer
 
-	data->drawSceneSelect();
+	//data->drawSceneSelect();
+	((YAFScene*) scene)->displaySelect();
 
 	// restore original projection matrix
 	glMatrixMode (GL_PROJECTION);

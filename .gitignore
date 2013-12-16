@@ -20,7 +20,7 @@
 *.ilk
 *.pdb
 *.db
-
+*.opensdf
 #Visual Studio
 *.sdf
 *.sln
