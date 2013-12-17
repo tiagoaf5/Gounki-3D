@@ -2,12 +2,14 @@
 #define _PIECESQUARE_H_
 
 #include "PieceBase.h"
-#include "Plane.h"
+#include "Cylinder.h"
+
+#include <string>
 
 class PieceSquare: public PieceBase
 {
 private:
-	Plane * side;
+	Cylinder * piece;
 public:
 	PieceSquare();
 	std::string getFormattedPiece(); // obtem a peça e transforma em string

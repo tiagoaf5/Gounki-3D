@@ -1,8 +1,10 @@
 #include "PieceSquare.h"
 
+using namespace std;
+
 PieceSquare::PieceSquare()
 {
-	side = new Plane(2,2,NULL);
+	piece = new Cylinder(0.06,0.06,0.025,20,5);
 }
 
 std::string PieceSquare::getFormattedPiece()
@@ -12,5 +14,8 @@ std::string PieceSquare::getFormattedPiece()
 
 void PieceSquare::draw()
 {
-
+	glPushMatrix();
+	glRotatef(90,1,0,0);
+	piece->draw();
+	glPopMatrix();
 }

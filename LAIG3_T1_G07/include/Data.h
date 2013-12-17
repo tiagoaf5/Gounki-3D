@@ -139,6 +139,10 @@ public:
 
 	//socket
 	void initSocket();
+
+	//board
+	void initBoard();
+	Board * getBoard();
 };
 
 #endif

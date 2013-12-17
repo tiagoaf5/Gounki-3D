@@ -102,6 +102,7 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 		for (int i=0; i<nselected; i++)
 			printf("%d ",selected[i]);
 		printf("\n");
+		data->getBoard()->selectPlace(selected[0],selected[1]);
 	}
 	else
 		printf("Nothing selected while picking \n");	

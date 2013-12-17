@@ -21,6 +21,7 @@
 *.pdb
 *.db
 *.opensdf
+*.tlog
 #Visual Studio
 *.sdf
 *.sln

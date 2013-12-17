@@ -46,7 +46,7 @@ public:
 	void update(unsigned long t);
 
 	//Data
-	Data* getData();
+	Data * getData();
 
 	//Camera info
 	void setActiveCamera(CGFcamera * cam);

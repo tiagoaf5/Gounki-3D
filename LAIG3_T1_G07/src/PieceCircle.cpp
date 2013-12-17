@@ -1,14 +1,10 @@
 #include "PieceCircle.h"
 
-#define BASE 0.06
-#define TOP 0.06
-#define HEIGHT 0.025
-#define SLICES 20
-#define STACKS 5
+using namespace std;
 
 PieceCircle::PieceCircle()
 {
-	piece = new Cylinder(BASE,TOP,HEIGHT,SLICES,STACKS);
+	piece = new Cylinder(0.06,0.06,0.025,20,5);
 }
 
 std::string PieceCircle::getFormattedPiece()

@@ -137,7 +137,7 @@ void Data::computeNodePointers(Node * node)
 
 void Data::drawScene()
 {
-
+	board->draw();
 	//glPushMatrix();
 	/*for (int r=0; r < 8; r++)
 	{
@@ -166,13 +166,13 @@ void Data::drawSceneSelect()
 	for (int r=0; r < 8; r++)
 	{
 		glPushMatrix();
-		glLoadName(r+1);
+		glLoadName(r);
 		for (int c=0; c < 8; c++)
 		{
 			glPushMatrix();
 			glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
 			glRotatef(-90,1,0,0);
-			glPushName(c+1);
+			glPushName(c);
 			pickingRetangle->draw();
 			glPopName();
 			glPopMatrix();
@@ -596,8 +596,21 @@ void Data::initSocket()
 
 
 
+void Data::initBoard()
+{
+	MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
+	MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
+	cout << "Black: " << app2->getId() << endl;
+	cout << "White: " << app1->getId() << endl;
+	
 
+	board = new Board(app2,app1);
+}
 
+Board * Data::getBoard()
+{
+	return board;
+}
 
 
 

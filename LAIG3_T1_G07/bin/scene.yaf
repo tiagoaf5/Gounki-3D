@@ -240,7 +240,7 @@
 				<noderef id="contador_total"/>
 				<noderef id="peca_quadrada"/>
 				<noderef id="piece1" />
-				<noderef id="piece2" />
+			<!-- 	<noderef id="piece2" /> -->
 			</children>
 		</node>
 		
@@ -818,11 +818,6 @@
 
 		<node id="piece1">
 			<transforms>
-			<!--<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
-				<!--<translate to="12.45625 2.125 12.40625" /> -->
 				<rotate axis="x" angle="90" />
 			</transforms>
 			<appearanceref id="ap_white_piece" />  
@@ -832,13 +827,9 @@
 			</children>
 		</node>	
 
-
+<!--
 		<node id="piece2">
-			<transforms> <!--
-				<translate to="0.5 0 0" />
-				<rotate axis="y" angle="90" />
-				<rotate axis="x" angle="90" />
-				<scale factor="1 1 0.1" /> -->
+			<transforms>
 				<translate to="12.26875 2.125 12.40625" />
 				<rotate axis="x" angle="90" />
 			</transforms>
@@ -846,7 +837,7 @@
 			<children>
 				<cylinder base="0.05" top="0.05" height="0.05" slices="20" stacks="5" />
 			</children>
-		</node>		
+		</node>		-->
 		
 		<!--              MESA DOS PONTOS    -->
 		

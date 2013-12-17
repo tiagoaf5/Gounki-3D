@@ -4,6 +4,8 @@
 #include "PieceBase.h"
 #include "Cylinder.h"
 
+#include <string>
+
 class PieceCircle: public PieceBase
 {
 	Cylinder * piece;
