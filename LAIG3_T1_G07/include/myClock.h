@@ -28,6 +28,7 @@ public:
 	void update(unsigned long num);
 	int getParado();
 	void setParado();
+	void reset();
 };
 
 #endif

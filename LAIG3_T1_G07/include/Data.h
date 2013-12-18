@@ -20,6 +20,9 @@
 #include "Socket.h"
 #include "Board.h"
 
+#include <sstream>
+	
+
 using namespace std;
 
 class Data
@@ -73,6 +76,9 @@ private:
 
 	//Sockets
 	Socket * socket;
+
+	//Relogio
+	CGFobject* relogio;
 
 	//Board
 	Board * board;
@@ -139,6 +145,11 @@ public:
 
 	//socket
 	void initSocket();
+	Socket * getSocket() const;
+
+	//relogio
+	void setClock(CGFobject* relogio);
+	CGFobject* getClock();
 
 	//board
 	void initBoard();

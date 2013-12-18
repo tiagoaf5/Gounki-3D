@@ -22,12 +22,12 @@ myClock::myClock(CGFscene * scene)
 	relog_tex = new CGFtexture("../data/clock.png");
 	//materials = new CGFappearance(ambs,difs,specs,shininesss);
 	segundos = new myClockHand(0.9);
-	minutos = new myClockHand(0.67);
-	horas = new myClockHand(0.5);
+	//minutos = new myClockHand(0.67);
+	//horas = new myClockHand(0.5);
 
-	segundos_ang = 270;
-	minutos_ang = 180;
-	horas_ang = 90;
+	segundos_ang = 0;
+	//minutos_ang = 180;
+	//horas_ang = 90;
 	anterior = 0;
 	parado = 0 ;
 }
@@ -48,7 +48,7 @@ void myClock::draw() {
 	segundos->draw();
 	glPopMatrix();
 
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslated(0,0,0.12);
 	glRotatef(40,0,0,1);
 	((myClockHand *)minutos)->setAngle(minutos_ang);
@@ -60,7 +60,7 @@ void myClock::draw() {
 	glRotatef(-40,0,0,1);
 	((myClockHand *)horas)->setAngle(horas_ang);
 	horas->draw();
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 void myClock::update(unsigned long num)
@@ -73,10 +73,10 @@ void myClock::update(unsigned long num)
 		{
 			double s = (num - anterior) / 1000.0 * 360 / 60.0;
 			segundos_ang += s;
-			double m = (num - anterior) / 1000.0 * 360 / 3600.0;
+			/*double m = (num - anterior) / 1000.0 * 360 / 3600.0;
 			minutos_ang += m;
 			double h = (num - anterior) / 1000.0 / 120.0;
-			horas_ang += h;
+			horas_ang += h;*/
 		}
 		anterior = num;
 	}
@@ -84,6 +84,11 @@ void myClock::update(unsigned long num)
 
 int myClock::getParado(){
 	return parado;
+}
+
+void myClock::reset(){
+	segundos_ang = 0;
+
 }
 
 void myClock::setParado(){

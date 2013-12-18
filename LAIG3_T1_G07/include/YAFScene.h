@@ -56,8 +56,6 @@ public:
 	CGFcamera * getActiveCamera() const;
 	map<string, CGFcamera *> getCamerasMap() const;
 	void displaySelect();
-	//para sair daqui este relógio
-	void setClock(CGFobject* relogio);
 
 protected:
 	TiXmlDocument* doc;
@@ -86,8 +84,6 @@ private:
 	
 
 	map<string, CGFcamera *> camerasMap;
-	//para sair daqui este relógio
-	CGFobject* relogio;
 };
 
 

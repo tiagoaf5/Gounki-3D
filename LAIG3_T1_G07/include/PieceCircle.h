@@ -13,7 +13,6 @@ public:
 	PieceCircle();
 	std::string getFormattedPiece(); // obtem a peça e transforma em string
 	void draw();
-
 };
 
 

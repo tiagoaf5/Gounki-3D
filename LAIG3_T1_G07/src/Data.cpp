@@ -593,6 +593,18 @@ void Data::initSocket()
 	socket = new Socket();
 }
 
+Socket * Data::getSocket() const
+{
+	return socket;
+}
+
+void Data::setClock(CGFobject* relogio){
+	this->relogio = relogio;
+}
+
+CGFobject* Data::getClock(){
+	return relogio;
+}
 
 
 
@@ -605,6 +617,17 @@ void Data::initBoard()
 	
 
 	board = new Board(app2,app1);
+	stringstream ss;
+	ss << "play(" <<"1,10,1,6," << board->getFormatted() << ").\n";
+	string val = ss.str();
+
+	cout << "sent: " << val << endl;
+	
+
+	socket->sendData((char *)val.c_str(), val.size());
+	char abc[200];
+	socket->receiveData(abc);
+	//cout << "prolog answered: " << abc << endl;
 }
 
 Board * Data::getBoard()

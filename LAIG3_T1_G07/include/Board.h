@@ -10,6 +10,9 @@
 #include "CGFappearance.h"
 
 #include <vector>
+#include <string>
+
+#include <sstream>
 
 using namespace std;
 
@@ -29,6 +32,7 @@ public:
 	Board(CGFappearance * black, CGFappearance * white);
 	void draw();
 	bool selectPlace(int x, int y);
+	string getFormatted() const;
 	
 };
 
