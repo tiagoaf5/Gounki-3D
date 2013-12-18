@@ -1321,7 +1321,7 @@ void YAFScene::init()
 	data->computeDisplayLists();
 
 	//>init socket
-	//data->initSocket();
+	data->initSocket();
 
 	//> Picking
 	data->initPicking();

@@ -91,7 +91,7 @@ bool Board::selectPlace(int y, int x)
 		board[x][y] = selectedPiece;
 		board[selectedX][selectedY] = NULL;
 		selectedPiece = NULL;
-		printf("Moving %d %d to %d %d\n",selectedX,selectedY,x,y);
+		printf("Moving %d %d to %d %d  (%s)\n",selectedX,selectedY,x,y,board[x][y]->getFormattedPiece());
 	}
 	else
 	{

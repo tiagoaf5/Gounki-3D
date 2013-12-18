@@ -7,7 +7,7 @@ PieceSquare::PieceSquare()
 	piece = new Cylinder(0.06,0.06,0.025,20,5);
 }
 
-std::string PieceSquare::getFormattedPiece()
+string PieceSquare::getFormattedPiece()
 {
 	return "x";
 }

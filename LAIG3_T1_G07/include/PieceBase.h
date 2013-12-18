@@ -6,9 +6,8 @@
 class PieceBase
 {
 public:
-	PieceBase(){};
-	virtual std::string getFormattedPiece(){return "a";};
-	virtual void draw(){};
+	virtual std::string getFormattedPiece() = 0;
+	virtual void draw() = 0;
 };
 
 #endif

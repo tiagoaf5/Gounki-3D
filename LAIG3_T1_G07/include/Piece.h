@@ -18,7 +18,7 @@ class Piece
 public:
 	Piece(int player, CGFappearance * appearance);
 	Piece(int player, PieceBase * piece, CGFappearance * appearance);
-	std::string getFormattedPiece(); // obtem a peça e transforma em string
+	string getFormattedPiece(); // piece ready for prolog
 	void draw();
 	void addPiece(PieceBase * piece);
 };

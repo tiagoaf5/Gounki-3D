@@ -7,7 +7,7 @@ PieceCircle::PieceCircle()
 	piece = new Cylinder(0.06,0.06,0.025,20,5);
 }
 
-std::string PieceCircle::getFormattedPiece()
+string PieceCircle::getFormattedPiece()
 {
 	return "o";
 }
