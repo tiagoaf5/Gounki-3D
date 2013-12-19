@@ -3,11 +3,11 @@
 
 using std::string;
 
-MyPerspectiveCamera::MyPerspectiveCamera(float near, float far, float angle, float target[3], float pos[3])
+MyPerspectiveCamera::MyPerspectiveCamera(float near1, float far1, float angle, float target[3], float pos[3])
 	: CGFcamera()
 {
-	this->near = near;
-	this->far = far;
+	this->near1 = near1;
+	this->far1 = far1;
 	this->angle1 = angle;
 
 	this->target [0] = target[0];
@@ -35,7 +35,7 @@ void MyPerspectiveCamera::updateProjectionMatrix(int width, int height)
 	float aspect= (float)width / (float)height;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(angle1, aspect, near, far);
+	gluPerspective(angle1, aspect, near1, far1);
 	//glMatrixMode(GL_MODELVIEW);
 }
 

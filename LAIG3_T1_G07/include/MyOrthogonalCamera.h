@@ -10,9 +10,9 @@ class MyOrthogonalCamera : public CGFcamera
 {
 private:
 	string id;
-	float near, far, left, right, top, bottom;
+	float near1, far1, left, right, top, bottom;
 public:
-	MyOrthogonalCamera(float near, float far, float left, float right, float top, float bottom);
+	MyOrthogonalCamera(float near1, float far1, float left, float right, float top, float bottom);
 	void applyView();
 	void updateProjectionMatrix(int width, int height);
 	void setId (string name);

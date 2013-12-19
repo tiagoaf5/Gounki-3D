@@ -10,11 +10,11 @@ class MyPerspectiveCamera : public CGFcamera
 {
 private:
 	float angle1;
-	float near;
-	float far;
+	float near1;
+	float far1;
 	string id;
 public:
-	MyPerspectiveCamera(float near, float far, float angle, float target[3], float pos[3]);
+	MyPerspectiveCamera(float near, float far1, float angle, float target[3], float pos[3]);
 	void applyView();
 	void updateProjectionMatrix(int width, int height);
 	void setId (string name);

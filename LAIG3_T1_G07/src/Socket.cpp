@@ -78,7 +78,7 @@ void Socket::receiveData(char * ans)
 			break;
 		pos++;
 	}
-	ans[pos] = 0;
+	ans[pos-1] = '\0';
 	cout << "prolog answered: " << ans << endl;
 }
 

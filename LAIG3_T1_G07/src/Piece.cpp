@@ -30,12 +30,26 @@ string Piece::getFormattedPiece()
 	 stringstream ss;
 
 	 ss << pieces[0]->getFormattedPiece();
-	 cout << "val-> " <<pieces[0]->getFormattedPiece() << endl;
 	 for (int i = 1; i < pieces.size(); i++)
 		 ss << "-" << pieces[i]->getFormattedPiece();
 
 	 ss << "-" << player;
 
-	 cout << "result-> " << ss.str() << endl;
 	 return ss.str();
+}
+
+void Piece::addPieces(vector<PieceBase *> p)
+{
+	for(int i = 0; i < p.size(); i++)
+		pieces.push_back(p[i]);
+}
+
+vector<PieceBase *> Piece::getPieces()
+{
+	return pieces;
+}
+
+int Piece::getPlayer() const
+{
+	return player;
 }

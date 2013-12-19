@@ -3,13 +3,16 @@
 
 #include "PieceBase.h"
 #include "Cylinder.h"
+#include "cgfobject.h"
+//#include <vector>
+
 
 #include <string>
 
 class PieceSquare: public PieceBase
 {
 private:
-	Cylinder * piece;
+	CGFobject * piece;
 public:
 	PieceSquare();
 	std::string getFormattedPiece(); // obtem a peça e transforma em string

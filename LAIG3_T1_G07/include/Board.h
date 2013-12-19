@@ -31,8 +31,10 @@ class Board
 public:
 	Board(CGFappearance * black, CGFappearance * white);
 	void draw();
-	bool selectPlace(int x, int y);
 	string getFormatted() const;
+	bool selectPlace(int x, int y);
+	bool removeSelection(int y, int x);
+	int move(int y1, int x1, int y2, int x2);
 	
 };
 

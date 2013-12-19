@@ -137,7 +137,9 @@ void Data::computeNodePointers(Node * node)
 
 void Data::drawScene()
 {
-	board->draw();
+	//board->draw();
+
+	game->draw();
 	//glPushMatrix();
 	/*for (int r=0; r < 8; r++)
 	{
@@ -587,7 +589,7 @@ void Data::initPicking()
 {
 	pickingRetangle = new MyRectangle(-0.091,-0.091,0.091,0.091,NULL);
 }
-
+/*
 void Data::initSocket()
 {
 	socket = new Socket();
@@ -596,7 +598,7 @@ void Data::initSocket()
 Socket * Data::getSocket() const
 {
 	return socket;
-}
+}*/
 
 void Data::setClock(CGFobject* relogio){
 	this->relogio = relogio;
@@ -606,8 +608,20 @@ CGFobject* Data::getClock(){
 	return relogio;
 }
 
+void Data::initGame()
+{
+	MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
+	MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
+
+	game = new Game(app2,app1);
+}
 
 
+Game * Data::getGame()
+{
+	return game;
+}
+/*
 void Data::initBoard()
 {
 	MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
@@ -634,7 +648,7 @@ Board * Data::getBoard()
 {
 	return board;
 }
-
+*/
 
 
 

@@ -9,11 +9,12 @@ class YAFinterface: public CGFinterface
 private:
 	int light1,light2,light3,light4,light5;
 	int testVar;
-	int grupo,grupo2;
+	int grupo,grupo2,grupo3;
 	GLUI_RadioButton *b1;
 	GLUI_RadioButton *b2;
 	GLUI_RadioButton *b3;
 	GLUI_Listbox * list_group;
+	GLUI_Button *b4;
 	int li[7];
 	int size;
 	int pos_default;

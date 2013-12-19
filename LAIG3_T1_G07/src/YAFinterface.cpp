@@ -102,7 +102,8 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 		for (int i=0; i<nselected; i++)
 			printf("%d ",selected[i]);
 		printf("\n");
-		data->getBoard()->selectPlace(selected[0],selected[1]);
+		data->getGame()->selectPosition(selected[0],selected[1]);
+		//data->getBoard()->selectPlace(selected[0],selected[1]);
 	}
 	else
 		printf("Nothing selected while picking \n");	
@@ -134,9 +135,6 @@ void YAFinterface::initGUI()
 		}
 		i++;
 	}
-
-
-
 
 
 	//------------------------------------------ DRAWMODE ----------------------------------
@@ -189,6 +187,13 @@ void YAFinterface::initGUI()
 	}
 	pos_default= j;
 	list_group->add_item(j,"default");
+
+
+
+	GLUI_Panel *varPanel4= addPanel("Servidor", 1);
+	this->addColumn();
+
+	b4 = addButtonToPanel(varPanel4,"stop",4);
 }
 
 
@@ -212,6 +217,12 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		{
 			updateCameras();
 			break;
+		};
+	case 4:
+		{
+			data->getGame()->endGame();
+/*			(data->getSocket())->quit();*/
+
 		}
 	}
 }

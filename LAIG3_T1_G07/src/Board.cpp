@@ -92,7 +92,7 @@ void Board::draw()
 
 bool Board::selectPlace(int y, int x)
 {
-	if(selectedPiece != NULL && board[x][y] == NULL)
+	/*if(selectedPiece != NULL && board[x][y] == NULL)
 	{
 		board[x][y] = selectedPiece;
 		board[selectedX][selectedY] = NULL;
@@ -107,6 +107,12 @@ bool Board::selectPlace(int y, int x)
 		selectedY = y;
 		printf("Selecting %d %d\n",x,y);
 	}
+	return true;*/
+	if (board[x][y] == NULL)
+		return false;
+	else
+		selectedPiece = board[x][y];
+
 	return true;
 }
 
@@ -138,4 +144,36 @@ string Board::getFormatted() const
 
 	ss << "]";
 	return ss.str();
+}
+
+bool Board::removeSelection(int y, int x)
+{
+	if(board[x][y] == NULL)
+		return false;
+	else
+		board[x][y] == NULL;
+	return true;
+}
+
+int Board::move(int y1, int x1, int y2, int x2)
+{
+	int eaten = 0;
+
+	if(board[x2][y2] != NULL)
+	{
+		if(board[x2][y2]->getPlayer() == selectedPiece->getPlayer())
+		{
+			board[x2][y2]->addPieces(selectedPiece->getPieces());
+		}
+		else
+		{
+			eaten = board[x2][y2]->getPieces().size();
+			board[x2][y2] = selectedPiece;
+		}
+	}
+	else
+		board[x2][y2] = selectedPiece;
+	
+	board[x1][y1] = NULL;
+	return eaten;
 }

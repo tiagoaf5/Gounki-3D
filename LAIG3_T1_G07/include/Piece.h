@@ -20,7 +20,9 @@ public:
 	Piece(int player, PieceBase * piece, CGFappearance * appearance);
 	string getFormattedPiece(); // piece ready for prolog
 	void draw();
-	void addPiece(PieceBase * piece);
+	void addPieces(vector<PieceBase *> p);
+	vector<PieceBase *> getPieces();
+	int getPlayer() const;
 };
 
 
