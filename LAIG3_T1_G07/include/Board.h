@@ -32,7 +32,7 @@ public:
 	Board(CGFappearance * black, CGFappearance * white);
 	void draw();
 	string getFormatted() const;
-	bool selectPlace(int x, int y);
+	bool selectPlace(int x, int y, int player);
 	bool removeSelection(int y, int x);
 	int move(int y1, int x1, int y2, int x2);
 	

@@ -90,7 +90,7 @@ void Board::draw()
 	}
 }
 
-bool Board::selectPlace(int y, int x)
+bool Board::selectPlace(int y, int x, int player)
 {
 	/*if(selectedPiece != NULL && board[x][y] == NULL)
 	{
@@ -108,10 +108,15 @@ bool Board::selectPlace(int y, int x)
 		printf("Selecting %d %d\n",x,y);
 	}
 	return true;*/
+
+
 	if (board[x][y] == NULL)
 		return false;
-	else
+	
+	if(board[x][y]->getPlayer() == player)
 		selectedPiece = board[x][y];
+	else 
+		return false;
 
 	return true;
 }

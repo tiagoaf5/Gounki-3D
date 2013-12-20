@@ -92,7 +92,7 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 		for (int j=0; j < num; j++) 
 			ptr++;
 	}
-	
+
 	// if there were hits, the one selected is in "selected", and it consist of nselected "names" (integer ID's)
 	if (selected!=NULL)
 	{
@@ -102,7 +102,7 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 		for (int i=0; i<nselected; i++)
 			printf("%d ",selected[i]);
 		printf("\n");
-		data->getGame()->selectPosition(selected[0],selected[1]);
+		data->getGame()->play(selected[0],selected[1]);
 		//data->getBoard()->selectPlace(selected[0],selected[1]);
 	}
 	else
@@ -118,6 +118,7 @@ void YAFinterface::initGUI()
 	char buf2[255];
 
 	data = (((YAFScene*) scene)->getData());
+	game = data->getGame();
 
 	//------------------------------------- LIGHTS ------------------------------
 
@@ -190,10 +191,39 @@ void YAFinterface::initGUI()
 
 
 
+	//------------------------------ Server ------------------------------------
+
 	GLUI_Panel *varPanel4= addPanel("Servidor", 1);
 	this->addColumn();
 
 	b4 = addButtonToPanel(varPanel4,"stop",4);
+	b5 = addButtonToPanel(varPanel4,"StartGame",7);
+
+
+	//------------------------------- Game Dificulty ----------------------------------
+
+	GLUI_Panel *varPanel5 = addPanel("Difficulty", 1);
+	//this->addColumn();
+
+	GLUI_RadioGroup * radio_group5 = addRadioGroupToPanel(varPanel5, &grupo5,5);
+
+
+	mode1 = addRadioButtonToGroup(radio_group5,"Easy");
+	mode2 = addRadioButtonToGroup(radio_group5,"Medium");
+	mode3 = addRadioButtonToGroup(radio_group5,"Hard");
+
+	radio_group5->set_selected(0);
+	//------------------------------- Game Mode -------------------------------------
+
+	GLUI_Panel *varPanel6 = addPanel("Mode", 1);
+	//this->addColumn();
+
+	list_group2 = addListboxToPanel(varPanel6,"Mode",&grupo6,6);
+
+	list_group2->add_item(1,"Player vs Player");
+	list_group2->add_item(2,"Player vs Computer");
+	list_group2->add_item(3,"Computer vs Player");
+	list_group2->add_item(4,"Computer vs Computer");
 }
 
 
@@ -221,8 +251,22 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 	case 4:
 		{
 			data->getGame()->endGame();
-/*			(data->getSocket())->quit();*/
-
+			/*			(data->getSocket())->quit();*/
+			break;
+		}
+	case 5:
+		{
+			updateDifficulty();
+			break;
+		}
+	case 6:
+		{
+			updateMode();
+			break;
+		}
+	case 7:
+		{
+			data->getGame()->startGame();
 		}
 	}
 }
@@ -266,6 +310,32 @@ void YAFinterface::updateCameras(){
 			((YAFScene*) scene)->setActiveCamera(iter->first);
 		}
 		k++;
+	}
+
+}
+
+void YAFinterface::updateDifficulty(){
+	if (mode1->active)
+		game->setDificulty(1);
+	else if (mode2->active)
+		game->setDificulty(2);
+	else
+		game->setDificulty(3);
+}
+
+void YAFinterface::updateMode(){
+
+	if(list_group2->get_int_val() == 1){
+		game->setMode(1);
+	}
+	else if (list_group2->get_int_val() == 2){
+		game->setMode(2);
+	}
+	else if (list_group2->get_int_val() == 3){
+		game->setMode(3);
+	}
+	else {
+		game->setMode(4);
 	}
 
 }

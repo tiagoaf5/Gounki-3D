@@ -9,17 +9,20 @@ class YAFinterface: public CGFinterface
 private:
 	int light1,light2,light3,light4,light5;
 	int testVar;
-	int grupo,grupo2,grupo3;
+	int grupo,grupo2,grupo3,grupo5,grupo6;
 	GLUI_RadioButton *b1;
 	GLUI_RadioButton *b2;
 	GLUI_RadioButton *b3;
-	GLUI_Listbox * list_group;
+	GLUI_RadioButton *mode1,*mode2,*mode3,*mode4;
+	GLUI_Listbox * list_group, *list_group2;
 	GLUI_Button *b4;
+	GLUI_Button *b5;
 	int li[7];
 	int size;
 	int pos_default;
 
 	Data *data;
+	Game *game;
 	map<string,CGFcamera*> cam;
 
 public:
@@ -33,6 +36,8 @@ public:
 	virtual void processMouse(int button, int state, int x, int y);	
 	void performPicking(int x, int y);
 	void processHits(GLint hits, GLuint buffer[]);
+	void updateDifficulty();
+	void updateMode();
 };
 
 
