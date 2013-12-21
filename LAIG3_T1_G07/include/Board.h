@@ -9,10 +9,12 @@
 
 #include "CGFappearance.h"
 
+#include "Move.h"
+
 #include <vector>
 #include <string>
-
 #include <sstream>
+#include <stack>
 
 using namespace std;
 
@@ -24,10 +26,14 @@ class Board
 	Piece * selectedPiece;
 	int selectedX;
 	int selectedY;
+
 	vector<vector<Piece *>> board;
 
+	stack<Move *> moves;
+		
 	void generateBoard();
 	vector<Piece *> buildRow(int player, string odd);
+	void saveMove(int x1,int y1, int x2, int y2);
 public:
 	Board(CGFappearance * black, CGFappearance * white);
 	void draw();
@@ -35,6 +41,7 @@ public:
 	bool selectPlace(int x, int y, int player);
 	bool removeSelection(int y, int x);
 	int move(int y1, int x1, int y2, int x2);
+	bool pop();
 	
 };
 

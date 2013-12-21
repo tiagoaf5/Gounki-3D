@@ -198,6 +198,7 @@ void YAFinterface::initGUI()
 
 	b4 = addButtonToPanel(varPanel4,"stop",4);
 	b5 = addButtonToPanel(varPanel4,"StartGame",7);
+	b6 = addButtonToPanel(varPanel4,"Undo",8);
 
 
 	//------------------------------- Game Dificulty ----------------------------------
@@ -267,6 +268,12 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 	case 7:
 		{
 			data->getGame()->startGame();
+			break;
+		}
+	case 8:
+		{
+			data->getGame()->pop();
+			break;
 		}
 	}
 }

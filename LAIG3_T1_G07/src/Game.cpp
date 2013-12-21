@@ -57,17 +57,31 @@ void Game::draw()
 
 bool Game::play(int x, int y)
 {
+	printf("Mode: %d\n", mode);
+
+	if(!started)
+	{
+		printf("not started\n");
+		return false;
+	}
+		
+
 	bool val = false;
+
 	switch (mode)
 	{
 	case 1:
 		val = pVp(x,y);
+		break;
 	case 2:
 		val = pVc(x,y);
+		break;
 	case 3:
 		val = cVp(x,y);
+		break;
 	case 4:
 		val = cVc();
+		break;
 	}
 	return val;
 }
@@ -114,6 +128,7 @@ bool Game::move(int player, int x, int y)
 
 void Game::endGame()
 {
+	started = false;
 	socket->quit();
 }
 
@@ -125,6 +140,9 @@ void Game::setDificulty(int difficulty)
 void Game::setMode(int mode)
 {
 	this->mode = mode;
+
+	if(mode == 3 && started)
+		cVp(-1,-1);
 }
 
 void Game::startGame()
@@ -132,13 +150,14 @@ void Game::startGame()
 	initBoard();
 	started = true;
 	printf("Mode: %d\nDifficulty: %d\n", mode,difficulty);
+
+	if(mode == 3)
+		cVp(-1,-1);
 }
 
 bool Game::pVp(int x, int y)
 {
-	if(!started)
-		return false;
-
+	printf("<pvp>\n");
 	if (!selected)
 		return select(x,y);
 	else
@@ -176,11 +195,47 @@ bool Game::pVc(int x, int y)
 }
 bool Game::cVp(int x, int y)
 {
+	if( x == -1 && y == -1 && activePlayer == 2)
+		return false;
+
+	int a,b,c,d;
+
+
+	if (activePlayer == 2)
+	{
+		if (!selected)
+			return select(x,y);
+		else
+		{
+			if(handleSelection(x, y))
+				return cVp(-1,-1); // to let the PC play
+			else
+				return false;
+		}
+
+	}
+	else
+	{
+		getPcMove(a,b,c,d);
+		printf("move %d %d to %d %d\n",a,b,c,d);
+		board->selectPlace(a-1,b-1, activePlayer);
+		board->move(a-1,b-1,c-1,d-1);
+		activePlayer = activePlayer % 2 + 1;
+	}
+
 	return true;
 }
 
 bool Game::cVc()
 {
+	int a,b,c,d;
+
+	getPcMove(a,b,c,d);
+	printf("move %d %d to %d %d\n",a,b,c,d);
+	board->selectPlace(a-1,b-1, activePlayer);
+	board->move(a-1,b-1,c-1,d-1);
+	activePlayer = activePlayer % 2 + 1;
+
 	return true;
 }
 
@@ -235,4 +290,9 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 	char abc[200];
 	socket->receiveData(abc);
 	sscanf(abc,"%d-%d-%d-%d.",&x1,&y1,&x2,&y2);
+}
+
+bool Game::pop()
+{
+	return board->pop();
 }

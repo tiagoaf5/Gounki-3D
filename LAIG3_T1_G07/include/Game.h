@@ -6,12 +6,11 @@
 #include <sstream>
 #include <iostream>
 
+
 #include "Socket.h"
 #include "Board.h"
 #include "CGFappearance.h"
 #include "MyAppearance.h"
-
-
 
 
 class Game
@@ -36,6 +35,8 @@ private:
 	bool select(int x, int y);
 	bool handleSelection( int x, int y);
 	void getPcMove(int &x1, int &y1, int &x2, int &y2);
+	void saveMove(int x1,int y1, int x2, int y2);
+
 
 public:
 	Game(CGFappearance * black, CGFappearance * white);
@@ -56,12 +57,10 @@ public:
 
 	//game modes
 	bool pVp(int x, int y);
-
-	
-
 	bool pVc(int x, int y);
 	bool cVp(int x, int y);
 	bool cVc();
+	bool pop();
 };
 
 #endif

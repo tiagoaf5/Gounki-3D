@@ -164,8 +164,11 @@ int Board::move(int y1, int x1, int y2, int x2)
 {
 	int eaten = 0;
 
+	saveMove(x1,y1,x2,y2);
+
 	if(board[x2][y2] != NULL)
 	{
+
 		if(board[x2][y2]->getPlayer() == selectedPiece->getPlayer())
 		{
 			board[x2][y2]->addPieces(selectedPiece->getPieces());
@@ -180,5 +183,49 @@ int Board::move(int y1, int x1, int y2, int x2)
 		board[x2][y2] = selectedPiece;
 	
 	board[x1][y1] = NULL;
+
+	//save move
+	
 	return eaten;
+}
+
+void Board::saveMove(int x1,int y1, int x2, int y2)
+{
+	Piece * p3 = NULL;
+	Piece * p4 = NULL;
+
+	if(board[x1][y1] != NULL)
+		p3 = new Piece(*board[x1][y1]);
+	else
+		p3 = NULL;
+
+	if(board[x2][y2] != NULL)
+		p4 = new Piece(*board[x2][y2]);
+	else
+		p4 = NULL;
+	
+	Move * m = new Move(x1,y1,x2,y2,p3,p4);
+	moves.push(m);
+}
+
+bool Board::pop()
+{
+	if (moves.empty())
+		return false;
+
+	Move * m = moves.top();
+	int x1,y1,x2,y2;
+
+	Piece * p1;
+	Piece * p2;
+
+	p1 = m->getOrigin(x1,y1);
+	p2 = m->getDestinantion(x2,y2);
+
+	board[x1][y1] = p1;
+	board[x2][y2] = p2;
+
+	moves.pop();
+
+	return true;
 }

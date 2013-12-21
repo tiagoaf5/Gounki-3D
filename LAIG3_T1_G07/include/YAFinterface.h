@@ -17,6 +17,7 @@ private:
 	GLUI_Listbox * list_group, *list_group2;
 	GLUI_Button *b4;
 	GLUI_Button *b5;
+	GLUI_Button *b6;
 	int li[7];
 	int size;
 	int pos_default;

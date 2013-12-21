@@ -18,6 +18,7 @@ using std::exception;
 
 int main(int argc, char* argv[]) 
 {
+
 	YAFScene *a1;
 	if (argc > 1)
 		a1 = new YAFScene(argv[1]);
