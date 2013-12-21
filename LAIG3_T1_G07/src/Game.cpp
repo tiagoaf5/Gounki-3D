@@ -294,5 +294,11 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 
 bool Game::pop()
 {
-	return board->pop();
+	if(board->pop())
+	{
+		activePlayer = activePlayer % 2 + 1;
+		return true;
+	}
+
+	return false;
 }
