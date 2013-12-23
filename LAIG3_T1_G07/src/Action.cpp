@@ -41,11 +41,11 @@ void Action::generateAnimation()
 	p1.push_back(BASE_Z + HALF_LENGTH * y1); 
 
 	p2.push_back(BASE_X + HALF_LENGTH * x1); 
-	p2.push_back(BASE_Y + 0.5);
+	p2.push_back(BASE_Y + 0.3);
 	p2.push_back(BASE_Z + HALF_LENGTH * y1);
 
 	p3.push_back(BASE_X + HALF_LENGTH * x2); 
-	p3.push_back(BASE_Y + 0.5);
+	p3.push_back(BASE_Y + 0.3);
 	p3.push_back(BASE_Z + HALF_LENGTH * y2);
 
 	p4.push_back(BASE_X + HALF_LENGTH * x2); 

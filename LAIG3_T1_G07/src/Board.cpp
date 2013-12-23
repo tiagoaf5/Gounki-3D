@@ -163,8 +163,9 @@ bool Board::removeSelection(int y, int x)
 int Board::move(int y1, int x1, int y2, int x2)
 {
 	int eaten = 0;
-	addAction(x1,y1,x2,y2);
 	saveMove(x1,y1,x2,y2);
+	addAction(x1,y1,x2,y2);
+	
 
 	if(board[x2][y2] != NULL)
 	{
