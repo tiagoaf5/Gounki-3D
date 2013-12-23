@@ -3,6 +3,7 @@
 
 #include "PieceBase.h"
 #include "CGFappearance.h"
+#include "LinearAnimation.h"
 
 #include <string>
 #include <vector>
@@ -15,6 +16,8 @@ class Piece
 	int player;
 	bool selected;
 	vector<PieceBase *> pieces;
+	bool animated;
+	LinearAnimation * anim;
 public:
 	Piece(int player, CGFappearance * appearance);
 	Piece(int player, PieceBase * piece, CGFappearance * appearance);
@@ -23,6 +26,7 @@ public:
 	void addPieces(vector<PieceBase *> p);
 	vector<PieceBase *> getPieces();
 	int getPlayer() const;
+	void setAnimation(LinearAnimation * anim);
 };
 
 

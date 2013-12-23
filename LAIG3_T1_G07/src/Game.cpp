@@ -6,7 +6,7 @@ Game::Game(CGFappearance * black, CGFappearance * white)
 {
 	blackAppearance = black;
 	whiteAppearance = white;
-	initSocket();
+	//initSocket();
 	//initBoard();
 	
 	board = NULL;
@@ -18,6 +18,7 @@ Game::Game(CGFappearance * black, CGFappearance * white)
 	selectedPos.second = -1;
 	activePlayer = 1;
 	started = false;
+	endOfGame = false;
 }
 
 void Game::initSocket()
@@ -59,7 +60,7 @@ bool Game::play(int x, int y)
 {
 	printf("Mode: %d\n", mode);
 
-	if(!started)
+	if(!started || endOfGame)
 	{
 		printf("not started\n");
 		return false;
@@ -83,6 +84,8 @@ bool Game::play(int x, int y)
 		val = cVc();
 		break;
 	}
+
+	checkEndofGame();
 	return val;
 }
 
@@ -147,8 +150,13 @@ void Game::setMode(int mode)
 
 void Game::startGame()
 {
+	if(!started)
+		initSocket();
+
 	initBoard();
+	endOfGame = false;
 	started = true;
+	activePlayer = 1;
 	printf("Mode: %d\nDifficulty: %d\n", mode,difficulty);
 
 	if(mode == 3)
@@ -167,7 +175,9 @@ bool Game::pVp(int x, int y)
 bool Game::pVc(int x, int y)
 {
 	int a,b,c,d;
-
+	
+	if( x == -1 && y == -1 && activePlayer == 1)
+		return false;
 	
 	if (activePlayer == 1)
 	{
@@ -189,7 +199,13 @@ bool Game::pVc(int x, int y)
 			
 	}
 	else
-		return false;
+	{
+		getPcMove(a,b,c,d);
+		printf("move %d %d to %d %d\n",a,b,c,d);
+		board->selectPlace(a-1,b-1, activePlayer);
+		board->move(a-1,b-1,c-1,d-1);
+		activePlayer = activePlayer % 2 + 1;
+	}
 
 	return true;
 }
@@ -297,8 +313,31 @@ bool Game::pop()
 	if(board->pop())
 	{
 		activePlayer = activePlayer % 2 + 1;
+		//play(-1,-1);
 		return true;
 	}
 
+	return false;
+}
+
+int Game::checkEndofGame()
+{
+	stringstream ss;
+
+	ss << "check_end_of_game(" << board->getFormatted() << ").\n";
+
+	socket->sendData((char *)ss.str().c_str(), ss.str().size());
+	char abc[100];
+
+	socket->receiveData(abc);
+	printf("--->%s<---\n",abc);
+	
+	if(strcmp(abc,"no.") != 0)
+	{
+		printf("Won player %s\n", abc);
+		endOfGame = true;
+		return true;
+	}
+	
 	return false;
 }

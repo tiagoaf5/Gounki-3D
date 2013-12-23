@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const double PI  =3.141592653589793238462;
+const double PI=3.141592653589793238462;
 
 LinearAnimation::LinearAnimation(vector<vector<double>> points, double span): Animation()
 {
@@ -82,7 +82,11 @@ vector<double> LinearAnimation::getTangent(vector<double> p1, vector<double> p2,
 void LinearAnimation::handlerUpdate(unsigned long animT)
 {
 	if(animT >= span)
+	{
+		finished = true;
 		return;
+	}
+		
 
 	unsigned int i;
 

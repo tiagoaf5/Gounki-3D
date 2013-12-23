@@ -24,20 +24,19 @@ private:
 
 	int activePlayer;
 	bool started;
+	bool endOfGame;
 	int difficulty;  // 1 easy, 2 medium , 3 hard
 	int mode; // 1 P V P, 2 P V C , 3 C V P, 4 C V C 
 
 	CGFappearance * blackAppearance;
 	CGFappearance * whiteAppearance;
 
-
 	void initSocket();
 	bool select(int x, int y);
 	bool handleSelection( int x, int y);
 	void getPcMove(int &x1, int &y1, int &x2, int &y2);
 	void saveMove(int x1,int y1, int x2, int y2);
-
-
+	int checkEndofGame();
 public:
 	Game(CGFappearance * black, CGFappearance * white);
 	//socket

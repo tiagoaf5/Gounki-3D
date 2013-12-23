@@ -13,6 +13,7 @@ private:
 	virtual void init();
 protected:
 	float transforms[4][4];
+	bool finished;
 public:
 	Animation();
 	void update(unsigned long t);
@@ -20,6 +21,7 @@ public:
 	void stop();
 	virtual void handlerUpdate(unsigned long animT);
 	void applyTransforms();
+	bool isFinished() const;
 };
 
 

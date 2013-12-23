@@ -163,7 +163,7 @@ bool Board::removeSelection(int y, int x)
 int Board::move(int y1, int x1, int y2, int x2)
 {
 	int eaten = 0;
-
+	addAction(x1,y1,x2,y2);
 	saveMove(x1,y1,x2,y2);
 
 	if(board[x2][y2] != NULL)
@@ -228,4 +228,25 @@ bool Board::pop()
 	moves.pop();
 
 	return true;
+}
+
+void Board::addAction(int y1,int x1, int y2, int x2)
+{
+	Action * a = new Action(x1, y1, x2, y2,selectedPiece);
+	actions.push(a);
+}
+
+Action * Board::getAction()
+{
+	if(actions.empty())
+		return NULL;
+	else 
+	{
+		if(actions.front()->isFinished())
+			actions.pop();
+		else
+			return actions.front();
+
+		return getAction();
+	}
 }

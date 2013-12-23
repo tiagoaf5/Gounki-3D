@@ -5,6 +5,7 @@ Animation::Animation()
 {
 	doReset=true;
 	stopped = false;
+	finished = false;
 	//initialize transforms with identity matrix
 	glPushMatrix();
 	glLoadIdentity();
@@ -55,4 +56,9 @@ void Animation::handlerUpdate(unsigned long animT)
 void Animation::applyTransforms()
 {
 	glMultMatrixf(&transforms[0][0]);
+}
+
+bool Animation::isFinished() const
+{
+	return finished;
 }

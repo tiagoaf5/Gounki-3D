@@ -13,6 +13,7 @@ Piece::Piece(int player, CGFappearance * appearance)
 {
 	this->player = player;
 	this->appearance = appearance;
+	animated = false;
 }
 
 Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance)
@@ -20,6 +21,7 @@ Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance)
 	this->player = player;
 	this->appearance = appearance;
 	pieces.push_back(piece);
+	animated = false;
 }
 
 void Piece::draw()
@@ -27,10 +29,23 @@ void Piece::draw()
 	appearance->apply();
 	for (int i = 0; i < pieces.size(); i++)
 	{
-		glPushMatrix();
-		glTranslatef(0.025*i,0.025*i,0);
-		pieces[i]->draw();
-		glPopMatrix();
+		if(!animated)
+		{
+			glPushMatrix();
+			glTranslatef(0.025*i,0.025*i,0);
+			pieces[i]->draw();
+			glPopMatrix();
+		}
+		else
+		{
+			glPopMatrix();
+			glPushMatrix();
+			anim->applyTransforms();
+			glTranslatef(0.025*i,0.025*i,0);
+			pieces[i]->draw();
+			glPopMatrix();
+			glPushMatrix();
+		}
 	}
 }
 
@@ -81,4 +96,19 @@ vector<PieceBase *> Piece::getPieces()
 int Piece::getPlayer() const
 {
 	return player;
+}
+
+void Piece::setAnimation(LinearAnimation * anim)
+{
+	if(anim != NULL) 
+	{
+		this->anim = anim; 
+		animated = true;
+	}
+	else
+	{
+		this->anim = NULL;
+		animated = false;
+	}
+	
 }
