@@ -46,7 +46,7 @@ public:
 	bool removeSelection(int y, int x);
 	int move(int y1, int x1, int y2, int x2);
 	bool pop();
-	Action * getAction();
+	bool performAction(unsigned long t);
 };
 
 #endif

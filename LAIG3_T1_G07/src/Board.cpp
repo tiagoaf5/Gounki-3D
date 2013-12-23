@@ -162,11 +162,10 @@ bool Board::removeSelection(int y, int x)
 
 int Board::move(int y1, int x1, int y2, int x2)
 {
-	int eaten = 0;
 	saveMove(x1,y1,x2,y2);
 	addAction(x1,y1,x2,y2);
 	
-
+	/*
 	if(board[x2][y2] != NULL)
 	{
 
@@ -187,7 +186,8 @@ int Board::move(int y1, int x1, int y2, int x2)
 
 	//save move
 	
-	return eaten;
+	return eaten;*/
+	return 0;
 }
 
 void Board::saveMove(int x1,int y1, int x2, int y2)
@@ -237,8 +237,53 @@ void Board::addAction(int y1,int x1, int y2, int x2)
 	actions.push(a);
 }
 
-Action * Board::getAction()
+bool Board::performAction(unsigned long t)
 {
+	if(actions.empty())
+		return false;
+	
+	Action * a = actions.front();
+	
+	if(!a->hasStarted())
+		a->start();
+
+	Piece * p = a->getPiece();
+	int x1,x2,y1,y2;
+	int eaten = 0;
+
+	
+	a->getCoords(y1,x1,y2,x2);
+
+	if(a->getAlmostFinished())
+	{
+		if(board[x2][y2] != NULL)
+		{
+			if(board[x2][y2]->getPlayer() == p->getPlayer())
+			{
+				board[x2][y2]->addPieces(p->getPieces());
+			}
+			else
+			{
+				eaten = board[x2][y2]->getPieces().size();
+				board[x2][y2] = p;
+			}
+		}
+		else
+			board[x2][y2] = p;
+
+		board[x1][y1] = NULL;
+
+		actions.pop();
+
+	}
+	else
+	{
+		actions.front()->update(t);
+	}
+
+
+	return true;
+	/*
 	if(actions.empty())
 		return NULL;
 	else 
@@ -249,5 +294,6 @@ Action * Board::getAction()
 			return actions.front();
 
 		return getAction();
-	}
+	}*/
+
 }

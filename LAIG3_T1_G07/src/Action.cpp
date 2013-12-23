@@ -15,6 +15,7 @@ Action::Action(int x1,int y1,int x2, int y2, Piece * piece)
 
 	started = false;
 	finished = false;
+	almostFinished = false;
 
 	generateAnimation();
 }
@@ -58,7 +59,7 @@ void Action::generateAnimation()
 	points.push_back(p4);
 
 	animation = new LinearAnimation(points,2);
-	start();
+	//start();
 }
 
 
@@ -68,17 +69,44 @@ void Action::start()
 	piece->setAnimation(animation);
 }
 
-void Action::update(double t)
+void Action::update(unsigned long t)
 {
+	if(animation->getAlmostFinished())
+		almostFinished = true;
+
 	if(animation->isFinished())
 	{
 		finished = true;
 		piece->setAnimation(NULL);
 	}
-	animation->update(t);
+	else
+		animation->update(t);
 }
 
-bool Action::isFinished() const
+bool Action::hasFinished() const
 {
 	return finished;
+}
+
+bool Action::hasStarted() const
+{
+	return started;
+}
+
+void Action::getCoords(int &x1,int &y1, int &x2, int &y2) const
+{
+	x1 = this->x1;
+	y1 = this->y1;
+	x2 = this->x2;
+	y2 = this->y2;
+}
+
+Piece * Action::getPiece()
+{
+	return piece;
+}
+
+bool Action::getAlmostFinished() const 
+{
+	return almostFinished;
 }

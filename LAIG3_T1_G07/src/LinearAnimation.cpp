@@ -10,6 +10,7 @@ LinearAnimation::LinearAnimation(vector<vector<double>> points, double span): An
 {
 	this->points = points;
 	this->span = span * 1000;
+	almostFinished = false;
 	//this->span = span;
 	init();
 }
@@ -86,7 +87,8 @@ void LinearAnimation::handlerUpdate(unsigned long animT)
 		finished = true;
 		return;
 	}
-		
+	if(animT >= span - 100)
+		almostFinished = true;
 
 	unsigned int i;
 
@@ -152,4 +154,9 @@ void LinearAnimation::handlerUpdate(unsigned long animT)
 	glRotated(alfa,0,1,0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, &transforms[0][0]);
 	glPopMatrix();
+}
+
+bool LinearAnimation::getAlmostFinished() const
+{
+	return almostFinished;
 }

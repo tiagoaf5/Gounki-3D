@@ -13,10 +13,12 @@ private:
 	vector<double> time;
 	double speed;
 	double span;
+	bool almostFinished;
 	vector<double> getTangent(vector<double> p1, vector<double> p2, double *length);
 	void init();
 public:
 	LinearAnimation(vector<vector<double>> points, double span);
 	void handlerUpdate(unsigned long animT);
+	bool getAlmostFinished() const;
 };
 #endif

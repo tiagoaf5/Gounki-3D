@@ -11,12 +11,17 @@ class Action
 	Piece * piece;
 	bool started;
 	bool finished;
+	bool almostFinished;
 	LinearAnimation * animation;
 	void generateAnimation();
 public:
 	Action(int x1,int y1,int x2, int y2, Piece * piece);
 	void start();
-	void update(double t);
-	bool isFinished() const;
+	void update(unsigned long t);
+	bool hasStarted() const;
+	bool hasFinished() const;
+	bool getAlmostFinished() const;
+	void getCoords(int &x1,int &y1, int &x2, int &y2) const;
+	Piece * getPiece();
 };
 #endif

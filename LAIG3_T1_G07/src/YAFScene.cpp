@@ -1363,9 +1363,9 @@ void YAFScene::update(unsigned long t)
 		shaders[i]->update(t);
 	((myClock *)(data->getClock()))->update(t);
 	if(data->getGame()->getBoard() != NULL)
-		if(data->getGame()->getBoard()->getAction() != NULL)
+		if(data->getGame()->getBoard() != NULL)
 		{
-			data->getGame()->getBoard()->getAction()->update(t);
+			data->getGame()->getBoard()->performAction(t);
 			printf(".");
 		}
 }

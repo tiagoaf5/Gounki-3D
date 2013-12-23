@@ -33,18 +33,23 @@ serverLoop(Stream) :-
         flush_output(Stream),
         (ClientMsg == quit; ClientMsg == end_of_file), !.
 
+parse_input(check_end_of_game(Arg1), Answer) :-
+        check_end_of_game(Arg1, Answer).
+
 parse_input(comando(Arg1, Arg2), Answer) :-
         comando(Arg1, Arg2, Answer).
         
 parse_input(play(Arg1,Arg2,Arg3,Arg4,Arg5), Answer) :-
         play(Arg1, Arg2, Arg3, Arg4,Arg5, Answer).
 
+parse_input(pc_move(Arg1,Arg2,Arg3), Answer) :-
+        pc_move(Arg1, Arg2, Arg3, Answer),!.
+
 parse_input(quit, ok-bye) :- !.
                 
 comando(Arg1, Arg2, Answer) :-
         write(Arg1), nl, write(Arg2), nl,
         Answer = 5.
-
 
 
 %%%%%%%%%%%%%%%% Initial chooses %%%%%%%%%%%%%%%%
@@ -940,35 +945,15 @@ game_cycle(_, _) :-
 
 %%%%%%%%%%%%%%%% Doing Moves %%%%%%%%%%%%%%%%
 
-pc_move(N,1,B,NB) :-
-        write('PC '),
-        write(N),
-        write(' turn. '), nl,
-        write('waiting...'), nl,
+pc_move(N,1,B,Answer) :-
         get_list_of_moves(N,B, Moves),
         pc_move_random(Moves, [Xi,Yi,Xf,Yf]),
-        player_move_aux(N, Xi-Yi-Xf-Yf, B, NB),
-        sleep(3),
-        write(' - I want to move from '),
-        write(Xi-Yi),
-        write(' to '),
-        write(Xf-Yf), nl, nl, 
-        print_board(NB),!.
+        Answer = Xi-Yi-Xf-Yf.
 
-pc_move(N,2,B,NB) :-
-        write('PC '),
-        write(N),
-        write(' turn. '), nl,
-        write('waiting...'), nl,
+pc_move(N,2,B,Answer) :-
         best_move(N,B, Moves),
         pc_move_random(Moves, [Xi,Yi,Xf,Yf]),
-        player_move_aux(N, Xi-Yi-Xf-Yf, B, NB),
-        sleep(3),
-        write(' - I want to move from '),
-        write(Xi-Yi),
-        write(' to '),
-        write(Xf-Yf), nl, nl, 
-        print_board(NB),!.
+        Answer = Xi-Yi-Xf-Yf.
 
 pc_move(N,3,B,NB) :-
         write('PC '),
@@ -1071,24 +1056,27 @@ play_deploy(A-B-N, Coord0, Board, NewBoard) :-
         
 %%%%%%%%%%%%%%%% Checking game termination %%%%%%%%%%%%%%%%
 
-check_end_of_game(B) :-
+check_end_of_game(B,Answer) :-
          get_line(L1, 1, B),
          check_end_of_game_aux(L1,1),
-         winner(1).
+         Answer=1,!.
       
-check_end_of_game(B) :-
+check_end_of_game(B,Answer) :-
          length(B,N),
          get_line(L2, N, B),
          check_end_of_game_aux(L2,2),
-         winner(2).
+         Answer=2,!.
 
-check_end_of_game(B) :-
+check_end_of_game(B,Answer) :-
          check_end_of_game_nopieces(B,1), 
-         winner(2).
+         Answer=2,!.
 
-check_end_of_game(B) :-
+check_end_of_game(B,Answer) :-
          check_end_of_game_nopieces(B,2),
-         winner(1).
+         Answer=1,!.
+
+check_end_of_game(_,'no').
+
    
    
 check_end_of_game_aux([_-N|_],N).
