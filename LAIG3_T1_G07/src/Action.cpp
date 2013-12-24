@@ -15,7 +15,7 @@ Action::Action(int x1,int y1,int x2, int y2, Piece * piece)
 
 	started = false;
 	finished = false;
-	almostFinished = false;
+	almostFinished = 0;
 
 	generateAnimation();
 }
@@ -72,7 +72,8 @@ void Action::start()
 void Action::update(unsigned long t)
 {
 	if(animation->getAlmostFinished())
-		almostFinished = true;
+		if(almostFinished == 0)
+			almostFinished = 1;
 
 	if(animation->isFinished())
 	{
@@ -106,7 +107,11 @@ Piece * Action::getPiece()
 	return piece;
 }
 
-bool Action::getAlmostFinished() const 
+int Action::getAlmostFinished() 
 {
-	return almostFinished;
+	if (almostFinished == 0)
+		return 0;
+
+	almostFinished++;
+	return almostFinished-1;
 }

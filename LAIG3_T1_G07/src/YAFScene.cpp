@@ -1366,7 +1366,7 @@ void YAFScene::update(unsigned long t)
 		if(data->getGame()->getBoard() != NULL)
 		{
 			data->getGame()->getBoard()->performAction(t);
-			printf(".");
+			
 		}
 }
 

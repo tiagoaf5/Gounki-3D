@@ -41,7 +41,7 @@ void LinearAnimation::init()
 	}
 
 	speed = totalLength / span;
-
+/*
 	printf("Animation details:\nPoints:\n");
 	for(unsigned int i = 0; i < points.size(); i++)
 		printf("%i	(%f,%f,%f)\n",i,points[i][0],points[i][1],points[i][2]);
@@ -60,7 +60,7 @@ void LinearAnimation::init()
 	for(unsigned int i = 0; i < time.size(); i++)
 		printf("%i	%f\n",i,time[i]);
 
-	printf("\nSpeed: %f\n",speed);
+	printf("\nSpeed: %f\n",speed);*/
 }
 
 vector<double> LinearAnimation::getTangent(vector<double> p1, vector<double> p2, double *length)

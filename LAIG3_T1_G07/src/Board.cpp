@@ -16,10 +16,12 @@ Board::Board(CGFappearance * black, CGFappearance * white)
 	appearanceWhite = white;
 	selectedPiece = NULL;
 	generateBoard();
+	generateBoard(1);
 }
 
-void Board::generateBoard()
+void Board::generateBoard(int b)
 {
+
 	//generate lines with pieces
 	vector<Piece *> line0 = buildRow(2,"x");
 	vector<Piece *> line1 = buildRow(2,"o");
@@ -31,14 +33,27 @@ void Board::generateBoard()
 	//empty lines
 	for (int i = 0; i < SIZE; i++)
 		middle.push_back(NULL);
+	
+	if(b == 0)
+	{
+		board.push_back(line0);
+		board.push_back(line1);
+		for (int i = 0; i < SIZE - 4; i++)
+			board.push_back(middle);
 
-	board.push_back(line0);
-	board.push_back(line1);
-	for (int i = 0; i < SIZE - 4; i++)
-		board.push_back(middle);
+		board.push_back(line6);
+		board.push_back(line7);
+	}
+	else
+	{
+		board_aux.push_back(line0);
+		board_aux.push_back(line1);
+		for (int i = 0; i < SIZE - 4; i++)
+			board_aux.push_back(middle);
 
-	board.push_back(line6);
-	board.push_back(line7);
+		board_aux.push_back(line6);
+		board_aux.push_back(line7);
+	}
 }
 
 vector<Piece *> Board::buildRow(int player, string odd)
@@ -121,10 +136,15 @@ bool Board::selectPlace(int y, int x, int player)
 	return true;
 }
 
-string Board::getFormatted() const
+string Board::getFormatted(int b) const
 {
 	stringstream ss;
-	
+	vector<vector<Piece *>> board1;
+	if (b == 0)
+		board1 = board;
+	else
+		board1 = board_aux;
+
 	ss << "[";
 
 	for (int i = 0; i < SIZE; i++)
@@ -133,10 +153,10 @@ string Board::getFormatted() const
 
 		for (int j = 0; j < SIZE; j++)
 		{
-			if(board[i][j] == NULL)
+			if(board1[i][j] == NULL)
 				ss << "e";
 			else
-				ss << board[i][j]->getFormattedPiece();
+				ss << board1[i][j]->getFormattedPiece();
 
 			if(j < SIZE - 1)
 				ss << ",";
@@ -151,7 +171,7 @@ string Board::getFormatted() const
 	return ss.str();
 }
 
-bool Board::removeSelection(int y, int x)
+bool Board::removeSelection(int y, int x) //need review
 {
 	if(board[x][y] == NULL)
 		return false;
@@ -162,32 +182,32 @@ bool Board::removeSelection(int y, int x)
 
 int Board::move(int y1, int x1, int y2, int x2)
 {
+	//saves move in the stack
 	saveMove(x1,y1,x2,y2);
+	//adds action to the queue
 	addAction(x1,y1,x2,y2);
-	
-	/*
-	if(board[x2][y2] != NULL)
+
+	int eaten = 0;
+	if(board_aux[x2][y2] != NULL)
 	{
 
-		if(board[x2][y2]->getPlayer() == selectedPiece->getPlayer())
+		if(board_aux[x2][y2]->getPlayer() == board_aux[x1][y1]->getPlayer())
 		{
-			board[x2][y2]->addPieces(selectedPiece->getPieces());
+			board_aux[x2][y2]->addPieces(board_aux[x1][y1]->getPieces());
 		}
 		else
 		{
-			eaten = board[x2][y2]->getPieces().size();
-			board[x2][y2] = selectedPiece;
+			eaten = board_aux[x2][y2]->getPieces().size();
+			board_aux[x2][y2] = board_aux[x1][y1];
 		}
 	}
 	else
-		board[x2][y2] = selectedPiece;
+		board_aux[x2][y2] = board_aux[x1][y1];
 	
-	board[x1][y1] = NULL;
+	board_aux[x1][y1] = NULL;
 
-	//save move
 	
-	return eaten;*/
-	return 0;
+	return eaten;
 }
 
 void Board::saveMove(int x1,int y1, int x2, int y2)
@@ -223,8 +243,14 @@ bool Board::pop()
 	p1 = m->getOrigin(x1,y1);
 	p2 = m->getDestinantion(x2,y2);
 
+	Piece * p3 = new Piece(*p1);
+	Piece * p4 = new Piece(*p2);
+
 	board[x1][y1] = p1;
 	board[x2][y2] = p2;
+
+	board_aux[x1][y1] = p3;
+	board_aux[x2][y2] = p4;
 
 	moves.pop();
 
@@ -250,16 +276,18 @@ bool Board::performAction(unsigned long t)
 	Piece * p = a->getPiece();
 	int x1,x2,y1,y2;
 	int eaten = 0;
-
+	int almost = a->getAlmostFinished();
 	
 	a->getCoords(y1,x1,y2,x2);
+	printf("%d, ",almost);
 
-	if(a->getAlmostFinished())
+	if(almost == 1)
 	{
 		if(board[x2][y2] != NULL)
 		{
 			if(board[x2][y2]->getPlayer() == p->getPlayer())
 			{
+				printf("abc\n");
 				board[x2][y2]->addPieces(p->getPieces());
 			}
 			else
@@ -273,14 +301,15 @@ bool Board::performAction(unsigned long t)
 
 		board[x1][y1] = NULL;
 
-		actions.pop();
-
+		//actions.pop();
 	}
-	else
+	else// if(a->getAlmostFinished() == 0)
 	{
 		actions.front()->update(t);
 	}
 
+	if(a->hasFinished())
+		actions.pop();
 
 	return true;
 	/*

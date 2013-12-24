@@ -30,18 +30,19 @@ class Board
 	int selectedY;
 
 	vector<vector<Piece *>> board;
+	vector<vector<Piece *>> board_aux;
 
 	stack<Move *> moves;
 	queue<Action *> actions;
 		
-	void generateBoard();
+	void generateBoard(int b = 0);
 	vector<Piece *> buildRow(int player, string odd);
 	void saveMove(int x1,int y1, int x2, int y2);
 	void addAction(int x1,int y1, int x2, int y2);
 public:
 	Board(CGFappearance * black, CGFappearance * white);
 	void draw();
-	string getFormatted() const;
+	string getFormatted(int b = 0) const;
 	bool selectPlace(int x, int y, int player);
 	bool removeSelection(int y, int x);
 	int move(int y1, int x1, int y2, int x2);

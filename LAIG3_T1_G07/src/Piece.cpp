@@ -38,6 +38,7 @@ void Piece::draw()
 		}
 		else
 		{
+			printf(".");
 			glPopMatrix();
 			glPushMatrix();
 			anim->applyTransforms();
@@ -64,6 +65,7 @@ string Piece::getFormattedPiece()
 
 void Piece::addPieces(vector<PieceBase *> p)
 {
+	printf(";\n");
 	for(int i = 0; i < p.size(); i++)
 		pieces.push_back(p[i]);
 

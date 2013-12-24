@@ -93,7 +93,7 @@ bool Game::isValidMove(int x, int y)
 {
 	stringstream ss;
 
-	ss << "play(" <<selectedPos.first+1 << "," << selectedPos.second +1 << "," << x +1<< ","<< y +1 << "," << board->getFormatted() << ").\n";
+	ss << "play(" <<selectedPos.first+1 << "," << selectedPos.second +1 << "," << x +1<< ","<< y +1 << "," << board->getFormatted(1) << ").\n";
 
 	string val = ss.str();
 	socket->sendData((char *)val.c_str(), val.size());
@@ -298,7 +298,7 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 {
 	stringstream ss;
 
-	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted() << ").\n";
+	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted(1) << ").\n";
 
 	socket->sendData((char *)(ss.str().c_str()), ss.str().size());
 	
