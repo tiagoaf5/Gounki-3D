@@ -154,6 +154,7 @@ void Game::startGame()
 		initSocket();
 
 	initBoard();
+
 	endOfGame = false;
 	started = true;
 	activePlayer = 1;
@@ -283,7 +284,7 @@ bool Game::handleSelection(int x, int y)
 		theReturn = false;
 		if(isValidMove(x,y))
 		{
-			board->move(selectedPos.first, selectedPos.second,x,y);
+			string eaten = board->move(selectedPos.first, selectedPos.second,x,y);
 			theReturn = true;
 			//change player
 			activePlayer = activePlayer % 2 + 1;

@@ -180,14 +180,14 @@ bool Board::removeSelection(int y, int x) //need review
 	return true;
 }
 
-int Board::move(int y1, int x1, int y2, int x2)
+string Board::move(int y1, int x1, int y2, int x2)
 {
 	//saves move in the stack
 	saveMove(x1,y1,x2,y2);
 	//adds action to the queue
 	addAction(x1,y1,x2,y2);
 
-	int eaten = 0;
+	string eaten;
 	if(board_aux[x2][y2] != NULL)
 	{
 
@@ -197,7 +197,7 @@ int Board::move(int y1, int x1, int y2, int x2)
 		}
 		else
 		{
-			eaten = board_aux[x2][y2]->getPieces().size();
+			eaten = board_aux[x2][y2]->getFormattedPiece();
 			board_aux[x2][y2] = board_aux[x1][y1];
 		}
 	}
@@ -233,7 +233,6 @@ bool Board::pop()
 {
 	if (moves.empty())
 		return false;
-
 	if(!actions.empty())
 		return false;
 

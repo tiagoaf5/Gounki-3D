@@ -45,7 +45,7 @@ public:
 	string getFormatted(int b = 0) const;
 	bool selectPlace(int x, int y, int player);
 	bool removeSelection(int y, int x);
-	int move(int y1, int x1, int y2, int x2);
+	string move(int y1, int x1, int y2, int x2);
 	bool pop();
 	bool performAction(unsigned long t);
 };
