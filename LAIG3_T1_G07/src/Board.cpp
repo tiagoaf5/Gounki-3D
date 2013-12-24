@@ -234,6 +234,9 @@ bool Board::pop()
 	if (moves.empty())
 		return false;
 
+	if(!actions.empty())
+		return false;
+
 	Move * m = moves.top();
 	int x1,y1,x2,y2;
 
@@ -243,8 +246,12 @@ bool Board::pop()
 	p1 = m->getOrigin(x1,y1);
 	p2 = m->getDestinantion(x2,y2);
 
-	Piece * p3 = new Piece(*p1);
-	Piece * p4 = new Piece(*p2);
+	Piece * p3 = NULL;
+	if (p1 != NULL)
+		p3 = new Piece(*p1);
+	Piece * p4 = NULL; 
+	if(p2 != NULL)
+		p4 = new Piece(*p2);
 
 	board[x1][y1] = p1;
 	board[x2][y2] = p2;

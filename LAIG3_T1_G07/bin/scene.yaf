@@ -61,6 +61,8 @@
 		<texture id="tx_madeira" file="../data/dark_wood.jpg"/>
     	<texture id="tx_white_piece" file="../data/white.png" /> 
 		<texture id="tx_black_piece" file="../data/black.png" /> 
+		<texture id="tx_white_piece1" file="../data/branca1.jpg" /> 
+		<texture id="tx_black_piece1" file="../data/preta1.jpg" /> 
 	</textures> 
 
     <appearances> 
@@ -178,9 +180,9 @@
             diffuse="0.8 0.8 0.8 1" 
             specular="0.8 0.8 0.8 1" 
             shininess="0.9"
-			textureref="tx_agua" 
+			textureref="tx_white_piece1"  
             texlength_s="1" 
-            texlength_t="1"	/> 
+            texlength_t="1"	/> <!-- agua -->
            <!-- emissive="0 0 0 1" 
             ambient="1 0.980392 0.803922 1" 
             diffuse="1 0.980392 0.803922 1" 
@@ -194,11 +196,11 @@
 			emissive="0 0 0 1" 
             ambient="0.8 0.8 0.8 1" 
             diffuse="0.8 0.8 0.8 1" 
-            specular="0.1 0.1 0.1 1" 
+            specular="0.8 0.8 0.8 1" 
             shininess="0.9"
-			textureref="tx_chama" 
+			textureref="tx_black_piece1" 
             texlength_s="1" 
-            texlength_t="1"	/>
+            texlength_t="1"	/> <!-- chama -->
            <!-- emissive="0 0 0 1" 
             ambient=" 0.36078  0.25098  0.20000 1" 
             diffuse=" 0.36078  0.25098  0.20000 1" 
