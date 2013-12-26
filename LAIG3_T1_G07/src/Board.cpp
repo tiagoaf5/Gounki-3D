@@ -10,10 +10,11 @@
 #include <iostream>
 using namespace std;
 
-Board::Board(CGFappearance * black, CGFappearance * white)
+Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
 {
 	appearanceBlack = black;
 	appearanceWhite = white;
+	appearanceSelected = selecteda;
 	selectedPiece = NULL;
 	generateBoard();
 	generateBoard(1);
@@ -84,7 +85,7 @@ vector<Piece *> Board::buildRow(int player, string odd)
 			else
 				base = new PieceCircle();
 		}
-		pieces.push_back(new Piece(player,base,app));
+		pieces.push_back(new Piece(player,base,app,appearanceSelected));
 	}
 
 	return pieces;
@@ -129,7 +130,10 @@ bool Board::selectPlace(int y, int x, int player)
 		return false;
 	
 	if(board[x][y]->getPlayer() == player)
+	{
 		selectedPiece = board[x][y];
+		selectedPiece->select();
+	}
 	else 
 		return false;
 
@@ -173,6 +177,7 @@ string Board::getFormatted(int b) const
 
 bool Board::removeSelection(int y, int x) //need review
 {
+	selectedPiece->unselect();
 	if(board[x][y] == NULL)
 		return false;
 	else
@@ -284,11 +289,13 @@ bool Board::performAction(unsigned long t)
 	int eaten = 0;
 	int almost = a->getAlmostFinished();
 	
+	
 	a->getCoords(y1,x1,y2,x2);
 	printf("%d, ",almost);
 
 	if(almost == 1)
 	{
+		p->unselect();
 		if(board[x2][y2] != NULL)
 		{
 			if(board[x2][y2]->getPlayer() == p->getPlayer())

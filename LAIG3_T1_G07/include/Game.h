@@ -30,6 +30,7 @@ private:
 
 	CGFappearance * blackAppearance;
 	CGFappearance * whiteAppearance;
+	CGFappearance * selectedAppearance;
 
 	void initSocket();
 	bool select(int x, int y);
@@ -38,7 +39,7 @@ private:
 	void saveMove(int x1,int y1, int x2, int y2);
 	int checkEndofGame();
 public:
-	Game(CGFappearance * black, CGFappearance * white);
+	Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda);
 	//socket
 	Socket * getSocket() const;
 	//board

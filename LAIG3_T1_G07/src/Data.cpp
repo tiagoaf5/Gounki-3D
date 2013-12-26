@@ -612,8 +612,9 @@ void Data::initGame()
 {
 	MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
 	MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
+	MyAppearance * app3 = appearancesMap.find("ap_selected_piece")->second;
 
-	game = new Game(app2,app1);
+	game = new Game(app2,app1,app3);
 }
 
 

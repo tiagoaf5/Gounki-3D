@@ -9,24 +9,32 @@
 #include <iostream>
 using namespace std;
 
-Piece::Piece(int player, CGFappearance * appearance)
+Piece::Piece(int player, CGFappearance * appearance, CGFappearance * selectedAppearanca)
 {
 	this->player = player;
 	this->appearance = appearance;
+	this->selectedAppearance = selectedAppearanca;
 	animated = false;
+	selected = false;
 }
 
-Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance)
+Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappearance * selectedAppearanca)
 {
 	this->player = player;
 	this->appearance = appearance;
+	this->selectedAppearance = selectedAppearanca;
 	pieces.push_back(piece);
 	animated = false;
+	selected = false;
 }
 
 void Piece::draw()
 {
-	appearance->apply();
+	if(!selected)
+		appearance->apply();
+	else
+		selectedAppearance->apply();
+
 	for (int i = 0; i < pieces.size(); i++)
 	{
 		if(!animated)
@@ -38,6 +46,7 @@ void Piece::draw()
 		}
 		else
 		{
+			selected = false;
 			printf(".");
 			glPopMatrix();
 			glPushMatrix();
@@ -113,4 +122,14 @@ void Piece::setAnimation(LinearAnimation * anim)
 		animated = false;
 	}
 	
+}
+
+void Piece::select()
+{
+	selected = true;
+}
+
+void Piece::unselect()
+{
+	selected = false;
 }

@@ -25,6 +25,7 @@ class Board
 {
 	CGFappearance * appearanceBlack;
 	CGFappearance * appearanceWhite;
+	CGFappearance * appearanceSelected;
 	Piece * selectedPiece;
 	int selectedX;
 	int selectedY;
@@ -40,7 +41,7 @@ class Board
 	void saveMove(int x1,int y1, int x2, int y2);
 	void addAction(int x1,int y1, int x2, int y2);
 public:
-	Board(CGFappearance * black, CGFappearance * white);
+	Board(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda);
 	void draw();
 	string getFormatted(int b = 0) const;
 	bool selectPlace(int x, int y, int player);

@@ -2,10 +2,11 @@
 
 using namespace std;
 
-Game::Game(CGFappearance * black, CGFappearance * white)
+Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
 {
 	blackAppearance = black;
 	whiteAppearance = white;
+	selectedAppearance = selecteda;
 	//initSocket();
 	//initBoard();
 	
@@ -34,7 +35,7 @@ Socket * Game::getSocket() const
 
 void Game::initBoard()
 {
-	board = new Board(blackAppearance,whiteAppearance);
+	board = new Board(blackAppearance,whiteAppearance,selectedAppearance);
 }
 
 Board * Game::getBoard()
@@ -289,8 +290,15 @@ bool Game::handleSelection(int x, int y)
 			//change player
 			activePlayer = activePlayer % 2 + 1;
 			printf("2. %d\n", activePlayer);
+			selected = false;
 		}
-		selected = false;
+		else
+		{
+			selected = false;
+			board->removeSelection(x,y); 	//tell board nothing is selected
+			theReturn = false;
+		}
+		
 	}
 	return theReturn;
 }

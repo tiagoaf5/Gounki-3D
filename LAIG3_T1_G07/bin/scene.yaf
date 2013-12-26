@@ -63,6 +63,7 @@
 		<texture id="tx_black_piece" file="../data/black.png" /> 
 		<texture id="tx_white_piece1" file="../data/branca1.jpg" /> 
 		<texture id="tx_black_piece1" file="../data/preta1.jpg" /> 
+		<texture id="tx_selected_piece" file="../data/gold.png" /> 
 	</textures> 
 
     <appearances> 
@@ -191,6 +192,16 @@
 			textureref="tx_chama" 
             texlength_s="1" 
             texlength_t="1"	/> -->
+			
+		<appearance id="ap_selected_piece" 
+			emissive="0.1 0.1 0.1 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.5 0.5 0.5 1" 
+            specular="0.8 0.8 0.8 1" 
+            shininess="0.9"
+			textureref="tx_selected_piece"  
+            texlength_s="1" 
+            texlength_t="1"	/>
 			
 		<appearance id="ap_black_piece" 
 			emissive="0 0 0 1" 
