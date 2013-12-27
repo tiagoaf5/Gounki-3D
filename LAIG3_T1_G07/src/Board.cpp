@@ -24,7 +24,6 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 	appearanceSelected = selecteda;
 	selectedPiece = NULL;
 	generateBoard();
-	generateBoard(1);
 
 	PieceCircle *pc1;
 	PieceSquare *ps1;
@@ -94,7 +93,7 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 	}
 }
 
-void Board::generateBoard(int b)
+void Board::generateBoard()
 {
 
 	//generate lines with pieces
@@ -109,8 +108,6 @@ void Board::generateBoard(int b)
 	for (int i = 0; i < SIZE; i++)
 		middle.push_back(NULL);
 
-	if(b == 0)
-	{
 		board.push_back(line0);
 		board.push_back(line1);
 		for (int i = 0; i < SIZE - 4; i++)
@@ -118,17 +115,7 @@ void Board::generateBoard(int b)
 
 		board.push_back(line6);
 		board.push_back(line7);
-	}
-	else
-	{
-		board_aux.push_back(line0);
-		board_aux.push_back(line1);
-		for (int i = 0; i < SIZE - 4; i++)
-			board_aux.push_back(middle);
 
-		board_aux.push_back(line6);
-		board_aux.push_back(line7);
-	}
 }
 
 vector<Piece *> Board::buildRow(int player, string odd)
@@ -241,14 +228,16 @@ bool Board::selectPlace(int y, int x, int player)
 	printf("Selecting %d %d\n",x,y);
 	}
 	return true;*/
-
+	if(!actions.empty())
+		return false;
 
 	if (board[x][y] == NULL)
 		return false;
 
 	if(board[x][y]->getPlayer() == player || player == 99)
 	{
-		selectedPiece = board[x][y]; ///PROBLEMA ESTÁ NA PEÇA SELECIONADA
+		selectedPiece = board[x][y]; ///PROBLEMA ESTÁ NA PEÇA SELECIONADA 
+		//imaginemos que a peça é diferente no board aux já, dá asneira
 		selectedPiece->select();
 	}
 	else 
@@ -257,14 +246,9 @@ bool Board::selectPlace(int y, int x, int player)
 	return true;
 }
 
-string Board::getFormatted(int b) const
+string Board::getFormatted() const
 {
 	stringstream ss;
-	vector<vector<Piece *>> board1;
-	if (b == 0)
-		board1 = board;
-	else
-		board1 = board_aux;
 
 	ss << "[";
 
@@ -274,10 +258,10 @@ string Board::getFormatted(int b) const
 
 		for (int j = 0; j < SIZE; j++)
 		{
-			if(board1[i][j] == NULL)
+			if(board[i][j] == NULL)
 				ss << "e";
 			else
-				ss << board1[i][j]->getFormattedPiece();
+				ss << board[i][j]->getFormattedPiece();
 
 			if(j < SIZE - 1)
 				ss << ",";
@@ -309,7 +293,7 @@ string Board::move(int y1, int x1, int y2, int x2)
 	saveMove(x1,y1,x2,y2);
 	//adds action to the queue
 	addAction(x1,y1,x2,y2);
-
+	/*
 	string eaten;
 	if(board_aux[x2][y2] != NULL)
 	{
@@ -331,9 +315,9 @@ string Board::move(int y1, int x1, int y2, int x2)
 
 	cout <<"peca: "<< eaten <<endl;
 
-	processEaten(eaten);
+	processEaten(eaten);*/
 
-	return eaten;
+	return "eaten";
 }
 
 void Board::saveMove(int x1,int y1, int x2, int y2)
@@ -372,24 +356,18 @@ bool Board::pop()
 	p2 = m->getDestinantion(x2,y2);
 
 
-	Piece * p3 = NULL;
 	if (p1 != NULL)
 	{
 		p1->unselect();
-		p3 = new Piece(*p1);
 	}
-	Piece * p4 = NULL; 
 	if(p2 != NULL)
 	{
 		p2->unselect();
-		p4 = new Piece(*p2);
 	}
 
 	board[x1][y1] = p1;
 	board[x2][y2] = p2;
 
-	board_aux[x1][y1] = p3;
-	board_aux[x2][y2] = p4;
 
 	moves.pop();
 
@@ -399,9 +377,7 @@ bool Board::pop()
 void Board::playMovie()
 {
 	board.clear();
-	board_aux.clear();
 	generateBoard();
-	generateBoard(1);
 	stack<Move *> tmp = moves;
 	stack<Move *> tmp2;
 	vector<Move *> orderedMoves;
@@ -420,6 +396,11 @@ void Board::playMovie()
 
 		/*Action * a = new Action(y1,x1,y2,x2,p1);
 		actions2.push(a);*/
+		while(!actions.empty())
+		{
+			printf(",");
+		}
+
 		selectPlace(y1,x1,99);
 		move(y1,x1,y2,x2);
 		tmp2.pop();

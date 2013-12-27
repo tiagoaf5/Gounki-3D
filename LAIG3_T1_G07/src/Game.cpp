@@ -94,6 +94,7 @@ bool Game::play(int x, int y)
 		return false;
 	}
 		
+	checkEndofGame();
 
 	bool val = false;
 
@@ -114,8 +115,8 @@ bool Game::play(int x, int y)
 		break;
 	}
 
-	if(val)
-		checkEndofGame();
+	/*if(val)
+		checkEndofGame();*/
 	return val;
 }
 
@@ -123,7 +124,7 @@ bool Game::isValidMove(int x, int y)
 {
 	stringstream ss;
 
-	ss << "play(" <<selectedPos.first+1 << "," << selectedPos.second +1 << "," << x +1<< ","<< y +1 << "," << board->getFormatted(1) << ").\n";
+	ss << "play(" <<selectedPos.first+1 << "," << selectedPos.second +1 << "," << x +1<< ","<< y +1 << "," << board->getFormatted() << ").\n";
 
 	string val = ss.str();
 	socket->sendData((char *)val.c_str(), val.size());
@@ -331,7 +332,7 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 {
 	stringstream ss;
 
-	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted(1) << ").\n";
+	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted() << ").\n";
 
 	socket->sendData((char *)(ss.str().c_str()), ss.str().size());
 	
@@ -361,7 +362,7 @@ int Game::checkEndofGame()
 {
 	stringstream ss;
 
-	ss << "check_end_of_game(" << board->getFormatted(1) << ").\n";
+	ss << "check_end_of_game(" << board->getFormatted() << ").\n";
 
 	socket->sendData((char *)ss.str().c_str(), ss.str().size());
 	char abc[100];
@@ -372,10 +373,14 @@ int Game::checkEndofGame()
 	{
 		printf("Won player %s\n", abc);
 		endOfGame = true;
-		return true;
+		char abc1[2];
+		abc1[1] = 0;
+		abc1[0] = abc[0];
+
+		return atoi(abc1);
 	}
 	
-	return false;
+	return -1;
 }
 
 void Game::setCamera(MyMobileCamera * camera)
