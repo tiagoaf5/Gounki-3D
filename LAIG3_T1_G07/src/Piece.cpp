@@ -80,7 +80,6 @@ string Piece::getFormattedPiece()
 
 void Piece::addPieces(vector<PieceBase *> p)
 {
-	printf(";\n");
 	for(int i = 0; i < p.size(); i++)
 		pieces.push_back(p[i]);
 
@@ -100,7 +99,7 @@ void Piece::addPieces(vector<PieceBase *> p)
 
 	for (int i = 0; i < ids.size(); i++) 
 	{
-		cout << ids[i] << endl;
+		//cout << ids[i] << endl;
 		pieces[i] = pecas.find(ids[i])->second;
 	}
 }

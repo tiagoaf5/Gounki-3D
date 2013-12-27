@@ -40,7 +40,7 @@ bool Animation::update(unsigned long t)
 		else
 		{
 			unsigned long animT=t-startTime;
-			printf("->%lu<-\n",animT);
+			//printf("->%lu<-\n",animT);
 			handlerUpdate(animT);
 		}
 		return true;

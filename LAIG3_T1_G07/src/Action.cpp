@@ -73,7 +73,7 @@ void Action::start()
 
 void Action::update(unsigned long t)
 {
-	printf(".");
+	//printf(".");
 
 	if(animation->getAlmostFinished())
 		almostFinished = true;
@@ -88,13 +88,13 @@ void Action::update(unsigned long t)
 	{//added
 		if(!animation->update(t))
 		{
-			printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			almostFinished = true;
 			finished = true;
 			piece->setAnimation(NULL);
 		}
-		else
-			printf("::::::::::::::::::::::::::::::::::::");
+		//else
+		//	printf("::::::::::::::::::::::::::::::::::::");
 	}
 }
 

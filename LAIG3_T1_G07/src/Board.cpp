@@ -246,9 +246,9 @@ bool Board::selectPlace(int y, int x, int player)
 	if (board[x][y] == NULL)
 		return false;
 
-	if(board[x][y]->getPlayer() == player)
+	if(board[x][y]->getPlayer() == player || player == 99)
 	{
-		selectedPiece = board[x][y];
+		selectedPiece = board[x][y]; ///PROBLEMA ESTÁ NA PEÇA SELECIONADA
 		selectedPiece->select();
 	}
 	else 
@@ -372,8 +372,6 @@ bool Board::pop()
 	p2 = m->getDestinantion(x2,y2);
 
 
-
-
 	Piece * p3 = NULL;
 	if (p1 != NULL)
 	{
@@ -398,6 +396,36 @@ bool Board::pop()
 	return true;
 }
 
+void Board::playMovie()
+{
+	board.clear();
+	board_aux.clear();
+	generateBoard();
+	generateBoard(1);
+	stack<Move *> tmp = moves;
+	stack<Move *> tmp2;
+	vector<Move *> orderedMoves;
+
+	while (!tmp.empty())
+	{
+		tmp2.push(tmp.top());
+		tmp.pop();
+	}
+	while(!tmp2.empty())
+	{
+		Move * m = tmp2.top();
+		int x1,y1,x2,y2;
+		Piece * p1 = m->getOrigin(x1,y1);
+		Piece * p2 = m->getDestinantion(x2,y2);
+
+		/*Action * a = new Action(y1,x1,y2,x2,p1);
+		actions2.push(a);*/
+		selectPlace(y1,x1,99);
+		move(y1,x1,y2,x2);
+		tmp2.pop();
+	}
+}
+
 void Board::addAction(int y1,int x1, int y2, int x2)
 {
 	Action * a = new Action(x1, y1, x2, y2,selectedPiece);
@@ -406,6 +434,7 @@ void Board::addAction(int y1,int x1, int y2, int x2)
 
 bool Board::performAction(unsigned long t)
 {
+	printf("-");
 	if(actions.empty())
 		return false;
 
@@ -417,22 +446,23 @@ bool Board::performAction(unsigned long t)
 		printf("start ");
 	}
 
-	printf("1");
+	//printf("1");
 	
-	if(a->getHandled())
+	/*if(a->getHandled())
 		printf("handled");
 	if(a->getAlmostFinished())
-		printf("almost");
+		printf("almost");*/
 
 	if(a->getAlmostFinished() && !a->getHandled())// TO CHANGEEEEEEEEEEEE
 	{
+		printf("benfica");
 		Piece * p = a->getPiece();
-		cout << " "<<p->getFormattedPiece() << " ";
+		//cout << " "<<p->getFormattedPiece() << " ";
 		int x1,x2,y1,y2;
 		int eaten = 0;
 		a->getCoords(y1,x1,y2,x2);
 
-		printf("2");
+		//printf("2");
 		p->unselect();
 		if(board[x2][y2] != NULL)
 		{
@@ -452,7 +482,7 @@ bool Board::performAction(unsigned long t)
 		
 		board[x1][y1] = NULL;
 		a->setHandled();
-		printf("3");
+		//printf("3");
 		//actions.pop();
 	}
 	else 
@@ -465,10 +495,10 @@ bool Board::performAction(unsigned long t)
 	{
 		camera->setPlayer(actions.front()->getPiece()->getPlayer() % 2 +1);
 		actions.pop();
-		printf("4");
+		//printf("4");
 	}
 
-	printf("\n");
+	//printf("\n");
 	return true;
 	/*
 	if(actions.empty())

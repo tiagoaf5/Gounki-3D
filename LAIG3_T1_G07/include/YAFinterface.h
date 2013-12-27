@@ -18,6 +18,7 @@ private:
 	GLUI_Button *b4;
 	GLUI_Button *b5;
 	GLUI_Button *b6;
+	GLUI_Button *b7;
 	int li[7];
 	int size;
 	int pos_default;

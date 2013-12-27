@@ -343,6 +343,9 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 
 bool Game::pop()
 {
+	if(endOfGame)
+		endOfGame = false;
+
 	if(board->pop())
 	{
 		activePlayer = activePlayer % 2 + 1;
@@ -380,4 +383,10 @@ void Game::setCamera(MyMobileCamera * camera)
 	this->camera = camera;
 	if (board != NULL)
 		board->setCamera(camera);
+}
+
+void Game::playMovie()
+{
+	if(endOfGame)
+		board->playMovie();
 }

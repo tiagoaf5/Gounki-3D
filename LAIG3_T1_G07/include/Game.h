@@ -72,6 +72,7 @@ public:
 	
 	//camera
 	void setCamera(MyMobileCamera * camera);
+	void playMovie();
 
 };
 
