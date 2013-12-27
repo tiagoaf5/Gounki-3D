@@ -11,6 +11,7 @@
 
 #include "Move.h"
 #include "Action.h"
+#include "MyMobileCamera.h"
 
 #include <vector>
 #include <string>
@@ -23,12 +24,23 @@ using namespace std;
 
 class Board
 {
+	MyMobileCamera * camera;
 	CGFappearance * appearanceBlack;
 	CGFappearance * appearanceWhite;
 	CGFappearance * appearanceSelected;
 	Piece * selectedPiece;
 	int selectedX;
 	int selectedY;
+	int nrSquares1,nrSquares2;
+	int nrCircles1,nrCircles2;
+
+	CGFappearance * whiteAppearance;
+	CGFappearance * blackAppearance;
+
+	vector<Piece *> CirclePieces1;
+	vector<Piece *> SquarePieces1;
+	vector<Piece *> CirclePieces2;
+	vector<Piece *> SquarePieces2;
 
 	vector<vector<Piece *>> board;
 	vector<vector<Piece *>> board_aux;
@@ -47,8 +59,17 @@ public:
 	bool selectPlace(int x, int y, int player);
 	bool removeSelection(int y, int x);
 	string move(int y1, int x1, int y2, int x2);
+
+	void processEaten( string eaten );
+
 	bool pop();
 	bool performAction(unsigned long t);
+
+	//camera
+	void setCamera(MyMobileCamera * camera);
+
+	//movie
+	void playMovie();
 };
 
 #endif

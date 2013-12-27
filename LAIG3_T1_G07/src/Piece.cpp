@@ -16,6 +16,7 @@ Piece::Piece(int player, CGFappearance * appearance, CGFappearance * selectedApp
 	this->selectedAppearance = selectedAppearanca;
 	animated = false;
 	selected = false;
+	hidden = 1;
 }
 
 Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappearance * selectedAppearanca)
@@ -26,6 +27,7 @@ Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappea
 	pieces.push_back(piece);
 	animated = false;
 	selected = false;
+	hidden = 1;
 }
 
 void Piece::draw()
@@ -35,6 +37,7 @@ void Piece::draw()
 	else
 		selectedAppearance->apply();
 
+	if(hidden == 1){
 	for (int i = 0; i < pieces.size(); i++)
 	{
 		if(!animated)
@@ -47,7 +50,7 @@ void Piece::draw()
 		else
 		{
 			selected = false;
-			printf(".");
+			//printf(".");
 			glPopMatrix();
 			glPushMatrix();
 			anim->applyTransforms();
@@ -56,6 +59,9 @@ void Piece::draw()
 			glPopMatrix();
 			glPushMatrix();
 		}
+	}
+	}
+	else{
 	}
 }
 
@@ -122,6 +128,14 @@ void Piece::setAnimation(LinearAnimation * anim)
 		animated = false;
 	}
 	
+}
+
+void Piece::setHidden(int number){
+	hidden = number;
+}
+
+int Piece::getHidden(){
+	return hidden;
 }
 
 void Piece::select()

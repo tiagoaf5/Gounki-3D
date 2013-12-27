@@ -1326,8 +1326,17 @@ void YAFScene::init()
 	//> Picking
 	data->initPicking();
 
+	//Game camera
+	float target1[] = {11.8, 2.05 ,11.75};
+	float pos1[] = {11.8, 3.8, 13.5};
+	mobileCam = new MyMobileCamera(0.1,50,40,target1,pos1);
+	MyMobileCamera * mycam = dynamic_cast<MyMobileCamera *>(mobileCam);
+	//mycam->start();
+
 	//Game
 	data->initGame();
+	data->getGame()->setCamera(mycam);
+	
 	//Board
 	//data->initBoard();
 
@@ -1341,6 +1350,8 @@ void YAFScene::init()
 	data->applyGlobals();
 	data->applyLighting(); //apply lighting options, doesn't change during display
 
+	
+	//setActiveCamera(mobileCam);
 
 	glEnable(GL_COLOR_MATERIAL);
 	setUpdatePeriod(30);
@@ -1354,20 +1365,22 @@ void YAFScene::init()
 
 void YAFScene::update(unsigned long t)
 {
-	vector<Animation *> animations = data->getAnimations();
+	/*vector<Animation *> animations = data->getAnimations();
 	for(unsigned int i = 0; i < animations.size(); i++)
 		animations[i]->update(t);
 	vector<MyShader *> shaders = data->getShaders();
 
 	for (unsigned int i = 0; i < shaders.size(); i++)
-		shaders[i]->update(t);
+		shaders[i]->update(t);*/
+	
 	((myClock *)(data->getClock()))->update(t);
+	
 	if(data->getGame()->getBoard() != NULL)
 		if(data->getGame()->getBoard() != NULL)
-		{
 			data->getGame()->getBoard()->performAction(t);
-			
-		}
+	
+	dynamic_cast<MyMobileCamera *>(mobileCam)->update(t);
+
 }
 
 
@@ -1427,6 +1440,12 @@ bool YAFScene::setActiveCamera(string camid)
 		CGFapplication::activeApp->forceRefresh();
 		return true;
 	}
+	else if (camid == "MOBILECAMERA")
+	{
+		CGFscene::activeCamera =  mobileCam;
+		CGFapplication::activeApp->forceRefresh();
+		return true;
+	}
 
 	map<string, CGFcamera *>::iterator it = camerasMap.find(camid);
 
@@ -1434,8 +1453,6 @@ bool YAFScene::setActiveCamera(string camid)
 		return false;
 	else
 	{
-		//activeCamera = it->second;
-		//myscene->setActiveCamera(it->second);
 		CGFscene::activeCamera =  it->second;
 		CGFapplication::activeApp->forceRefresh();
 		return true;

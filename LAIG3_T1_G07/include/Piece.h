@@ -19,6 +19,7 @@ class Piece
 	vector<PieceBase *> pieces;
 	bool animated;
 	LinearAnimation * anim;
+	int hidden;
 public:
 	Piece(int player, CGFappearance * appearance, CGFappearance * selectedAppearanca);
 	Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappearance * selectedAppearanca);
@@ -28,6 +29,8 @@ public:
 	vector<PieceBase *> getPieces();
 	int getPlayer() const;
 	void setAnimation(LinearAnimation * anim);
+	void setHidden(int number);
+	int getHidden();
 	void select();
 	void unselect();
 };

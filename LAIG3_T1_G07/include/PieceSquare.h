@@ -2,7 +2,6 @@
 #define _PIECESQUARE_H_
 
 #include "PieceBase.h"
-#include "Cylinder.h"
 #include "cgfobject.h"
 //#include <vector>
 

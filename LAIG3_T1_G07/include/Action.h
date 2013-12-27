@@ -10,8 +10,9 @@ class Action
 	int x2,y2;
 	Piece * piece;
 	bool started;
+	bool handled;
 	bool finished;
-	int almostFinished;
+	bool almostFinished;
 	LinearAnimation * animation;
 	void generateAnimation();
 public:
@@ -20,8 +21,10 @@ public:
 	void update(unsigned long t);
 	bool hasStarted() const;
 	bool hasFinished() const;
-	int getAlmostFinished();
+	bool getAlmostFinished();
 	void getCoords(int &x1,int &y1, int &x2, int &y2) const;
 	Piece * getPiece();
+	bool getHandled() const;
+	void setHandled();
 };
 #endif

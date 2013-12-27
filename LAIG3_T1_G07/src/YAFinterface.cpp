@@ -188,7 +188,10 @@ void YAFinterface::initGUI()
 	}
 	pos_default= j;
 	list_group->add_item(j,"default");
+	list_group->add_item(j+1,"mobile");
 
+	list_group->set_int_val(j+1);
+	((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
 
 
 	//------------------------------ Server ------------------------------------
@@ -241,18 +244,18 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 	case 2:
 		{
 			updateDrawMode();
+			data->setText(1,6);
 			break;
 		};
 
 	case 3:
 		{
-			updateCameras();
+			updateCameras(); 
 			break;
 		};
 	case 4:
 		{
 			data->getGame()->endGame();
-			/*			(data->getSocket())->quit();*/
 			break;
 		}
 	case 5:
@@ -304,11 +307,12 @@ void YAFinterface::updateDrawMode(){
 
 void YAFinterface::updateCameras(){
 
-	int k = 0;
+	int k = 0; 
 
-	if(list_group->get_int_val() == pos_default){
+	if(list_group->get_int_val() == pos_default)
 		((YAFScene*) scene)->setActiveCamera("");
-	}
+	else if(list_group->get_int_val() == pos_default+1)
+		((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
 
 	map<string,CGFcamera*>::iterator iter = cam.begin();
 
@@ -334,15 +338,23 @@ void YAFinterface::updateMode(){
 
 	if(list_group2->get_int_val() == 1){
 		game->setMode(1);
+		list_group->set_int_val(pos_default+1);
+		((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
 	}
 	else if (list_group2->get_int_val() == 2){
 		game->setMode(2);
+		list_group->set_int_val(2);
+		((YAFScene*) scene)->setActiveCamera("camerap1");
 	}
 	else if (list_group2->get_int_val() == 3){
 		game->setMode(3);
+		list_group->set_int_val(3);
+		((YAFScene*) scene)->setActiveCamera("camerap2");
 	}
 	else {
 		game->setMode(4);
+		list_group->set_int_val(2);
+		((YAFScene*) scene)->setActiveCamera("camerap1");
 	}
 
 }

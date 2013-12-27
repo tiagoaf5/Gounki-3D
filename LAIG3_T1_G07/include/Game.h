@@ -11,16 +11,21 @@
 #include "Board.h"
 #include "CGFappearance.h"
 #include "MyAppearance.h"
+#include "MyMobileCamera.h"
 
 
 class Game
 {
 private:
+	MyMobileCamera * camera;
 	Board * board;
 	Socket * socket;
 
 	pair<int,int> selectedPos;
 	bool selected;
+
+
+
 
 	int activePlayer;
 	bool started;
@@ -61,6 +66,13 @@ public:
 	bool cVp(int x, int y);
 	bool cVc();
 	bool pop();
+
+	//side pieces
+	vector<Piece *> getPieces(int type); // 1- Player 1 Square   2- Player 1 Circle   3- Player 2 Square     4- Player 2 Square
+	
+	//camera
+	void setCamera(MyMobileCamera * camera);
+
 };
 
 #endif

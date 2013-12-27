@@ -14,6 +14,12 @@ Data::Data()
 	defaultAppearance->setId("default:default");
 	appearancesStack.push(defaultAppearance);
 
+	myTextObj1=new TextObject(1);
+	myTextObj1->setNumber('2');
+	
+	myTextObj2 = new TextObject(2);
+	myTextObj2->setNumber('1');
+
 }
 
 
@@ -138,7 +144,8 @@ void Data::computeNodePointers(Node * node)
 void Data::drawScene()
 {
 	//board->draw();
-
+	myTextObj1->draw();
+	myTextObj2->draw();
 	game->draw();
 	//glPushMatrix();
 	/*for (int r=0; r < 8; r++)
@@ -621,6 +628,27 @@ void Data::initGame()
 Game * Data::getGame()
 {
 	return game;
+}
+
+
+TextObject * Data::getText(int player){
+
+	if (player == 1)
+		return myTextObj1;
+	else
+		return myTextObj2;
+}
+
+void Data::setText(int player,int number){
+
+	if (player == 1){
+		myTextObj1->setNumber(number);
+		myTextObj1->draw();
+	}
+	else{
+		myTextObj2->setNumber(number);
+		myTextObj1->draw();
+	}
 }
 /*
 void Data::initBoard()

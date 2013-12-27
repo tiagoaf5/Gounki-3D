@@ -32,7 +32,7 @@ void MyPerspectiveCamera::applyView()
 
 void MyPerspectiveCamera::updateProjectionMatrix(int width, int height)
 {
-	float aspect= (float)width / (float)height;
+	float aspect= (float)width / (float)height; 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(angle1, aspect, near1, far1);

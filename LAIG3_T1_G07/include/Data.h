@@ -19,7 +19,7 @@
 #include "MyOrthogonalCamera.h"
 #include "MyLight.h"
 #include "MyShader.h"
-
+#include "TextObject.h"
 #include "Game.h"
 
 /*
@@ -89,6 +89,11 @@ private:
 
 	//Board
 	//Board * board;
+
+	//text
+	TextObject *myTextObj1;
+	TextObject *myTextObj2;
+
 
 	//private functions
 	void computeNodePointers(Node * node);
@@ -161,6 +166,10 @@ public:
 	//Game
 	void initGame();
 	Game * getGame();
+
+	//text
+	TextObject * getText(int player);
+	void setText(int player,int number);
 
 	/*
 	//board

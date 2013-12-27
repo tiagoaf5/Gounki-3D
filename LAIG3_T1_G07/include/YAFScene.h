@@ -25,6 +25,7 @@
 #include "SpotLight.h"
 #include "MyOrthogonalCamera.h"
 #include "MyPerspectiveCamera.h"
+#include "MyMobileCamera.h"
 #include "LinearAnimation.h"
 
 //#include "Socket.h"
@@ -80,9 +81,7 @@ private:
 	bool readAppearancesBlock ();
 	bool readGraphBlock ();
 	bool readAnimationsBlock();
-
-	
-
+	CGFcamera * mobileCam;
 	map<string, CGFcamera *> camerasMap;
 };
 

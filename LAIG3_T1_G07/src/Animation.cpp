@@ -31,7 +31,7 @@ void Animation::stop()
 	stopped = true;
 }
 
-void Animation::update(unsigned long t)
+bool Animation::update(unsigned long t)
 {
 	if(!stopped)
 	{
@@ -40,9 +40,12 @@ void Animation::update(unsigned long t)
 		else
 		{
 			unsigned long animT=t-startTime;
+			printf("->%lu<-\n",animT);
 			handlerUpdate(animT);
 		}
+		return true;
 	}
+	return false;
 }
 
 void Animation::init()

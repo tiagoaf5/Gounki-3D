@@ -15,7 +15,9 @@ Action::Action(int x1,int y1,int x2, int y2, Piece * piece)
 
 	started = false;
 	finished = false;
-	almostFinished = 0;
+	handled = false;
+	almostFinished = false;
+	animation = NULL;
 
 	generateAnimation();
 }
@@ -71,17 +73,29 @@ void Action::start()
 
 void Action::update(unsigned long t)
 {
+	printf(".");
+
 	if(animation->getAlmostFinished())
-		if(almostFinished == 0)
-			almostFinished = 1;
+		almostFinished = true;
 
 	if(animation->isFinished())
 	{
+		almostFinished = true;
 		finished = true;
 		piece->setAnimation(NULL);
 	}
 	else
-		animation->update(t);
+	{//added
+		if(!animation->update(t))
+		{
+			printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			almostFinished = true;
+			finished = true;
+			piece->setAnimation(NULL);
+		}
+		else
+			printf("::::::::::::::::::::::::::::::::::::");
+	}
 }
 
 bool Action::hasFinished() const
@@ -102,16 +116,17 @@ void Action::getCoords(int &x1,int &y1, int &x2, int &y2) const
 	y2 = this->y2;
 }
 
-Piece * Action::getPiece()
-{
+Piece * Action::getPiece() {
 	return piece;
 }
 
-int Action::getAlmostFinished() 
-{
-	if (almostFinished == 0)
-		return 0;
+bool Action::getAlmostFinished() {
+	return almostFinished;
+}
 
-	almostFinished++;
-	return almostFinished-1;
+bool Action::getHandled() const { 
+	return handled; 
+}
+void Action::setHandled() { 
+	handled = true; 
 }

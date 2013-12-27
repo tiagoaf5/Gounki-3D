@@ -87,7 +87,7 @@ void LinearAnimation::handlerUpdate(unsigned long animT)
 		finished = true;
 		return;
 	}
-	if(animT >= span - 100)
+	if(animT >= span - 150) //100
 		almostFinished = true;
 
 	unsigned int i;

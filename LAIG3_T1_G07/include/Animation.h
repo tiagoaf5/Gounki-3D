@@ -16,7 +16,7 @@ protected:
 	bool finished;
 public:
 	Animation();
-	void update(unsigned long t);
+	bool update(unsigned long t);
 	void reset();
 	void stop();
 	virtual void handlerUpdate(unsigned long animT);

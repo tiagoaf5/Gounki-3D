@@ -1,5 +1,8 @@
 #include "Game.h"
-
+#define BASE_X 10.9
+#define BASE_Y 2.02
+#define BASE_Z 11.4
+#define HALF_LENGTH 0.03
 using namespace std;
 
 Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
@@ -20,6 +23,16 @@ Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecte
 	activePlayer = 1;
 	started = false;
 	endOfGame = false;
+
+	PieceCircle *pc1;
+	PieceSquare *ps1;
+	PieceCircle *pc2;
+	PieceSquare *ps2;
+
+	CGFappearance * app;
+
+	//circle p1
+
 }
 
 void Game::initSocket()
@@ -36,6 +49,7 @@ Socket * Game::getSocket() const
 void Game::initBoard()
 {
 	board = new Board(blackAppearance,whiteAppearance,selectedAppearance);
+	board->setCamera(camera);
 }
 
 Board * Game::getBoard()
@@ -43,6 +57,19 @@ Board * Game::getBoard()
 	return board;
 }
 
+
+void Game::setDificulty(int difficulty)
+{
+	this->difficulty = difficulty;
+}
+
+void Game::setMode(int mode)
+{
+	this->mode = mode;
+
+	//if(mode == 3 && started)
+	play(-1,-1);
+}
 
 void Game::setAppearances(CGFappearance * black, CGFappearance * white)
 {
@@ -76,6 +103,7 @@ bool Game::play(int x, int y)
 		val = pVp(x,y);
 		break;
 	case 2:
+		printf("oix\n");
 		val = pVc(x,y);
 		break;
 	case 3:
@@ -86,7 +114,8 @@ bool Game::play(int x, int y)
 		break;
 	}
 
-	checkEndofGame();
+	if(val)
+		checkEndofGame();
 	return val;
 }
 
@@ -107,7 +136,7 @@ bool Game::isValidMove(int x, int y)
 	else
 		return false;
 }
-
+/*
 bool Game::move(int player, int x, int y)
 {
 	stringstream ss;
@@ -128,25 +157,12 @@ bool Game::move(int player, int x, int y)
 
 	board->selectPlace(x,y,player);
 	return true;
-}
+}*/
 
 void Game::endGame()
 {
 	started = false;
 	socket->quit();
-}
-
-void Game::setDificulty(int difficulty)
-{
-	this->difficulty = difficulty;
-}
-
-void Game::setMode(int mode)
-{
-	this->mode = mode;
-
-	if(mode == 3 && started)
-		cVp(-1,-1);
 }
 
 void Game::startGame()
@@ -167,11 +183,16 @@ void Game::startGame()
 
 bool Game::pVp(int x, int y)
 {
+	if( x == -1 && y == -1)
+		return false;
+
 	printf("<pvp>\n");
 	if (!selected)
-		return select(x,y);
+		select(x,y);
 	else
 		return handleSelection(x, y);
+
+	return false;
 }
 
 bool Game::pVc(int x, int y)
@@ -184,16 +205,17 @@ bool Game::pVc(int x, int y)
 	if (activePlayer == 1)
 	{
 		if (!selected)
-			return select(x,y);
+			select(x,y);
 		else
 		{
 			if(handleSelection(x, y))
 			{
-				getPcMove(a,b,c,d);
+				/*getPcMove(a,b,c,d);
 				printf("move %d %d to %d %d\n",a,b,c,d);
 				board->selectPlace(a-1,b-1, activePlayer);
 				board->move(a-1,b-1,c-1,d-1);
-				activePlayer = activePlayer % 2 + 1;
+				activePlayer = activePlayer % 2 + 1;*/
+				return pVc(-1,-1);
 			}
 			else
 				return false;
@@ -207,9 +229,10 @@ bool Game::pVc(int x, int y)
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
 		activePlayer = activePlayer % 2 + 1;
+		return true;
 	}
 
-	return true;
+	return false;
 }
 bool Game::cVp(int x, int y)
 {
@@ -222,7 +245,7 @@ bool Game::cVp(int x, int y)
 	if (activePlayer == 2)
 	{
 		if (!selected)
-			return select(x,y);
+			select(x,y);
 		else
 		{
 			if(handleSelection(x, y))
@@ -239,9 +262,10 @@ bool Game::cVp(int x, int y)
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
 		activePlayer = activePlayer % 2 + 1;
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 bool Game::cVc()
@@ -323,6 +347,7 @@ bool Game::pop()
 	{
 		activePlayer = activePlayer % 2 + 1;
 		//play(-1,-1);
+		camera->setPos(activePlayer);
 		return true;
 	}
 
@@ -333,13 +358,12 @@ int Game::checkEndofGame()
 {
 	stringstream ss;
 
-	ss << "check_end_of_game(" << board->getFormatted() << ").\n";
+	ss << "check_end_of_game(" << board->getFormatted(1) << ").\n";
 
 	socket->sendData((char *)ss.str().c_str(), ss.str().size());
 	char abc[100];
 
 	socket->receiveData(abc);
-	printf("--->%s<---\n",abc);
 	
 	if(strcmp(abc,"no.") != 0)
 	{
@@ -349,4 +373,11 @@ int Game::checkEndofGame()
 	}
 	
 	return false;
+}
+
+void Game::setCamera(MyMobileCamera * camera)
+{
+	this->camera = camera;
+	if (board != NULL)
+		board->setCamera(camera);
 }
