@@ -12,10 +12,12 @@ class Move
 	int y2;
 	Piece * p1;
 	Piece * p2;
+	Piece * result;
 public:
 	Move(int x1,int y1, int x2, int y2, Piece * p1, Piece * p2);
 	Piece * getOrigin(int &x1, int &y1) const;
 	Piece * getDestinantion(int &x2, int &y2) const;
+	Piece * getResultPiece();
 };
 
 

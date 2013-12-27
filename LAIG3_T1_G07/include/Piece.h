@@ -33,6 +33,7 @@ public:
 	int getHidden();
 	void select();
 	void unselect();
+	void getNrPieces(int &c1,int &s1, int &c2, int &s2);
 };
 
 

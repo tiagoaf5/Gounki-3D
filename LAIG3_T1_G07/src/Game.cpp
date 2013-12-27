@@ -68,7 +68,7 @@ void Game::setMode(int mode)
 	this->mode = mode;
 
 	//if(mode == 3 && started)
-	play(-1,-1);
+	//play(-1,-1);
 }
 
 void Game::setAppearances(CGFappearance * black, CGFappearance * white)
@@ -93,8 +93,12 @@ bool Game::play(int x, int y)
 		printf("not started\n");
 		return false;
 	}
+
+	if(!board->getReady())
+		return false;
 		
-	checkEndofGame();
+	if(checkEndofGame() > 1)
+		return true;
 
 	bool val = false;
 
@@ -104,7 +108,6 @@ bool Game::play(int x, int y)
 		val = pVp(x,y);
 		break;
 	case 2:
-		printf("oix\n");
 		val = pVc(x,y);
 		break;
 	case 3:
@@ -216,7 +219,7 @@ bool Game::pVc(int x, int y)
 				board->selectPlace(a-1,b-1, activePlayer);
 				board->move(a-1,b-1,c-1,d-1);
 				activePlayer = activePlayer % 2 + 1;*/
-				return pVc(-1,-1);
+				//return pVc(-1,-1);
 			}
 			else
 				return false;
@@ -250,7 +253,7 @@ bool Game::cVp(int x, int y)
 		else
 		{
 			if(handleSelection(x, y))
-				return cVp(-1,-1); // to let the PC play
+				return true;//cVp(-1,-1); // to let the PC play
 			else
 				return false;
 		}
@@ -314,13 +317,13 @@ bool Game::handleSelection(int x, int y)
 			theReturn = true;
 			//change player
 			activePlayer = activePlayer % 2 + 1;
-			printf("2. %d\n", activePlayer);
 			selected = false;
 		}
 		else
 		{
+			/*printf("invalid move %d %d\n",x,y);
 			selected = false;
-			board->removeSelection(x,y); 	//tell board nothing is selected
+			board->removeSelection(x,y); 	//tell board nothing is selected*/
 			theReturn = false;
 		}
 		
@@ -374,10 +377,10 @@ int Game::checkEndofGame()
 		printf("Won player %s\n", abc);
 		endOfGame = true;
 		char abc1[2];
-		abc1[1] = 0;
+		abc1[1] = '\0';
 		abc1[0] = abc[0];
-
-		return atoi(abc1);
+		int aa =atoi(abc1);
+		return aa;
 	}
 	
 	return -1;

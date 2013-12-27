@@ -22,7 +22,7 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 	appearanceBlack = black;
 	appearanceWhite = white;
 	appearanceSelected = selecteda;
-	selectedPiece = NULL;
+	//selectedPiece = NULL;
 	generateBoard();
 
 	PieceCircle *pc1;
@@ -35,9 +35,15 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 	nrCircles1 = 0;
 	nrCircles2 = 0;
 
+	PieceBase * pc = new PieceCircle();
+	circlePiece1 = new Piece(1,pc,blackAppearance,selecteda);
+	circlePiece2 = new Piece(2,pc,whiteAppearance,selecteda);
+	pc = new PieceSquare();
+	squarePiece1 = new Piece(1,pc,blackAppearance,selecteda);
+	squarePiece2 = new Piece(2,pc,whiteAppearance,selecteda);
 
+/*
 	CGFappearance * app;
-
 
 	for (int i = 0 ; i < 8 ; i++){
 		pc1 = new PieceCircle();
@@ -90,7 +96,7 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 		pie3->setHidden(0);
 
 		SquarePieces2.push_back(pie3);
-	}
+	}*/
 }
 
 void Board::generateBoard()
@@ -166,7 +172,43 @@ void Board::draw()
 		}
 	}
 
-
+	for(int i = 1; i <= 8; i++)
+	{
+		bool end = true;
+		if(nrCircles1 >= i)
+		{
+			end = false;
+			glPushMatrix();
+			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2+0.9);
+			circlePiece1->draw();
+			glPopMatrix();
+		}
+		if(nrSquares1 >= i)
+		{
+			end = false;
+			glPushMatrix();
+			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2+0.7);
+			squarePiece1->draw();
+			glPopMatrix();
+		}
+		if(nrCircles2 >= i)
+		{
+			end = false;
+			glPushMatrix();
+			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2-0.2);
+			circlePiece2->draw();
+			glPopMatrix();
+		}
+		if(nrSquares2 >= i)
+		{
+			end = false;
+			glPushMatrix();
+			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2);
+			squarePiece2->draw();
+			glPopMatrix();
+		}
+	}
+	/*
 	for(int i = 0; i < 8; i++)
 	{
 		glPushMatrix();
@@ -207,7 +249,7 @@ void Board::draw()
 		if(SquarePieces2[i] != NULL)
 			SquarePieces2[i]->draw();
 		glPopMatrix();
-	}
+	}*/
 }
 
 bool Board::selectPlace(int y, int x, int player)
@@ -235,11 +277,7 @@ bool Board::selectPlace(int y, int x, int player)
 		return false;
 
 	if(board[x][y]->getPlayer() == player || player == 99)
-	{
-		selectedPiece = board[x][y]; ///PROBLEMA ESTÁ NA PEÇA SELECIONADA 
-		//imaginemos que a peça é diferente no board aux já, dá asneira
-		selectedPiece->select();
-	}
+		board[x][y]->select();
 	else 
 		return false;
 
@@ -278,7 +316,8 @@ string Board::getFormatted() const
 
 bool Board::removeSelection(int y, int x) //need review
 {
-	selectedPiece->unselect();
+	board[x][y]->unselect();
+	//selectedPiece->unselect();
 	/*if(board[x][y] == NULL)
 	return false;
 	else
@@ -292,7 +331,7 @@ string Board::move(int y1, int x1, int y2, int x2)
 	//saves move in the stack
 	saveMove(x1,y1,x2,y2);
 	//adds action to the queue
-	addAction(x1,y1,x2,y2);
+	addAction(y1,x1,y2,x2);
 	/*
 	string eaten;
 	if(board_aux[x2][y2] != NULL)
@@ -339,6 +378,14 @@ void Board::saveMove(int x1,int y1, int x2, int y2)
 	moves.push(m);
 }
 
+
+void Board::addAction(int x1,int y1, int x2, int y2)
+{
+
+	Action * a = new Action(x1, y1, x2, y2,board[y1][x1], board[y2][x2]);
+	actions.push(a);
+}
+
 bool Board::pop()
 {
 	if (moves.empty())
@@ -363,6 +410,12 @@ bool Board::pop()
 	if(p2 != NULL)
 	{
 		p2->unselect();
+		int c1 = 0, s1 = 0, c2 = 0, s2 = 0;
+		p2->getNrPieces(c1,s1,c2,s2);
+		nrCircles1 -= c1;
+		nrSquares1 -= s1;
+		nrCircles2 -= c2;
+		nrSquares2 -= s2;
 	}
 
 	board[x1][y1] = p1;
@@ -380,7 +433,6 @@ void Board::playMovie()
 	generateBoard();
 	stack<Move *> tmp = moves;
 	stack<Move *> tmp2;
-	vector<Move *> orderedMoves;
 
 	while (!tmp.empty())
 	{
@@ -394,36 +446,31 @@ void Board::playMovie()
 		Piece * p1 = m->getOrigin(x1,y1);
 		Piece * p2 = m->getDestinantion(x2,y2);
 
-		/*Action * a = new Action(y1,x1,y2,x2,p1);
-		actions2.push(a);*/
-		while(!actions.empty())
-		{
-			printf(",");
-		}
+		Action * a = new Action(y1,x1,y2,x2,p1,p2);
+		actions.push(a);
 
-		selectPlace(y1,x1,99);
-		move(y1,x1,y2,x2);
+		//selectPlace(y1,x1,99);
+		//move(y1,x1,y2,x2);
 		tmp2.pop();
 	}
 }
 
-void Board::addAction(int y1,int x1, int y2, int x2)
-{
-	Action * a = new Action(x1, y1, x2, y2,selectedPiece);
-	actions.push(a);
-}
 
 bool Board::performAction(unsigned long t)
 {
 	printf("-");
 	if(actions.empty())
 		return false;
-
+	
+	int x1,x2,y1,y2;
 	Action * a = actions.front();
+	a->getCoords(y1,x1,y2,x2);
+
 
 	if(!a->hasStarted())
 	{
 		a->start();
+		board[x1][y1] = a->getPiece(1);
 		printf("start ");
 	}
 
@@ -436,16 +483,18 @@ bool Board::performAction(unsigned long t)
 
 	if(a->getAlmostFinished() && !a->getHandled())// TO CHANGEEEEEEEEEEEE
 	{
-		printf("benfica");
-		Piece * p = a->getPiece();
+		Piece * p = a->getPiece(1);
 		//cout << " "<<p->getFormattedPiece() << " ";
-		int x1,x2,y1,y2;
+		
 		int eaten = 0;
-		a->getCoords(y1,x1,y2,x2);
-
-		//printf("2");
+		
 		p->unselect();
-		if(board[x2][y2] != NULL)
+		board[x2][y2] = a->getPiece(3);
+
+		//update eaten pieces
+		a->updateBoardEaten(nrCircles1, nrSquares1, nrCircles2, nrSquares2);
+
+		/*if(board[x2][y2] != NULL)
 		{
 			if(board[x2][y2]->getPlayer() == p->getPlayer())
 			{
@@ -459,12 +508,10 @@ bool Board::performAction(unsigned long t)
 			}
 		}
 		else
-			board[x2][y2] = p;
+			board[x2][y2] = p;*/
 		
 		board[x1][y1] = NULL;
 		a->setHandled();
-		//printf("3");
-		//actions.pop();
 	}
 	else 
 	{
@@ -474,7 +521,7 @@ bool Board::performAction(unsigned long t)
 
 	if(a->hasFinished() && a->getHandled())
 	{
-		camera->setPlayer(actions.front()->getPiece()->getPlayer() % 2 +1);
+		camera->setPlayer(actions.front()->getPiece(1)->getPlayer() % 2 +1);
 		actions.pop();
 		//printf("4");
 	}
@@ -502,7 +549,7 @@ void Board::setCamera(MyMobileCamera * camera)
 }
 
 void Board::processEaten(string eaten)
-{
+{/*
 	string temp;
 	temp = eaten;
 
@@ -538,5 +585,9 @@ void Board::processEaten(string eaten)
 				temp = temp.substr(temp.find("o")+1);
 			}
 		}
-	}
+	}*/
+}
+bool Board::getReady() const
+{
+	return actions.empty();
 }

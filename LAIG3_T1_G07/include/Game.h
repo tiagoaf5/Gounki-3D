@@ -53,7 +53,7 @@ public:
 	void setAppearances(CGFappearance * black, CGFappearance * white);
 	void draw();
 	bool play(int x, int y);
-	bool move(int player, int x, int y);
+	//bool move(int player, int x, int y);
 	bool isValidMove(int x, int y);
 	void endGame();
 	void setDificulty(int difficulty);

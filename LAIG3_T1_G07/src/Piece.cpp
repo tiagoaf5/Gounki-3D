@@ -37,29 +37,30 @@ void Piece::draw()
 	else
 		selectedAppearance->apply();
 
-	if(hidden == 1){
-	for (int i = 0; i < pieces.size(); i++)
+	if(hidden == 1)
 	{
-		if(!animated)
+		for (int i = 0; i < pieces.size(); i++)
 		{
-			glPushMatrix();
-			glTranslatef(0.025*i,0.025*i,0);
-			pieces[i]->draw();
-			glPopMatrix();
+			if(!animated)
+			{
+				glPushMatrix();
+				glTranslatef(0.025*i,0.025*i,0);
+				pieces[i]->draw();
+				glPopMatrix();
+			}
+			else
+			{
+				selected = false;
+				//printf(".");
+				glPopMatrix();
+				glPushMatrix();
+				anim->applyTransforms();
+				glTranslatef(0.025*i,0.025*i,0);
+				pieces[i]->draw();
+				glPopMatrix();
+				glPushMatrix();
+			}
 		}
-		else
-		{
-			selected = false;
-			//printf(".");
-			glPopMatrix();
-			glPushMatrix();
-			anim->applyTransforms();
-			glTranslatef(0.025*i,0.025*i,0);
-			pieces[i]->draw();
-			glPopMatrix();
-			glPushMatrix();
-		}
-	}
 	}
 	else{
 	}
@@ -69,13 +70,13 @@ string Piece::getFormattedPiece()
 {		
 	stringstream ss;
 
-	 ss << pieces[0]->getFormattedPiece();
-	 for (int i = 1; i < pieces.size(); i++)
-		 ss << "-" << pieces[i]->getFormattedPiece();
+	ss << pieces[0]->getFormattedPiece();
+	for (int i = 1; i < pieces.size(); i++)
+		ss << "-" << pieces[i]->getFormattedPiece();
 
-	 ss << "-" << player;
+	ss << "-" << player;
 
-	 return ss.str();
+	return ss.str();
 }
 
 void Piece::addPieces(vector<PieceBase *> p)
@@ -126,7 +127,7 @@ void Piece::setAnimation(LinearAnimation * anim)
 		this->anim = NULL;
 		animated = false;
 	}
-	
+
 }
 
 void Piece::setHidden(int number){
@@ -145,4 +146,40 @@ void Piece::select()
 void Piece::unselect()
 {
 	selected = false;
+}
+
+void Piece::getNrPieces(int &c1,int &s1, int &c2, int &s2)
+{
+	string eaten = getFormattedPiece();
+	string temp = eaten;
+
+	if (!eaten.empty())
+	{
+		if (eaten.find("2") != -1)
+		{
+			while(temp.find("x") != -1)
+			{
+				s1++;
+				temp = temp.substr(temp.find("x")+1);
+			}
+			while(temp.find("o") != -1)
+			{
+				c1++;
+				temp = temp.substr(temp.find("o")+1);
+			}
+		}
+		else
+		{
+			while(temp.find("x") != -1)
+			{
+				s2++;
+				temp = temp.substr(temp.find("x")+1);
+			}
+			while(temp.find("o") != -1)
+			{
+				c2++;
+				temp = temp.substr(temp.find("o")+1);
+			}
+		}
+	}
 }

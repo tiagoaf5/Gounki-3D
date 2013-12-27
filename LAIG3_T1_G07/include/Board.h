@@ -28,7 +28,7 @@ class Board
 	CGFappearance * appearanceBlack;
 	CGFappearance * appearanceWhite;
 	CGFappearance * appearanceSelected;
-	Piece * selectedPiece;
+	//Piece * selectedPiece;
 	int selectedX;
 	int selectedY;
 	int nrSquares1,nrSquares2;
@@ -37,10 +37,10 @@ class Board
 	CGFappearance * whiteAppearance;
 	CGFappearance * blackAppearance;
 
-	vector<Piece *> CirclePieces1;
-	vector<Piece *> SquarePieces1;
-	vector<Piece *> CirclePieces2;
-	vector<Piece *> SquarePieces2;
+	Piece * circlePiece1;
+	Piece * squarePiece1;
+	Piece * circlePiece2;
+	Piece * squarePiece2;
 
 	vector<vector<Piece *>> board;
 
@@ -69,6 +69,8 @@ public:
 
 	//movie
 	void playMovie();
+
+	bool getReady() const;
 };
 
 #endif
