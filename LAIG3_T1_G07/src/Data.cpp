@@ -20,6 +20,7 @@ Data::Data()
 	myTextObj2 = new TextObject(2);
 	myTextObj2->setNumber('1');
 
+	game = NULL;
 }
 
 
@@ -622,6 +623,7 @@ void Data::initGame()
 	MyAppearance * app3 = appearancesMap.find("ap_selected_piece")->second;
 
 	game = new Game(app2,app1,app3);
+	game->setClock(relogio);
 }
 
 

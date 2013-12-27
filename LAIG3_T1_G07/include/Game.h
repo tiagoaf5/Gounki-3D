@@ -13,6 +13,8 @@
 #include "MyAppearance.h"
 #include "MyMobileCamera.h"
 
+#include "CGFobject.h"
+
 
 class Game
 {
@@ -25,7 +27,7 @@ private:
 	bool selected;
 
 
-
+	CGFobject * clock;
 
 	int activePlayer;
 	bool started;
@@ -43,6 +45,7 @@ private:
 	void getPcMove(int &x1, int &y1, int &x2, int &y2);
 	void saveMove(int x1,int y1, int x2, int y2);
 	int checkEndofGame();
+	void changePlayer();
 public:
 	Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda);
 	//socket
@@ -73,6 +76,9 @@ public:
 	//camera
 	void setCamera(MyMobileCamera * camera);
 	void playMovie();
+
+	//clock
+	void setClock(CGFobject * clock);
 
 };
 

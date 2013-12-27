@@ -1365,13 +1365,13 @@ void YAFScene::init()
 
 void YAFScene::update(unsigned long t)
 {
-	/*vector<Animation *> animations = data->getAnimations();
+	vector<Animation *> animations = data->getAnimations();
 	for(unsigned int i = 0; i < animations.size(); i++)
 		animations[i]->update(t);
 	vector<MyShader *> shaders = data->getShaders();
 
 	for (unsigned int i = 0; i < shaders.size(); i++)
-		shaders[i]->update(t);*/
+		shaders[i]->update(t);
 	
 	((myClock *)(data->getClock()))->update(t);
 	

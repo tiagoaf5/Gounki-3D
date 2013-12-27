@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "myClock.h"
+
 #define BASE_X 10.9
 #define BASE_Y 2.02
 #define BASE_Z 11.4
@@ -232,7 +234,7 @@ bool Game::pVc(int x, int y)
 		printf("move %d %d to %d %d\n",a,b,c,d);
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
-		activePlayer = activePlayer % 2 + 1;
+		changePlayer();
 		return true;
 	}
 
@@ -265,7 +267,7 @@ bool Game::cVp(int x, int y)
 		printf("move %d %d to %d %d\n",a,b,c,d);
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
-		activePlayer = activePlayer % 2 + 1;
+		changePlayer();
 		return true;
 	}
 
@@ -280,7 +282,7 @@ bool Game::cVc()
 	printf("move %d %d to %d %d\n",a,b,c,d);
 	board->selectPlace(a-1,b-1, activePlayer);
 	board->move(a-1,b-1,c-1,d-1);
-	activePlayer = activePlayer % 2 + 1;
+	changePlayer();
 
 	return true;
 }
@@ -316,7 +318,7 @@ bool Game::handleSelection(int x, int y)
 			string eaten = board->move(selectedPos.first, selectedPos.second,x,y);
 			theReturn = true;
 			//change player
-			activePlayer = activePlayer % 2 + 1;
+			changePlayer();
 			selected = false;
 		}
 		else
@@ -347,12 +349,15 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 
 bool Game::pop()
 {
+	if(!started)
+		return false;
+
 	if(endOfGame)
 		endOfGame = false;
 
 	if(board->pop())
 	{
-		activePlayer = activePlayer % 2 + 1;
+		changePlayer();
 		//play(-1,-1);
 		camera->setPos(activePlayer);
 		return true;
@@ -397,4 +402,17 @@ void Game::playMovie()
 {
 	if(endOfGame)
 		board->playMovie();
+}
+
+void Game::setClock(CGFobject * clock)
+{
+	this->clock = clock;
+
+	((myClock *)(clock))->reset();
+}
+
+void Game::changePlayer()
+{
+	activePlayer = activePlayer % 2 + 1;
+	((myClock *)(clock))->reset();
 }

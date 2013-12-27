@@ -256,7 +256,7 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		};
 	case 4:
 		{
-			data->getGame()->endGame();
+				game->endGame();
 			break;
 		}
 	case 5:
@@ -271,17 +271,17 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		}
 	case 7:
 		{
-			data->getGame()->startGame();
+			game->startGame();
 			break;
 		}
 	case 8:
 		{
-			data->getGame()->pop();
+			game->pop();
 			break;
 		}
 	case 9:
 		{
-			data->getGame()->playMovie();
+			game->playMovie();
 			break;
 		}
 	}
