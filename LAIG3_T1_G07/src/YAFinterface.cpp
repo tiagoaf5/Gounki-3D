@@ -112,7 +112,8 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 
 void YAFinterface::initGUI()
 {
-
+	dif1 = 1;
+	dif2 = 1;
 	//-------------------------------- GAME ------------------------------------
 
 	GLUI_Panel *gamePanel= addPanel("Game", 1);
@@ -225,7 +226,7 @@ void YAFinterface::initGUI()
 
 	GLUI_RadioGroup * radio_group5 = addRadioGroupToPanel(difficultyPanel1, &grupo5,5);
 
-	GLUI_RadioGroup * radio_group6 = addRadioGroupToPanel(difficultyPanel2, &grupo7,5);
+	GLUI_RadioGroup * radio_group6 = addRadioGroupToPanel(difficultyPanel2, &grupo7,4);
 
 	mode1 = addRadioButtonToGroup(radio_group5,"Easy");
 	mode2 = addRadioButtonToGroup(radio_group5,"Hard");
@@ -287,12 +288,12 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		};
 	case 4:
 		{
-				game->endGame();
+				updateDifficulty(2);
 			break;
 		}
 	case 5:
 		{
-			updateDifficulty();
+			updateDifficulty(1);
 			break;
 		}
 	case 6:
@@ -367,20 +368,24 @@ void YAFinterface::updateCameras(){
 
 }
 
-void YAFinterface::updateDifficulty(){
-	int p1=1, p2=1;
+void YAFinterface::updateDifficulty(int i){
 
-	if (mode1->active)
-		p1 = 1;
-	else if (mode2->active)
-		p1 = 2;
+	if(i == 1)
+	{
+		if (mode1->active)
+			dif1 = 1;
+		else if(mode2->active)
+			dif1 = 2;
+	}
+	else
+	{
+		if(mode3->active)
+			dif2 = 1;
+		else if (mode4->active)
+			dif2 = 2;
+	}
 
-	if(mode3->active)
-		p2 = 1;
-	else if(mode4->active)
-		p2 = 2;
-
-	game->setDificulty(p1,p2);
+	game->setDificulty(dif1,dif2);
 }
 
 void YAFinterface::updateMode(){

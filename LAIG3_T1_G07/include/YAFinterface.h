@@ -22,6 +22,7 @@ private:
 	int li[7];
 	int size;
 	int pos_default;
+	int dif1, dif2;
 
 	Data *data;
 	Game *game;
@@ -38,7 +39,7 @@ public:
 	virtual void processMouse(int button, int state, int x, int y);	
 	void performPicking(int x, int y);
 	void processHits(GLint hits, GLuint buffer[]);
-	void updateDifficulty();
+	void updateDifficulty(int i);
 	void updateMode();
 };
 

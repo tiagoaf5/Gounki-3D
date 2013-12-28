@@ -69,6 +69,7 @@ void Game::setDificulty(int difficulty1, int difficulty2)
 {
 	this->difficulty1 = difficulty1;
 	this->difficulty2 = difficulty2;
+	printf("Difficultie p1: %d  p2: %d\n",this->difficulty1,this->difficulty2);
 }
 
 void Game::setMode(int mode)

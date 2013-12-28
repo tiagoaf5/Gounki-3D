@@ -15,7 +15,7 @@
                 diffuse="1 0.55 0.2 1" 
                 specular="1 0.55 0.2 1" 
             /> 
-			<spot id="light2" enabled="false" 
+			<spot id="light2" enabled="true" 
                 location="0 7 0" 
                 ambient="0.1 0.2 0.3 1" 
                 diffuse="1 1 1 1" 
@@ -55,16 +55,16 @@
 		<texture id="tx_relva" file="../data/relva.png" />
 		<texture id="tx_agua" file="../data/water.jpg" />
 		<texture id="tx_taca" file="../data/glass2.png" /> 
-		<texture id="tx_board" file="../data/board1.png" /> 
+		<texture id="tx_board" file="../data/board.png" /> 
 		<texture id="tx_board1" file="../data/board1.png" /> 
-		<texture id="tx_board_side" file="../data/board_side3.png" />
+		<texture id="tx_board_side" file="../data/board_side2.png" />
 		<texture id="tx_board_side1" file="../data/board_side3.png" /> 		
 		<texture id="tx_relogio" file="../data/clock.png"/>
 		<texture id="tx_madeira" file="../data/dark_wood.jpg"/>
     	<texture id="tx_white_piece" file="../data/white.png" /> 
 		<texture id="tx_black_piece" file="../data/black.png" /> 
-		<texture id="tx_white_piece1" file="../data/branca1.jpg" /> 
-		<texture id="tx_black_piece1" file="../data/preta1.jpg" /> 
+		<texture id="tx_white_piece1" file="../data/branca1.png" /> 
+		<texture id="tx_black_piece1" file="../data/preta1.png" /> 
 		<texture id="tx_selected_piece" file="../data/gold.png" /> 
 		<texture id="tx_0" file="../data/numbers/0.png" /> 
 		<texture id="tx_1" file="../data/numbers/1.png" /> 
