@@ -79,7 +79,7 @@ public:
 
 	//clock
 	void setClock(CGFobject * clock);
-
+	void update (unsigned long t);
 };
 
 #endif

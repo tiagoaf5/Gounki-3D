@@ -14,7 +14,7 @@ Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecte
 	selectedAppearance = selecteda;
 	//initSocket();
 	//initBoard();
-	
+
 	board = NULL;
 	mode = 1;
 	difficulty = 1;
@@ -98,7 +98,7 @@ bool Game::play(int x, int y)
 
 	if(!board->getReady())
 		return false;
-		
+
 	if(checkEndofGame() > 1)
 		return true;
 
@@ -121,7 +121,7 @@ bool Game::play(int x, int y)
 	}
 
 	/*if(val)
-		checkEndofGame();*/
+	checkEndofGame();*/
 	return val;
 }
 
@@ -145,24 +145,24 @@ bool Game::isValidMove(int x, int y)
 /*
 bool Game::move(int player, int x, int y)
 {
-	stringstream ss;
-	ss << "play(" <<selectedPos.first << "," << selectedPos.second << "," << x << ","<< y << board->getFormatted() << ").\n";
-	string val = ss.str();
+stringstream ss;
+ss << "play(" <<selectedPos.first << "," << selectedPos.second << "," << x << ","<< y << board->getFormatted() << ").\n";
+string val = ss.str();
 
-	cout << "sent: " << val << endl;
+cout << "sent: " << val << endl;
 
 
-	socket->sendData((char *)val.c_str(), val.size());
-	char abc[200];
-	socket->receiveData(abc);
+socket->sendData((char *)val.c_str(), val.size());
+char abc[200];
+socket->receiveData(abc);
 
-	if(strcmp(abc,"ok") == 0)
-		return true;
-	else 
-		return false;
+if(strcmp(abc,"ok") == 0)
+return true;
+else 
+return false;
 
-	board->selectPlace(x,y,player);
-	return true;
+board->selectPlace(x,y,player);
+return true;
 }*/
 
 void Game::endGame()
@@ -183,8 +183,10 @@ void Game::startGame()
 	activePlayer = 1;
 	printf("Mode: %d\nDifficulty: %d\n", mode,difficulty);
 
+	((myClock *)(clock))->reset();
+/*
 	if(mode == 3)
-		cVp(-1,-1);
+		cVp(-1,-1);*/
 }
 
 bool Game::pVp(int x, int y)
@@ -204,10 +206,10 @@ bool Game::pVp(int x, int y)
 bool Game::pVc(int x, int y)
 {
 	int a,b,c,d;
-	
+
 	if( x == -1 && y == -1 && activePlayer == 1)
 		return false;
-	
+
 	if (activePlayer == 1)
 	{
 		if (!selected)
@@ -226,7 +228,7 @@ bool Game::pVc(int x, int y)
 			else
 				return false;
 		}
-			
+
 	}
 	else
 	{
@@ -328,7 +330,7 @@ bool Game::handleSelection(int x, int y)
 			board->removeSelection(x,y); 	//tell board nothing is selected*/
 			theReturn = false;
 		}
-		
+
 	}
 	return theReturn;
 }
@@ -340,7 +342,7 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted() << ").\n";
 
 	socket->sendData((char *)(ss.str().c_str()), ss.str().size());
-	
+
 	cout << "Sent: " << ss.str() << endl;
 	char abc[200];
 	socket->receiveData(abc);
@@ -376,7 +378,7 @@ int Game::checkEndofGame()
 	char abc[100];
 
 	socket->receiveData(abc);
-	
+
 	if(strcmp(abc,"no.") != 0)
 	{
 		printf("Won player %s\n", abc);
@@ -387,7 +389,7 @@ int Game::checkEndofGame()
 		int aa =atoi(abc1);
 		return aa;
 	}
-	
+
 	return -1;
 }
 
@@ -415,4 +417,19 @@ void Game::changePlayer()
 {
 	activePlayer = activePlayer % 2 + 1;
 	((myClock *)(clock))->reset();
+}
+
+void Game::update (unsigned long t)
+{
+	if(board != NULL)
+		board->performAction(t);
+
+	printf("---> %lu\n", ((myClock*)clock)->getTime());
+
+	if(((myClock*)clock)->getTime() >= 30 && started)
+	{
+		changePlayer();
+		((myClock*)clock)->reset();
+		camera->setPos(activePlayer);
+	}
 }

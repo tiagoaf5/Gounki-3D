@@ -1375,12 +1375,10 @@ void YAFScene::update(unsigned long t)
 	
 	((myClock *)(data->getClock()))->update(t);
 	
-	if(data->getGame()->getBoard() != NULL)
-		if(data->getGame()->getBoard() != NULL)
-			data->getGame()->getBoard()->performAction(t);
+	//if(data->getGame()->getBoard() != NULL)
+		data->getGame()->update(t);
 	
 	dynamic_cast<MyMobileCamera *>(mobileCam)->update(t);
-
 }
 
 

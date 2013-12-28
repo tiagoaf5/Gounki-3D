@@ -68,7 +68,10 @@ void myClock::update(unsigned long num)
 	if (parado == 0){
 	
 		if (anterior == 0)
+		{
+			startTime = num;
 			anterior = num;
+		}
 		else
 		{
 			double s = (num - anterior) / 1000.0 * 360 / 60.0;
@@ -88,7 +91,7 @@ int myClock::getParado(){
 
 void myClock::reset(){
 	segundos_ang = 0;
-
+	anterior == 0;
 }
 
 void myClock::setParado(){
@@ -101,4 +104,9 @@ void myClock::setParado(){
 		parado = 1;
 		return;
 	}
+}
+
+unsigned long myClock::getTime() const
+{
+	return (anterior - startTime)/1000;
 }

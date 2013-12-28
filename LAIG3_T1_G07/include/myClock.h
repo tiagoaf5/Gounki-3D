@@ -21,6 +21,7 @@ private:
 	double segundos_ang;
 	double minutos_ang;
 	double horas_ang;
+	unsigned long startTime;
 	int parado; // 0 anda 1 parado
 public:
 	myClock(CGFscene * scene);
@@ -29,6 +30,7 @@ public:
 	int getParado();
 	void setParado();
 	void reset();
+	unsigned long getTime() const;
 };
 
 #endif
