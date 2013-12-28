@@ -55,8 +55,10 @@
 		<texture id="tx_relva" file="../data/relva.png" />
 		<texture id="tx_agua" file="../data/water.jpg" />
 		<texture id="tx_taca" file="../data/glass2.png" /> 
-		<texture id="tx_board" file="../data/board.png" /> 
-		<texture id="tx_board_side" file="../data/board_side2.png" /> 
+		<texture id="tx_board" file="../data/board1.png" /> 
+		<texture id="tx_board1" file="../data/board1.png" /> 
+		<texture id="tx_board_side" file="../data/board_side3.png" />
+		<texture id="tx_board_side1" file="../data/board_side3.png" /> 		
 		<texture id="tx_relogio" file="../data/clock.png"/>
 		<texture id="tx_madeira" file="../data/dark_wood.jpg"/>
     	<texture id="tx_white_piece" file="../data/white.png" /> 
@@ -158,6 +160,15 @@
 			textureref="tx_board" 
             texlength_s="0.25" 
             texlength_t="0.25"	/>
+		<appearance id="ap_board1" 
+            emissive="0 0 0 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="1.0 1.0 1.0 1" 
+            shininess="1.0"
+			textureref="tx_board1" 
+            texlength_s="0.25" 
+            texlength_t="0.25"	/>
 		<appearance id="ap_board_side" 
             emissive="0 0 0 1" 
             ambient="0.8 0.8 0.8 1" 
@@ -165,6 +176,15 @@
             specular="0.1 0.1 0.1 1" 
             shininess="0.9"
 			textureref="tx_board_side" 
+            texlength_s="0.1" 
+            texlength_t="0.1"	/>
+		<appearance id="ap_board_side1" 
+            emissive="0 0 0 1" 
+            ambient="0.8 0.8 0.8 1" 
+            diffuse="0.8 0.8 0.8 1" 
+            specular="1.0 1.0 1.0 1" 
+            shininess="0.9"
+			textureref="tx_board_side1" 
             texlength_s="0.1" 
             texlength_t="0.1"	/>
 		<appearance id="ap_relogio" 
