@@ -434,6 +434,11 @@ void Board::playMovie()
 	stack<Move *> tmp = moves;
 	stack<Move *> tmp2;
 
+	nrSquares1 = 0;
+	nrSquares2 = 0;
+	nrCircles1 = 0;
+	nrCircles2 = 0;
+
 	while (!tmp.empty())
 	{
 		tmp2.push(tmp.top());

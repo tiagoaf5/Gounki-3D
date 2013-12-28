@@ -15,6 +15,8 @@
 
 #include "CGFobject.h"
 
+#include "FixedText.h"
+
 
 class Game
 {
@@ -22,6 +24,7 @@ private:
 	MyMobileCamera * camera;
 	Board * board;
 	Socket * socket;
+	FixedText * text;
 
 	pair<int,int> selectedPos;
 	bool selected;
@@ -54,7 +57,10 @@ public:
 	void initBoard();
 	Board * getBoard();
 	void setAppearances(CGFappearance * black, CGFappearance * white);
+
 	void draw();
+	void drawText();
+
 	bool play(int x, int y);
 	//bool move(int player, int x, int y);
 	bool isValidMove(int x, int y);

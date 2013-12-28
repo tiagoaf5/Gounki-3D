@@ -91,7 +91,7 @@ int myClock::getParado(){
 
 void myClock::reset(){
 	segundos_ang = 0;
-	anterior == 0;
+	anterior = 0;
 }
 
 void myClock::setParado(){

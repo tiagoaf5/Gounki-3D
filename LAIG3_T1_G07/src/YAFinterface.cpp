@@ -281,6 +281,11 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		}
 	case 9:
 		{
+			if(list_group->get_int_val() != 3 && list_group->get_int_val() != 2)
+			{
+				list_group->set_int_val(2);
+				((YAFScene*) scene)->setActiveCamera("camerap1");
+			}
 			game->playMovie();
 			break;
 		}

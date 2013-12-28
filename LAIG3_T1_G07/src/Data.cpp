@@ -165,6 +165,7 @@ void Data::drawScene()
 	//glPopMatrix();
 	clearAppearancesStack();
 	drawNode(root);
+	game->drawText();
 }
 
 void Data::drawSceneSelect()

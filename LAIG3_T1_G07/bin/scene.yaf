@@ -64,6 +64,16 @@
 		<texture id="tx_white_piece1" file="../data/branca1.jpg" /> 
 		<texture id="tx_black_piece1" file="../data/preta1.jpg" /> 
 		<texture id="tx_selected_piece" file="../data/gold.png" /> 
+		<texture id="tx_0" file="../data/numbers/0.png" /> 
+		<texture id="tx_1" file="../data/numbers/1.png" /> 
+		<texture id="tx_2" file="../data/numbers/2.png" /> 
+		<texture id="tx_3" file="../data/numbers/3.png" /> 
+		<texture id="tx_4" file="../data/numbers/4.png" /> 
+		<texture id="tx_5" file="../data/numbers/5.png" /> 
+		<texture id="tx_6" file="../data/numbers/6.png" /> 
+		<texture id="tx_7" file="../data/numbers/7.png" /> 
+		<texture id="tx_8" file="../data/numbers/8.png" /> 
+		<texture id="tx_9" file="../data/numbers/9.png" /> 
 	</textures> 
 
     <appearances> 

@@ -12,6 +12,9 @@ Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecte
 	blackAppearance = black;
 	whiteAppearance = white;
 	selectedAppearance = selecteda;
+	
+	float color[] = {1.0,1.0,1.0};
+	text = new FixedText("",color);
 	//initSocket();
 	//initBoard();
 
@@ -86,6 +89,10 @@ void Game::draw()
 		board->draw();
 }
 
+void Game::drawText() {
+	text->draw();
+}
+
 bool Game::play(int x, int y)
 {
 	printf("Mode: %d\n", mode);
@@ -99,7 +106,7 @@ bool Game::play(int x, int y)
 	if(!board->getReady())
 		return false;
 
-	if(checkEndofGame() > 1)
+	if(checkEndofGame() >= 1)
 		return true;
 
 	bool val = false;
@@ -184,6 +191,7 @@ void Game::startGame()
 	printf("Mode: %d\nDifficulty: %d\n", mode,difficulty);
 
 	((myClock *)(clock))->reset();
+	text->hide();
 /*
 	if(mode == 3)
 		cVp(-1,-1);*/
@@ -355,7 +363,10 @@ bool Game::pop()
 		return false;
 
 	if(endOfGame)
+	{
 		endOfGame = false;
+		text->hide();
+	}
 
 	if(board->pop())
 	{
@@ -381,12 +392,19 @@ int Game::checkEndofGame()
 
 	if(strcmp(abc,"no.") != 0)
 	{
+		stringstream ss1;
+		
 		printf("Won player %s\n", abc);
 		endOfGame = true;
 		char abc1[2];
 		abc1[1] = '\0';
 		abc1[0] = abc[0];
 		int aa =atoi(abc1);
+		
+		ss1 << "Player " << aa << " won!";
+		cout << "-------------> " << ss1.str() << endl;
+		text->setText(ss1.str());
+		text->show();
 		return aa;
 	}
 
@@ -423,8 +441,6 @@ void Game::update (unsigned long t)
 {
 	if(board != NULL)
 		board->performAction(t);
-
-	printf("---> %lu\n", ((myClock*)clock)->getTime());
 
 	if(((myClock*)clock)->getTime() >= 30 && started)
 	{
