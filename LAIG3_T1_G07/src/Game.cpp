@@ -20,7 +20,9 @@ Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecte
 
 	board = NULL;
 	mode = 1;
-	difficulty = 1;
+
+	difficulty1 = 1;
+	difficulty2 = 1;
 
 	selected = false;
 	selectedPos.first = -1;
@@ -63,9 +65,10 @@ Board * Game::getBoard()
 }
 
 
-void Game::setDificulty(int difficulty)
+void Game::setDificulty(int difficulty1, int difficulty2)
 {
-	this->difficulty = difficulty;
+	this->difficulty1 = difficulty1;
+	this->difficulty2 = difficulty2;
 }
 
 void Game::setMode(int mode)
@@ -188,7 +191,7 @@ void Game::startGame()
 	endOfGame = false;
 	started = true;
 	activePlayer = 1;
-	printf("Mode: %d\nDifficulty: %d\n", mode,difficulty);
+	printf("Mode: %d\nDifficulty: %d %d\n", mode,difficulty1,difficulty2);
 
 	((myClock *)(clock))->reset();
 	text->hide();
@@ -346,6 +349,10 @@ bool Game::handleSelection(int x, int y)
 void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 {
 	stringstream ss;
+	int difficulty = difficulty1;
+	
+	if(activePlayer == 2)
+		difficulty = difficulty2;
 
 	ss << "pc_move(" << activePlayer << "," << difficulty << "," << board->getFormatted() << ").\n";
 

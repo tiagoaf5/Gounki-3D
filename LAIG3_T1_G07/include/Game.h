@@ -35,7 +35,8 @@ private:
 	int activePlayer;
 	bool started;
 	bool endOfGame;
-	int difficulty;  // 1 easy, 2 medium , 3 hard
+	int difficulty1;  // 1 easy, 2 medium
+	int difficulty2;
 	int mode; // 1 P V P, 2 P V C , 3 C V P, 4 C V C 
 
 	CGFappearance * blackAppearance;
@@ -65,7 +66,7 @@ public:
 	//bool move(int player, int x, int y);
 	bool isValidMove(int x, int y);
 	void endGame();
-	void setDificulty(int difficulty);
+	void setDificulty(int difficulty1, int difficulty2);
 	void setMode(int mode);
 	void startGame();
 

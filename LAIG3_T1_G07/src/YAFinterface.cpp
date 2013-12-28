@@ -113,6 +113,16 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 void YAFinterface::initGUI()
 {
 
+	//-------------------------------- GAME ------------------------------------
+
+	GLUI_Panel *gamePanel= addPanel("Game", 1);
+	gamePanel->set_alignment(GLUI_ALIGN_CENTER);
+	this->addColumn();
+	GLUI_Panel *scenePanel= addPanel("Scene", 1);
+	gamePanel->set_alignment(GLUI_ALIGN_CENTER);
+
+	//------------------------------------------------------------------------
+
 	int i = 0, j = 0;
 	char buf1[255];
 	char buf2[255];
@@ -120,56 +130,13 @@ void YAFinterface::initGUI()
 	data = (((YAFScene*) scene)->getData());
 	game = data->getGame();
 
-	//------------------------------------- LIGHTS ------------------------------
-
-	GLUI_Panel *varPanel= addPanel("Lights", 1);
-	vector <GLUI_Checkbox * > checkboxes;
-	this->addColumn();
-
-	size = (data->getLights()).size();
-
-	while (i < (data->getLights()).size()){
-		strcpy(buf1,(data->getLights())[i]->getID().c_str());
-		checkboxes.push_back(addCheckboxToPanel(varPanel,buf1,&li[i],1));
-		if (!data->getLights()[i]->getEnabled()){
-			checkboxes[i]->set_int_val(0);
-		}
-		i++;
-	}
-
-
-	//------------------------------------------ DRAWMODE ----------------------------------
-
-	GLUI_Panel *varPanel2= addPanel("DrawMode", 1);
-	this->addColumn();
-	GLUI_RadioGroup * radio_group = addRadioGroupToPanel(varPanel2, &grupo,2);
-
-
-	b1 = addRadioButtonToGroup(radio_group,"Fill");
-	b2 = addRadioButtonToGroup(radio_group,"Line");
-	b3 = addRadioButtonToGroup(radio_group,"Point");
-
-	if (data->getDrawMode() == "fill" || data->getDrawMode() == "Fill" ){
-		radio_group->set_selected(0);
-	}
-
-	if (data->getDrawMode() == "point" || data->getDrawMode() == "Point" ){
-		radio_group->set_selected(1);
-	}
-
-	if (data->getDrawMode() == "line" || data->getDrawMode() == "Line" ){
-		radio_group->set_selected(2);
-	}
-
-
-
 	//----------------------------------------- CAMERAS -------------------------------------
 
 
 
-	GLUI_Panel *varPanel3= addPanel("Cameras", 1);
+	GLUI_Panel *camerasPanel= addPanelToPanel(scenePanel,"Cameras", 1);
 
-	list_group = addListboxToPanel(varPanel3,"Cameras",&grupo2,3);
+	list_group = addListboxToPanel(camerasPanel,"Cameras",&grupo2,3);
 
 	cam = ((YAFScene*) scene)->getCamerasMap();
 
@@ -194,41 +161,105 @@ void YAFinterface::initGUI()
 	((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
 
 
-	//------------------------------ Server ------------------------------------
+	GLUI_Panel *sceneopsPanel = addPanelToPanel(scenePanel,"",1);
+	//------------------------------------- LIGHTS ------------------------------
 
-	GLUI_Panel *varPanel4= addPanel("Servidor", 1);
-	this->addColumn();
+	GLUI_Panel *lightsPanel= addPanelToPanel(sceneopsPanel,"Lights", 1);
+	vector <GLUI_Checkbox * > checkboxes;
+	addColumnToPanel(sceneopsPanel);
 
-	b4 = addButtonToPanel(varPanel4,"stop",4);
-	b5 = addButtonToPanel(varPanel4,"StartGame",7);
-	b6 = addButtonToPanel(varPanel4,"Undo",8);
-	b7 = addButtonToPanel(varPanel4,"PlayMovie",9);
+	size = (data->getLights()).size();
+
+	while (i < (data->getLights()).size()){
+		strcpy(buf1,(data->getLights())[i]->getID().c_str());
+		checkboxes.push_back(addCheckboxToPanel(lightsPanel,buf1,&li[i],1));
+		if (!data->getLights()[i]->getEnabled()){
+			checkboxes[i]->set_int_val(0);
+		}
+		i++;
+	}
 
 
-	//------------------------------- Game Dificulty ----------------------------------
+	//------------------------------------------ DRAWMODE ----------------------------------
 
-	GLUI_Panel *varPanel5 = addPanel("Difficulty", 1);
-	//this->addColumn();
-
-	GLUI_RadioGroup * radio_group5 = addRadioGroupToPanel(varPanel5, &grupo5,5);
+	GLUI_Panel *drawmodePanel= addPanelToPanel(sceneopsPanel,"DrawMode", 1);
+	GLUI_RadioGroup * radio_group = addRadioGroupToPanel(drawmodePanel, &grupo,2);
 
 
-	mode1 = addRadioButtonToGroup(radio_group5,"Easy");
-	mode2 = addRadioButtonToGroup(radio_group5,"Medium");
-	mode3 = addRadioButtonToGroup(radio_group5,"Hard");
+	b1 = addRadioButtonToGroup(radio_group,"Fill");
+	b2 = addRadioButtonToGroup(radio_group,"Line");
+	b3 = addRadioButtonToGroup(radio_group,"Point");
 
-	radio_group5->set_selected(0);
+	if (data->getDrawMode() == "fill" || data->getDrawMode() == "Fill" ){
+		radio_group->set_selected(0);
+	}
+
+	if (data->getDrawMode() == "point" || data->getDrawMode() == "Point" ){
+		radio_group->set_selected(1);
+	}
+
+	if (data->getDrawMode() == "line" || data->getDrawMode() == "Line" ){
+		radio_group->set_selected(2);
+	}
+
+
 	//------------------------------- Game Mode -------------------------------------
 
-	GLUI_Panel *varPanel6 = addPanel("Mode", 1);
-	//this->addColumn();
+	GLUI_Panel *modePanel = addPanelToPanel(gamePanel,"Mode", 1);
 
-	list_group2 = addListboxToPanel(varPanel6,"Mode",&grupo6,6);
+
+	list_group2 = addListboxToPanel(modePanel,"",&grupo6,6);
 
 	list_group2->add_item(1,"Player vs Player");
 	list_group2->add_item(2,"Player vs Computer");
 	list_group2->add_item(3,"Computer vs Player");
 	list_group2->add_item(4,"Computer vs Computer");
+
+	//------------------------------- Game Dificulty ----------------------------------
+
+	GLUI_Panel *difficultyPanel = addPanelToPanel(gamePanel,"Difficulty", 1);
+
+	GLUI_Panel *difficultyPanel1 = addPanelToPanel(difficultyPanel,"Computer 1", 1);
+	addColumnToPanel(difficultyPanel);
+	GLUI_Panel *difficultyPanel2 = addPanelToPanel(difficultyPanel,"Computer 2", 1);
+
+	GLUI_RadioGroup * radio_group5 = addRadioGroupToPanel(difficultyPanel1, &grupo5,5);
+
+	GLUI_RadioGroup * radio_group6 = addRadioGroupToPanel(difficultyPanel2, &grupo7,5);
+
+	mode1 = addRadioButtonToGroup(radio_group5,"Easy");
+	mode2 = addRadioButtonToGroup(radio_group5,"Hard");
+
+	mode3 = addRadioButtonToGroup(radio_group6,"Easy");
+	mode4 = addRadioButtonToGroup(radio_group6,"Hard");
+	//mode3 = addRadioButtonToGroup(radio_group5,"Hard");
+
+	radio_group5->set_selected(0);
+	radio_group6->set_selected(0);
+
+	//------------------------------ Server ------------------------------------
+
+	
+
+	addColumnToPanel(gamePanel);
+
+	GLUI_Panel *emptyPanel= addPanelToPanel(gamePanel,"", 1);
+	emptyPanel->set_w(30);
+	emptyPanel->hide_internal(1);
+	emptyPanel->set_alignment(GLUI_ALIGN_CENTER);
+	GLUI_Panel *servidorPanel= addPanelToPanel(gamePanel,"", 1);
+	servidorPanel->set_alignment(GLUI_ALIGN_CENTER);
+	GLUI_Panel *emptyPanel2= addPanelToPanel(gamePanel,"", 1);
+	emptyPanel2->set_w(30);
+	emptyPanel2->set_alignment(GLUI_ALIGN_CENTER);
+	emptyPanel2->hide_internal(1);
+
+	b5 = addButtonToPanel(servidorPanel,"StartGame",7);
+	b5->set_alignment(GLUI_ALIGN_CENTER);
+	//b4 = addButtonToPanel(servidorPanel,"stop",4);
+	b6 = addButtonToPanel(servidorPanel,"Undo",8);
+	b7 = addButtonToPanel(servidorPanel,"PlayMovie",9);
+
 }
 
 
@@ -337,12 +368,19 @@ void YAFinterface::updateCameras(){
 }
 
 void YAFinterface::updateDifficulty(){
+	int p1=1, p2=1;
+
 	if (mode1->active)
-		game->setDificulty(1);
+		p1 = 1;
 	else if (mode2->active)
-		game->setDificulty(2);
-	else
-		game->setDificulty(3);
+		p1 = 2;
+
+	if(mode3->active)
+		p2 = 1;
+	else if(mode4->active)
+		p2 = 2;
+
+	game->setDificulty(p1,p2);
 }
 
 void YAFinterface::updateMode(){
