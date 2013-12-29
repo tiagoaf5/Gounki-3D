@@ -9,6 +9,9 @@ MyRectangle::MyRectangle(float x1,float y1,float x2,float y2, CGFscene * scene)
 	this->x2 = x2;
 	this->y2 = y2;
 	this->scene = scene;
+
+	text_length_s = 1;
+	text_length_t = 1;
 }
 
 void MyRectangle::draw()
@@ -22,8 +25,8 @@ void MyRectangle::draw()
 	}
 	else
 	{
-		coord.first = 1;
-		coord.second = 1;
+		coord.first = text_length_s;
+		coord.second = text_length_t;
 	}
 
 	glBegin(GL_QUADS);
@@ -46,4 +49,10 @@ void MyRectangle::draw()
 		//glTexCoord2d(0,1);
 		glVertex2f(x1,y2);
 	glEnd();
+}
+
+void MyRectangle::setTextLength(float s, float t)
+{
+	text_length_s = s;
+	text_length_t = t;
 }

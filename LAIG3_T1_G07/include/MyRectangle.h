@@ -13,6 +13,7 @@ private:
 public:
 	MyRectangle(float x1,float y1,float x2,float y2, CGFscene * scene);
 	void draw();
+	void setTextLength(float s, float t);
 };
 
 #endif

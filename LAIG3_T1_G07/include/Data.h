@@ -19,7 +19,6 @@
 #include "MyOrthogonalCamera.h"
 #include "MyLight.h"
 #include "MyShader.h"
-#include "TextObject.h"
 #include "Game.h"
 
 /*
@@ -90,9 +89,7 @@ private:
 	//Board
 	//Board * board;
 
-	//text
-	TextObject *myTextObj1;
-	TextObject *myTextObj2;
+
 
 
 	//private functions
@@ -101,6 +98,7 @@ private:
 	void clearAppearancesStack();
 	void drawDisplayList(Node * node);
 	void drawDisplayList(Node * node, int time);
+	void initGameScore();
 
 public:
 	Data();
@@ -109,6 +107,7 @@ public:
 	bool addNodeToMap(char * id, Node * node);
 	void printNodesMap(); //testing purpose
 	void setRootStr(string r);
+	void setRoot(string r);
 	void computeNodePointers();
 	void drawScene();
 	void drawSceneSelect();
@@ -168,8 +167,6 @@ public:
 	Game * getGame();
 
 	//text
-	TextObject * getText(int player);
-	void setText(int player,int number);
 
 	/*
 	//board

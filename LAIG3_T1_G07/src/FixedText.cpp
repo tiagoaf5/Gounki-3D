@@ -47,10 +47,11 @@ void FixedText::draw()
 	begin2D(true);
 	glEnable(GL_COLOR);
 	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE);
 
 	glPushAttrib(GL_CURRENT_BIT);
-	glColor3f(1.0, 1.0, 1.0);
-	
+	glColor3f(color[0], color[1], color[2]);
+
 	glRasterPos2i(glutGet(GLUT_WINDOW_WIDTH)/2 - glutBitmapLength(font,(const unsigned char *)text.c_str())/2, 20);
 
 	glPushMatrix();
@@ -67,6 +68,7 @@ void FixedText::draw()
 	glPopMatrix();
 	end2D();
 	glPopAttrib();
+	glEnable(GL_TEXTURE);
 	glEnable(GL_LIGHTING);
 	glDisable(GL_COLOR);
 }

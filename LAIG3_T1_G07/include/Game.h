@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <vector>
 
 
 #include "Socket.h"
@@ -16,7 +17,7 @@
 #include "CGFobject.h"
 
 #include "FixedText.h"
-
+#include "PiecesApperances.h"
 
 class Game
 {
@@ -29,8 +30,8 @@ private:
 	pair<int,int> selectedPos;
 	bool selected;
 
-
 	CGFobject * clock;
+	CGFobject * score;
 
 	int activePlayer;
 	bool started;
@@ -39,9 +40,12 @@ private:
 	int difficulty2;
 	int mode; // 1 P V P, 2 P V C , 3 C V P, 4 C V C 
 
-	CGFappearance * blackAppearance;
-	CGFappearance * whiteAppearance;
-	CGFappearance * selectedAppearance;
+	int score1;
+	int score2;
+	int winner;
+
+	PieceAppearances * piecesAppearances;
+	vector<CGFappearance *> numberTextures;
 
 	void initSocket();
 	bool select(int x, int y);
@@ -50,6 +54,7 @@ private:
 	void saveMove(int x1,int y1, int x2, int y2);
 	int checkEndofGame();
 	void changePlayer();
+	void processWinner(bool update);
 public:
 	Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda);
 	//socket
@@ -87,6 +92,8 @@ public:
 	//clock
 	void setClock(CGFobject * clock);
 	void update (unsigned long t);
+
+	void setNumberAppearances(vector<CGFappearance *> numberTextures);
 };
 
 #endif

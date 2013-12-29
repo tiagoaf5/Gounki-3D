@@ -14,15 +14,16 @@
 #include <iostream>
 using namespace std;
 
-Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
+Board::Board(PieceAppearances * thePiecesApp)
 {
-	blackAppearance = black;
+	/*blackAppearance = black;
 	whiteAppearance = white;
 
 	appearanceBlack = black;
 	appearanceWhite = white;
-	appearanceSelected = selecteda;
+	appearanceSelected = selecteda;*/
 	//selectedPiece = NULL;
+	this->thePiecesApp = thePiecesApp;
 	generateBoard();
 
 	PieceCircle *pc1;
@@ -36,66 +37,66 @@ Board::Board(CGFappearance * black, CGFappearance * white, CGFappearance * selec
 	nrCircles2 = 0;
 
 	PieceBase * pc = new PieceCircle();
-	circlePiece1 = new Piece(1,pc,blackAppearance,selecteda);
-	circlePiece2 = new Piece(2,pc,whiteAppearance,selecteda);
+	circlePiece1 = new Piece(1,pc,thePiecesApp);
+	circlePiece2 = new Piece(2,pc,thePiecesApp);
 	pc = new PieceSquare();
-	squarePiece1 = new Piece(1,pc,blackAppearance,selecteda);
-	squarePiece2 = new Piece(2,pc,whiteAppearance,selecteda);
+	squarePiece1 = new Piece(1,pc,thePiecesApp);
+	squarePiece2 = new Piece(2,pc,thePiecesApp);
 
-/*
+	/*
 	CGFappearance * app;
 
 	for (int i = 0 ; i < 8 ; i++){
-		pc1 = new PieceCircle();
+	pc1 = new PieceCircle();
 
-		app = blackAppearance;
+	app = blackAppearance;
 
-		Piece* pie = new Piece(1,pc1,app,selecteda);
+	Piece* pie = new Piece(1,pc1,app,selecteda);
 
-		pie->setHidden(0);
+	pie->setHidden(0);
 
-		CirclePieces1.push_back(pie);
+	CirclePieces1.push_back(pie);
 	}
 
 
 	//square p1
 	for (int i = 0 ; i < 8 ; i++){
-		ps1 = new PieceSquare();
+	ps1 = new PieceSquare();
 
-		app = blackAppearance;
+	app = blackAppearance;
 
-		Piece* pie1 = new Piece(1,ps1,app,selecteda);
+	Piece* pie1 = new Piece(1,ps1,app,selecteda);
 
-		pie1->setHidden(0);
+	pie1->setHidden(0);
 
-		SquarePieces1.push_back(pie1);
+	SquarePieces1.push_back(pie1);
 	}
 
 	//circle p2
 	for (int i = 0 ; i < 8 ; i++){
-		pc2 = new PieceCircle();
+	pc2 = new PieceCircle();
 
-		app = whiteAppearance;
+	app = whiteAppearance;
 
-		Piece* pie2 = new Piece(1,pc2,app,selecteda);
+	Piece* pie2 = new Piece(1,pc2,app,selecteda);
 
-		pie2->setHidden(0);
+	pie2->setHidden(0);
 
-		CirclePieces2.push_back(pie2);
+	CirclePieces2.push_back(pie2);
 	}
 
 
 	//square p2
 	for (int i = 0 ; i < 8 ; i++){
-		ps2 = new PieceSquare();
+	ps2 = new PieceSquare();
 
-		app = whiteAppearance;
+	app = whiteAppearance;
 
-		Piece* pie3 = new Piece(1,ps2,app,selecteda);
+	Piece* pie3 = new Piece(1,ps2,app,selecteda);
 
-		pie3->setHidden(0);
+	pie3->setHidden(0);
 
-		SquarePieces2.push_back(pie3);
+	SquarePieces2.push_back(pie3);
 	}*/
 }
 
@@ -114,13 +115,13 @@ void Board::generateBoard()
 	for (int i = 0; i < SIZE; i++)
 		middle.push_back(NULL);
 
-		board.push_back(line0);
-		board.push_back(line1);
-		for (int i = 0; i < SIZE - 4; i++)
-			board.push_back(middle);
+	board.push_back(line0);
+	board.push_back(line1);
+	for (int i = 0; i < SIZE - 4; i++)
+		board.push_back(middle);
 
-		board.push_back(line6);
-		board.push_back(line7);
+	board.push_back(line6);
+	board.push_back(line7);
 
 }
 
@@ -129,10 +130,10 @@ vector<Piece *> Board::buildRow(int player, string odd)
 	vector<Piece *> pieces;
 	CGFappearance * app;
 
-	if(player == 1)
-		app = appearanceWhite;
+	/*if(player == 1)
+	app = appearanceWhite;
 	else
-		app = appearanceBlack;
+	app = appearanceBlack;*/
 
 	for(int i = 0; i < SIZE; i++)
 	{
@@ -152,7 +153,7 @@ vector<Piece *> Board::buildRow(int player, string odd)
 			else
 				base = new PieceCircle();
 		}
-		pieces.push_back(new Piece(player,base,app,appearanceSelected));
+		pieces.push_back(new Piece(player,base,thePiecesApp));
 	}
 
 	return pieces;
@@ -180,7 +181,7 @@ void Board::draw()
 			end = false;
 			glPushMatrix();
 			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2+0.9);
-			circlePiece1->draw();
+			circlePiece2->draw();
 			glPopMatrix();
 		}
 		if(nrSquares1 >= i)
@@ -188,7 +189,7 @@ void Board::draw()
 			end = false;
 			glPushMatrix();
 			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2+0.7);
-			squarePiece1->draw();
+			squarePiece2->draw();
 			glPopMatrix();
 		}
 		if(nrCircles2 >= i)
@@ -196,7 +197,7 @@ void Board::draw()
 			end = false;
 			glPushMatrix();
 			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2-0.2);
-			circlePiece2->draw();
+			circlePiece1->draw();
 			glPopMatrix();
 		}
 		if(nrSquares2 >= i)
@@ -204,51 +205,51 @@ void Board::draw()
 			end = false;
 			glPushMatrix();
 			glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*(i-1),BASE_Z2);
-			squarePiece2->draw();
+			squarePiece1->draw();
 			glPopMatrix();
 		}
 	}
 	/*
 	for(int i = 0; i < 8; i++)
 	{
-		glPushMatrix();
-		glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.9);
-		if(CirclePieces1[i] != NULL)
-			CirclePieces1[i]->draw();
-		glPopMatrix();
-		//printf("hidden: %d\n",CirclePieces1[i]->getHidden());
+	glPushMatrix();
+	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.9);
+	if(CirclePieces1[i] != NULL)
+	CirclePieces1[i]->draw();
+	glPopMatrix();
+	//printf("hidden: %d\n",CirclePieces1[i]->getHidden());
 	}
 
 
 
 	for(int i = 0; i < 8; i++)
 	{
-		glPushMatrix();
-		glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.7);
-		if(SquarePieces1[i] != NULL)
-			SquarePieces1[i]->draw();
-		glPopMatrix();
+	glPushMatrix();
+	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.7);
+	if(SquarePieces1[i] != NULL)
+	SquarePieces1[i]->draw();
+	glPopMatrix();
 	}
 
 
 	for(int i = 0; i < 8; i++)
 	{
-		glPushMatrix();
-		glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2-0.2);
-		if(CirclePieces2[i] != NULL)
-			CirclePieces2[i]->draw();
-		glPopMatrix();
+	glPushMatrix();
+	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2-0.2);
+	if(CirclePieces2[i] != NULL)
+	CirclePieces2[i]->draw();
+	glPopMatrix();
 	}
 
 
 
 	for(int i = 0; i < 8; i++)
 	{
-		glPushMatrix();
-		glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2);
-		if(SquarePieces2[i] != NULL)
-			SquarePieces2[i]->draw();
-		glPopMatrix();
+	glPushMatrix();
+	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2);
+	if(SquarePieces2[i] != NULL)
+	SquarePieces2[i]->draw();
+	glPopMatrix();
 	}*/
 }
 
@@ -314,49 +315,19 @@ string Board::getFormatted() const
 	return ss.str();
 }
 
-bool Board::removeSelection(int y, int x) //need review
+bool Board::removeSelection(int y, int x)
 {
 	board[x][y]->unselect();
-	//selectedPiece->unselect();
-	/*if(board[x][y] == NULL)
-	return false;
-	else
-	board[x][y] == NULL;
-	return true;*/
 	return true;
 }
 
-string Board::move(int y1, int x1, int y2, int x2)
+void Board::move(int y1, int x1, int y2, int x2)
 {
 	//saves move in the stack
 	saveMove(x1,y1,x2,y2);
+
 	//adds action to the queue
 	addAction(y1,x1,y2,x2);
-	/*
-	string eaten;
-	if(board_aux[x2][y2] != NULL)
-	{
-
-		if(board_aux[x2][y2]->getPlayer() == board_aux[x1][y1]->getPlayer())
-		{
-			board_aux[x2][y2]->addPieces(board_aux[x1][y1]->getPieces());
-		}
-		else
-		{
-			eaten = board_aux[x2][y2]->getFormattedPiece();
-			board_aux[x2][y2] = board_aux[x1][y1];
-		}
-	}
-	else
-		board_aux[x2][y2] = board_aux[x1][y1];
-
-	board_aux[x1][y1] = NULL;
-
-	cout <<"peca: "<< eaten <<endl;
-
-	processEaten(eaten);*/
-
-	return "eaten";
 }
 
 void Board::saveMove(int x1,int y1, int x2, int y2)
@@ -403,8 +374,7 @@ bool Board::pop()
 	p2 = m->getDestinantion(x2,y2);
 
 
-	if (p1 != NULL)
-	{
+	if (p1 != NULL) {
 		p1->unselect();
 	}
 	if(p2 != NULL)
@@ -454,8 +424,6 @@ void Board::playMovie()
 		Action * a = new Action(y1,x1,y2,x2,p1,p2);
 		actions.push(a);
 
-		//selectPlace(y1,x1,99);
-		//move(y1,x1,y2,x2);
 		tmp2.pop();
 	}
 }
@@ -463,10 +431,9 @@ void Board::playMovie()
 
 bool Board::performAction(unsigned long t)
 {
-	printf("-");
 	if(actions.empty())
 		return false;
-	
+
 	int x1,x2,y1,y2;
 	Action * a = actions.front();
 	a->getCoords(y1,x1,y2,x2);
@@ -476,76 +443,33 @@ bool Board::performAction(unsigned long t)
 	{
 		a->start();
 		board[x1][y1] = a->getPiece(1);
-		printf("start ");
 	}
 
-	//printf("1");
-	
-	/*if(a->getHandled())
-		printf("handled");
-	if(a->getAlmostFinished())
-		printf("almost");*/
-
-	if(a->getAlmostFinished() && !a->getHandled())// TO CHANGEEEEEEEEEEEE
+	if(a->getAlmostFinished() && !a->getHandled())
 	{
 		Piece * p = a->getPiece(1);
-		//cout << " "<<p->getFormattedPiece() << " ";
-		
+
 		int eaten = 0;
-		
+
 		p->unselect();
 		board[x2][y2] = a->getPiece(3);
 
 		//update eaten pieces
 		a->updateBoardEaten(nrCircles1, nrSquares1, nrCircles2, nrSquares2);
 
-		/*if(board[x2][y2] != NULL)
-		{
-			if(board[x2][y2]->getPlayer() == p->getPlayer())
-			{
-				//printf("abc\n");
-				board[x2][y2]->addPieces(p->getPieces());
-			}
-			else
-			{
-				eaten = board[x2][y2]->getPieces().size();
-				board[x2][y2] = p;
-			}
-		}
-		else
-			board[x2][y2] = p;*/
-		
 		board[x1][y1] = NULL;
 		a->setHandled();
 	}
 	else 
-	{
-		printf("0");
 		actions.front()->update(t);
-	}
 
 	if(a->hasFinished() && a->getHandled())
 	{
 		camera->setPlayer(actions.front()->getPiece(1)->getPlayer() % 2 +1);
 		actions.pop();
-		//printf("4");
 	}
 
-	//printf("\n");
 	return true;
-	/*
-	if(actions.empty())
-	return NULL;
-	else 
-	{
-	if(actions.front()->isFinished())
-	actions.pop();
-	else
-	return actions.front();
-
-	return getAction();
-	}*/
-
 }
 
 void Board::setCamera(MyMobileCamera * camera)
@@ -553,45 +477,6 @@ void Board::setCamera(MyMobileCamera * camera)
 	this->camera = camera;
 }
 
-void Board::processEaten(string eaten)
-{/*
-	string temp;
-	temp = eaten;
-
-	if (!eaten.empty())
-	{
-		if (eaten.find("2") != -1)
-		{
-			while(temp.find("x") != -1)
-			{
-				SquarePieces1[nrSquares1]->setHidden(1);
-				nrSquares1++;
-				temp = temp.substr(temp.find("x")+1);
-			}
-			while(temp.find("o") != -1)
-			{
-				CirclePieces1[nrCircles1]->setHidden(1);
-				nrCircles1++;
-				temp = temp.substr(temp.find("o")+1);
-			}
-		}
-		else
-		{
-			while(temp.find("x") != -1)
-			{
-				SquarePieces2[nrSquares2]->setHidden(1);
-				nrSquares2++;
-				temp = temp.substr(temp.find("x")+1);
-			}
-			while(temp.find("o") != -1)
-			{
-				CirclePieces2[nrCircles2]->setHidden(1);
-				nrCircles2++;
-				temp = temp.substr(temp.find("o")+1);
-			}
-		}
-	}*/
-}
 bool Board::getReady() const
 {
 	return actions.empty();

@@ -9,21 +9,19 @@
 #include <iostream>
 using namespace std;
 
-Piece::Piece(int player, CGFappearance * appearance, CGFappearance * selectedAppearanca)
+Piece::Piece(int player, PieceAppearances * thePiecesApp)
 {
 	this->player = player;
-	this->appearance = appearance;
-	this->selectedAppearance = selectedAppearanca;
+	this->thePiecesApp = thePiecesApp;
 	animated = false;
 	selected = false;
 	hidden = 1;
 }
 
-Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappearance * selectedAppearanca)
+Piece::Piece(int player, PieceBase * piece, PieceAppearances * thePiecesApp)
 {
 	this->player = player;
-	this->appearance = appearance;
-	this->selectedAppearance = selectedAppearanca;
+	this->thePiecesApp = thePiecesApp;
 	pieces.push_back(piece);
 	animated = false;
 	selected = false;
@@ -33,9 +31,11 @@ Piece::Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappea
 void Piece::draw()
 {
 	if(!selected)
-		appearance->apply();
+	{
+		thePiecesApp->apply(player);
+	}
 	else
-		selectedAppearance->apply();
+		thePiecesApp->apply(3);
 
 	if(hidden == 1)
 	{

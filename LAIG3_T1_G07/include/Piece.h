@@ -4,6 +4,7 @@
 #include "PieceBase.h"
 #include "CGFappearance.h"
 #include "LinearAnimation.h"
+#include "PiecesApperances.h"
 
 #include <string>
 #include <vector>
@@ -12,8 +13,7 @@ using namespace std;
 
 class Piece
 {
-	CGFappearance * appearance;
-	CGFappearance * selectedAppearance;
+	PieceAppearances * thePiecesApp;
 	int player;
 	bool selected;
 	vector<PieceBase *> pieces;
@@ -21,8 +21,8 @@ class Piece
 	LinearAnimation * anim;
 	int hidden;
 public:
-	Piece(int player, CGFappearance * appearance, CGFappearance * selectedAppearanca);
-	Piece(int player, PieceBase * piece, CGFappearance * appearance, CGFappearance * selectedAppearanca);
+	Piece(int player, PieceAppearances * thePiecesApp);
+	Piece(int player, PieceBase * piece, PieceAppearances * thePiecesApp);
 	string getFormattedPiece(); // piece ready for prolog
 	void draw();
 	void addPieces(vector<PieceBase *> p);

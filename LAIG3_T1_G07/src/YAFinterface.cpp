@@ -114,6 +114,7 @@ void YAFinterface::initGUI()
 {
 	dif1 = 1;
 	dif2 = 1;
+
 	//-------------------------------- GAME ------------------------------------
 
 	GLUI_Panel *gamePanel= addPanel("Game", 1);
@@ -131,39 +132,10 @@ void YAFinterface::initGUI()
 	data = (((YAFScene*) scene)->getData());
 	game = data->getGame();
 
-	//----------------------------------------- CAMERAS -------------------------------------
 
 
-
-	GLUI_Panel *camerasPanel= addPanelToPanel(scenePanel,"Cameras", 1);
-
-	list_group = addListboxToPanel(camerasPanel,"Cameras",&grupo2,3);
-
-	cam = ((YAFScene*) scene)->getCamerasMap();
-
-	map<string,CGFcamera*>::iterator iter = cam.begin();
-
-	for (iter;iter != cam.end(); iter++){
-		strcpy(buf2,(iter->first).c_str());
-		list_group->add_item(j,buf2);
-
-		if(iter->second == ((YAFScene*) scene)->getActiveCamera()){
-			//(iter->second)->applyView();
-			((YAFScene*) scene)->setActiveCamera(iter->first);
-			list_group->set_int_val(j);
-		}
-		j++;
-	}
-	pos_default= j;
-	list_group->add_item(j,"default");
-	list_group->add_item(j+1,"mobile");
-
-	list_group->set_int_val(j+1);
-	((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
-
-
-	GLUI_Panel *sceneopsPanel = addPanelToPanel(scenePanel,"",1);
 	//------------------------------------- LIGHTS ------------------------------
+	GLUI_Panel *sceneopsPanel = addPanelToPanel(scenePanel,"",1);
 
 	GLUI_Panel *lightsPanel= addPanelToPanel(sceneopsPanel,"Lights", 1);
 	vector <GLUI_Checkbox * > checkboxes;
@@ -240,20 +212,20 @@ void YAFinterface::initGUI()
 
 	//------------------------------ Server ------------------------------------
 
-	
+
 
 	addColumnToPanel(gamePanel);
 
-	GLUI_Panel *emptyPanel= addPanelToPanel(gamePanel,"", 1);
+	/*GLUI_Panel *emptyPanel= addPanelToPanel(gamePanel,"", 1);
 	emptyPanel->set_w(30);
 	emptyPanel->hide_internal(1);
-	emptyPanel->set_alignment(GLUI_ALIGN_CENTER);
+	emptyPanel->set_alignment(GLUI_ALIGN_CENTER);*/
 	GLUI_Panel *servidorPanel= addPanelToPanel(gamePanel,"", 1);
 	servidorPanel->set_alignment(GLUI_ALIGN_CENTER);
-	GLUI_Panel *emptyPanel2= addPanelToPanel(gamePanel,"", 1);
+	/*GLUI_Panel *emptyPanel2= addPanelToPanel(gamePanel,"", 1);
 	emptyPanel2->set_w(30);
 	emptyPanel2->set_alignment(GLUI_ALIGN_CENTER);
-	emptyPanel2->hide_internal(1);
+	emptyPanel2->hide_internal(1);*/
 
 	b5 = addButtonToPanel(servidorPanel,"StartGame",7);
 	b5->set_alignment(GLUI_ALIGN_CENTER);
@@ -261,6 +233,44 @@ void YAFinterface::initGUI()
 	b6 = addButtonToPanel(servidorPanel,"Undo",8);
 	b7 = addButtonToPanel(servidorPanel,"PlayMovie",9);
 
+	//----------------------------------------- CAMERAS -------------------------------------
+
+
+
+	GLUI_Panel *camerasPanel= addPanelToPanel(gamePanel,"Cameras", 1);
+
+	list_group = addListboxToPanel(camerasPanel,"Cameras",&grupo2,3);
+
+	cam = ((YAFScene*) scene)->getCamerasMap();
+
+	map<string,CGFcamera*>::iterator iter = cam.begin();
+
+	for (iter;iter != cam.end(); iter++){
+		strcpy(buf2,(iter->first).c_str());
+		list_group->add_item(j,buf2);
+
+		if(iter->second == ((YAFScene*) scene)->getActiveCamera()){
+			//(iter->second)->applyView();
+			((YAFScene*) scene)->setActiveCamera(iter->first);
+			list_group->set_int_val(j);
+		}
+		j++;
+	}
+	pos_default= j;
+	list_group->add_item(j,"Default");
+	list_group->add_item(j+1,"Mobile");
+
+	list_group->set_int_val(j+1);
+	((YAFScene*) scene)->setActiveCamera("MOBILECAMERA");
+
+
+	//-------------------------------  Scenes --------------------------------------------
+
+	GLUI_Panel *varPanel7 = addPanelToPanel(scenePanel,"Scenes", 1);
+
+	list_group3 = addListboxToPanel(varPanel7,"Scenes",&grupo8,10);
+	list_group3->add_item(1,"Garden");
+	list_group3->add_item(2,"Prision");
 }
 
 
@@ -277,7 +287,6 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 	case 2:
 		{
 			updateDrawMode();
-			data->setText(1,6);
 			break;
 		};
 
@@ -288,7 +297,7 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 		};
 	case 4:
 		{
-				updateDifficulty(2);
+			updateDifficulty(2);
 			break;
 		}
 	case 5:
@@ -321,6 +330,11 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 			game->playMovie();
 			break;
 		}
+	case 10:
+		{	
+			updateScene();
+			break;
+		}	
 	}
 }
 
@@ -368,7 +382,8 @@ void YAFinterface::updateCameras(){
 
 }
 
-void YAFinterface::updateDifficulty(int i){
+void YAFinterface::updateDifficulty(int i)
+{
 
 	if(i == 1)
 	{
@@ -398,17 +413,30 @@ void YAFinterface::updateMode(){
 	else if (list_group2->get_int_val() == 2){
 		game->setMode(2);
 		list_group->set_int_val(2);
-		((YAFScene*) scene)->setActiveCamera("camerap1");
+		((YAFScene*) scene)->setActiveCamera("Player1");
 	}
 	else if (list_group2->get_int_val() == 3){
 		game->setMode(3);
 		list_group->set_int_val(3);
-		((YAFScene*) scene)->setActiveCamera("camerap2");
+		((YAFScene*) scene)->setActiveCamera("Player2");
 	}
 	else {
 		game->setMode(4);
 		list_group->set_int_val(2);
-		((YAFScene*) scene)->setActiveCamera("camerap1");
+		((YAFScene*) scene)->setActiveCamera("Player1");
+	}
+
+}
+
+void YAFinterface::updateScene(){
+
+	if(list_group3->get_int_val() == 1){
+		data->setRoot("cena");
+		//data->computeNodePointers();
+	}
+	else if(list_group3->get_int_val() == 2){
+		data->setRoot("cena2");
+		//data->computeNodePointers();
 	}
 
 }

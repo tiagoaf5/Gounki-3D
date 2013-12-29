@@ -1,11 +1,11 @@
 <yaf> 
     <globals background="0.05 0.05 0.05 1" drawmode="fill" shading="gouraud" cullface="back" cullorder="CCW" /> 
      
-    <cameras initial="Player1" > 
-        <perspective id="Camera1" near="0.1" far="50" angle="40" pos="12 5 23" target="2 0 0" /> 
-        <perspective id="Player1" near="0.1" far="50" angle="40" pos="11.8 3.8 13.5" target="11.8 2.05 11.75" /> 
-        <perspective id="Player2" near="0.1" far="50" angle="40" pos="11.8 3.8 10" target="11.8 2.05 11.75" /> 
-		<ortho id="Camera2" near="-15" far="50" left="-5" right="20" top="15" bottom="-10" /> 
+    <cameras initial="camerap1" > 
+        <perspective id="camera1" near="0.1" far="50" angle="40" pos="20.0 7.5 25.0" target="3 0 0" /> 
+        <perspective id="camerap1" near="0.1" far="50" angle="40" pos="11.8 3.8 13.5" target="11.8 2.05 11.75" /> 
+        <perspective id="camerap2" near="0.1" far="50" angle="40" pos="11.8 3.8 10" target="11.8 2.05 11.75" /> 
+		<ortho id="camera2" near="-15" far="50" left="-5" right="20" top="15" bottom="-10" /> 
 	</cameras> 
    
     <lighting doublesided="true" local="true" enabled="true" ambient="0.3 0.3 0.3 1"> 
@@ -24,6 +24,15 @@
                 exponent="2" 
                 direction="2 0 2" 
             />
+		<!--	<spot id="light3" enabled="false" 
+                location="10 1 2" 
+                ambient="0.1 0.2 0.3 1" 
+                diffuse="1 1 1 1" 
+                specular="1 1 1 1" 
+                angle="60" 
+                exponent="2" 
+                direction="0 1 -1" 
+            /> -->
 			
 			<spot id="game" enabled="true" 
                 location="11.8 5 11.75" 
@@ -52,10 +61,10 @@
 		<texture id="tx_board_side1" file="../data/board_side3.png" /> 		
 		<texture id="tx_relogio" file="../data/clock.png"/>
 		<texture id="tx_madeira" file="../data/dark_wood.jpg"/>
-    	<texture id="tx_white_piece" file="../data/branca3.png" /> 
-		<texture id="tx_black_piece" file="../data/preta3.png" /> 
-		<texture id="tx_white_piece1" file="../data/branca1.png" /> 
-		<texture id="tx_black_piece1" file="../data/preta1.png" /> 
+    	<texture id="tx_white_piece" file="../data/white.png" /> 
+		<texture id="tx_black_piece" file="../data/black.png" /> 
+		<texture id="tx_white_piece1" file="../data/branca1.jpg" /> 
+		<texture id="tx_black_piece1" file="../data/preta1.jpg" /> 
 		<texture id="tx_selected_piece" file="../data/gold.png" /> 
 		<texture id="tx_0" file="../data/numbers/0.png" /> 
 		<texture id="tx_1" file="../data/numbers/1.png" /> 
@@ -70,8 +79,6 @@
 		<texture id="tx_parede_p" file="../data/parede.jpg" />
 		<texture id="tx_lencol" file="../data/lencol.jpg" />
 		<texture id="tx_cenario" file="../data/cenario.jpg" />
-		<texture id="tx_metalica" file="../data/metalica.jpg" />
-		<texture id="tx_metal_cama" file="../data/metal_cama.jpg" />
 	</textures> 
 
     <appearances> 
@@ -207,7 +214,7 @@
             diffuse="0.8 0.8 0.8 1" 
             specular="0.8 0.8 0.8 1" 
             shininess="0.9"
-			textureref="tx_white_piece"  
+			textureref="tx_white_piece1"  
             texlength_s="1" 
             texlength_t="1"	/> 
 			
@@ -222,26 +229,6 @@
             texlength_t="1"	/>
 			
 		<appearance id="ap_black_piece" 
-			emissive="0 0 0 1" 
-            ambient="0.8 0.8 0.8 1" 
-            diffuse="0.8 0.8 0.8 1" 
-            specular="0.8 0.8 0.8 1" 
-            shininess="0.9"
-			textureref="tx_black_piece" 
-            texlength_s="1" 
-            texlength_t="1"	/> 
-			
-		<appearance id="ap_white_piece1" 
-			emissive="0 0 0 1" 
-            ambient="0.8 0.8 0.8 1" 
-            diffuse="0.8 0.8 0.8 1" 
-            specular="0.8 0.8 0.8 1" 
-            shininess="0.9"
-			textureref="tx_white_piece1"  
-            texlength_s="1" 
-            texlength_t="1"	/> 
-			
-		<appearance id="ap_black_piece1" 
 			emissive="0 0 0 1" 
             ambient="0.8 0.8 0.8 1" 
             diffuse="0.8 0.8 0.8 1" 
@@ -267,9 +254,9 @@
             diffuse="0.5 0.5 0.5 1" 
             specular="0.8 0.8 0.8 1" 
             shininess="0.9"
-			textureref="tx_lencol"  
+			textureref="tx_parede_p"  
             texlength_s="1" 
-            texlength_t="0.25"	/>
+            texlength_t="1"	/>
 			
 		<appearance id="ap_cenario" 
             emissive="0.1 0.1 0.1 1" 
@@ -281,25 +268,25 @@
             texlength_s="1" 
             texlength_t="1"	/>
 			
-		<appearance id="ap_metalica" 
-            emissive="0.1 0.1 0.1 1" 
-            ambient="0.8 0.8 0.8 1" 
-            diffuse="0.5 0.5 0.5 1" 
-            specular="0.8 0.8 0.8 1" 
-            shininess="0.9"
-			textureref="tx_metalica"  
-            texlength_s="1" 
-            texlength_t="1"	/>
+		<appearance id="ap_marcador1" 
+            emissive="0 0 0 1" 
+            ambient="1 1 1 1" 
+            diffuse="1 1 1 1" 
+            specular="1 1 1 1" 
+            shininess="1"
+			textureref="tx_0" 
+            texlength_s="0.375" 
+            texlength_t="0.75"	/>
 			
-		<appearance id="ap_metal_cama" 
-            emissive="0.1 0.1 0.1 1" 
-            ambient="0.8 0.8 0.8 1" 
-            diffuse="0.5 0.5 0.5 1" 
-            specular="0.8 0.8 0.8 1" 
-            shininess="0.9"
-			textureref="tx_metal_cama"  
-            texlength_s="1" 
-            texlength_t="1"	/>
+		<appearance id="ap_marcador2" 
+            emissive="0 0 0 1" 
+            ambient="1 1 1 1" 
+            diffuse="1 1 1 1" 
+            specular="1 1 1 1" 
+            shininess="1"
+			textureref="tx_0" 
+            texlength_s="0.375" 
+            texlength_t="0.75"	/>
 			
 		<appearance id="ap_0" 
             emissive="0 0 0 1" 
@@ -963,7 +950,6 @@
 		<node id="chao_p">
 			<transforms>
 			</transforms>
-			<appearanceref id="ap_metalica" /> 
 			<children>
 				<noderef id="chao1p" />
 			</children>
@@ -1194,7 +1180,8 @@
 			<appearanceref id="ap_madeira" />  
 			<children>
 				<noderef id="face_baixo" />
-				
+				<noderef id="quadrado_pontos1"/>
+				<noderef id="quadrado_pontos2"/>
 				<!--<noderef id="face_frontal1" />-->
 				<!--<noderef id="face_frontal2" />-->
 				<noderef id="face_traseira1" />
@@ -1205,6 +1192,29 @@
 				<noderef id="face_lateral2_int" />
 				<!--<noderef id="tampa" />-->
 				<noderef id="tampa2" />
+			</children>
+		</node>
+		
+		<node id="quadrado_pontos1">
+		<transforms>
+			<translate to="0 0 0" />
+			</transforms>
+			<appearanceref id="ap_marcador1" />
+			<children>
+				<rectangle xy1="-0.1875 -0.375" xy2="0.1875 0.375" /> 
+			</children>
+		</node>
+		
+		
+		<node id="quadrado_pontos2">
+		<transforms>
+			<translate to="0 0 0" />
+			<!--<scale factor = "0.3 0.9 1" />-->
+			<!--<scale factor = "0.25 0.5 1" />-->
+			</transforms>
+			<appearanceref id="ap_marcador2" />
+			<children>
+				<rectangle xy1="-0.1875 -0.375" xy2="0.1875 0.375" /> 
 			</children>
 		</node>
 		
@@ -1459,14 +1469,13 @@
 	
 	<!--    CENA 2   -->
 	
+
 	
 	
 	<node id ="cama_p">
 		<transforms>
 		</transforms>
 		<children>
-			<noderef id="lenc" />
-			<noderef id="lenc2" />
 			<noderef id="par1" />
 			<noderef id="par2" />
 			<noderef id="escada"/>
@@ -1479,17 +1488,6 @@
 		<translate to ="0 0 3"/>
 		<scale factor=" 4 1.2 7 " />
 		</transforms>
-		<appearanceref id="ap_metal_cama" />  
-		<children>
-			<noderef id="cubo" />
-		</children>
-	</node>
-	
-	<node id = "lenc">
-		<transforms>
-		<translate to ="0 1.2 3"/>
-		<scale factor=" 4 0.03 7 " />
-		</transforms>
 		<appearanceref id="ap_lencol" />  
 		<children>
 			<noderef id="cubo" />
@@ -1501,18 +1499,7 @@
 		<translate to ="0 3 3"/>
 		<scale factor=" 4 1.2 7 " />
 		</transforms>
-		<appearanceref id="ap_metal_cama" />  
-		<children>
-			<noderef id="cubo" />
-		</children>
-	</node>
-	
-	<node id = "lenc2">
-		<transforms>
-		<translate to ="0 4.2 3"/>
-		<scale factor=" 4 0.03 7 " />
-		</transforms>
-		<appearanceref id="ap_lencol" />  
+		<appearanceref id="ap_madeira" />  
 		<children>
 			<noderef id="cubo" />
 		</children>
@@ -1521,7 +1508,7 @@
 	<node id="suportes">
 		<transforms>
 		</transforms>
-		<appearanceref id="ap_black_piece1" /> 
+		<appearanceref id="ap_black_piece" /> 
 		<children>
 			<noderef id="suporte1"/>
 			<noderef id="suporte2"/>
@@ -1574,7 +1561,7 @@
 		<transforms>
 		<translate to= "4.05 0 7.3"/>
 		</transforms>
-		<appearanceref id="ap_black_piece1" /> 
+		<appearanceref id="ap_black_piece" /> 
 		<children>
 			<noderef id="escada_lado1"/>
 			<noderef id="escada_lado2"/>
@@ -1921,7 +1908,7 @@
 	<node id="grades">
 	<transforms>
 	</transforms>
-	<appearanceref id="ap_black_piece1" />
+	<appearanceref id="ap_black_piece" />
 	<children>
 		<noderef id="grade1"/>
 		<noderef id="grade2"/>
@@ -1932,54 +1919,55 @@
 	</node>
 	
 	<node id="grade1">
-		<transforms>
-			<translate to ="5 0 0"/>
-			<rotate axis="x" angle="-90" />
-		</transforms>
-		<children>
-			<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
-		</children>
+	<transforms>
+	<translate to ="5 0 0"/>
+	<rotate axis="x" angle="-90" />
+	</transforms>
+	<children>
+	<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
+	</children>
 	</node>
 	
 	<node id="grade2">
-		<transforms>
-			<translate to ="6 0 0"/>
-			<rotate axis="x" angle="-90" />
-		</transforms>
-		<children>
-			<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
-		</children>
+	<transforms>
+	<translate to ="6 0 0"/>
+	<rotate axis="x" angle="-90" />
+	</transforms>
+	<children>
+	<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
+	</children>
 	</node>
 	
 	<node id="grade3">
-		<transforms>
-			<translate to ="7 0 0"/>
-			<rotate axis="x" angle="-90" />
-		</transforms>
-		<children>
-			<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
-		</children>
+	<transforms>
+	<translate to ="7 0 0"/>
+	<rotate axis="x" angle="-90" />
+	</transforms>
+	<children>
+	<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
+	</children>
 	</node>
 	
 	<node id="grade4">
-		<transforms>
-			<translate to ="8 0 0"/>
-			<rotate axis="x" angle="-90" />
-		</transforms>
-		<children>
-			<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
-		</children>
+	<transforms>
+	<translate to ="8 0 0"/>
+	<rotate axis="x" angle="-90" />
+	</transforms>
+	<children>
+	<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
+	</children>
 	</node>
 	
 	<node id="grade5">
-		<transforms>
-			<translate to ="9 0 0"/>
-			<rotate axis="x" angle="-90" />
-		</transforms>
-		<children>
-			<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
-		</children>
+	<transforms>
+	<translate to ="9 0 0"/>
+	<rotate axis="x" angle="-90" />
+	</transforms>
+	<children>
+	<cylinder base="0.08" top="0.08" height="4.8" slices="20" stacks="5" />
+	</children>
 	</node>
+				
 	
     </graph> 
 </yaf> 

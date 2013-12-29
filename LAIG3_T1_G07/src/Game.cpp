@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "myClock.h"
+#include "MyRectangle.h"
+#include "CGFapplication.h"
 
 #define BASE_X 10.9
 #define BASE_Y 2.02
@@ -9,10 +11,15 @@ using namespace std;
 
 Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
 {
-	blackAppearance = black;
+	/*blackAppearance = black;
 	whiteAppearance = white;
-	selectedAppearance = selecteda;
-	
+	selectedAppearance = selecteda;*/
+	piecesAppearances = new PieceAppearances(white,black,selecteda);
+	/*thePiecesApp->black = black;
+	thePiecesApp->white = white;
+	thePiecesApp->selected = selecteda;*/
+
+
 	float color[] = {1.0,1.0,1.0};
 	text = new FixedText("",color);
 	//initSocket();
@@ -31,15 +38,12 @@ Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecte
 	started = false;
 	endOfGame = false;
 
-	PieceCircle *pc1;
-	PieceSquare *ps1;
-	PieceCircle *pc2;
-	PieceSquare *ps2;
+	score1 = 0;
+	score2 = 0;
+	winner = 1;
 
-	CGFappearance * app;
-
-	//circle p1
-
+	score = new MyRectangle(-0.1875, -0.375,0.1875, 0.375, NULL);
+	((MyRectangle *)score)->setTextLength(0.375,0.75);
 }
 
 void Game::initSocket()
@@ -55,7 +59,7 @@ Socket * Game::getSocket() const
 
 void Game::initBoard()
 {
-	board = new Board(blackAppearance,whiteAppearance,selectedAppearance);
+	board = new Board(piecesAppearances);
 	board->setCamera(camera);
 }
 
@@ -69,7 +73,6 @@ void Game::setDificulty(int difficulty1, int difficulty2)
 {
 	this->difficulty1 = difficulty1;
 	this->difficulty2 = difficulty2;
-	printf("Difficultie p1: %d  p2: %d\n",this->difficulty1,this->difficulty2);
 }
 
 void Game::setMode(int mode)
@@ -82,13 +85,40 @@ void Game::setMode(int mode)
 
 void Game::setAppearances(CGFappearance * black, CGFappearance * white)
 {
-	blackAppearance = black;
-	whiteAppearance = white;
+	piecesAppearances->setAppearances(white,black);
 }
 
 
 void Game::draw()
 {
+	glPushMatrix();
+
+		glPushMatrix();
+			
+			glTranslatef(12.8, 2, 11.8);
+			glRotatef(-90,0,1,0);
+			glScalef(0.2, 0.2, 0.2);
+			glTranslatef(0.5, 0.5, 0.74);
+			/*<translate to="-0.5 0.5 0.74" />
+			<translate to ="12.8 2 11.8"/>
+			<rotate axis="y" angle ="-90" />
+			<scale factor = "0.2 0.2 0.2"/>*/
+			
+			numberTextures[score1%10]->apply();
+			score->draw();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(12.8, 2, 11.8);
+			glRotatef(-90,0,1,0);
+			glScalef(0.2, 0.2, 0.2);
+			glTranslatef(-0.5, 0.5, 0.74);
+			numberTextures[score2%10]->apply();
+			score->draw();
+		glPopMatrix();
+	glPopMatrix();
+
+
 	if(board != NULL)
 		board->draw();
 }
@@ -196,9 +226,9 @@ void Game::startGame()
 
 	((myClock *)(clock))->reset();
 	text->hide();
-/*
+	/*
 	if(mode == 3)
-		cVp(-1,-1);*/
+	cVp(-1,-1);*/
 }
 
 bool Game::pVp(int x, int y)
@@ -329,10 +359,9 @@ bool Game::handleSelection(int x, int y)
 		theReturn = false;
 		if(isValidMove(x,y))
 		{
-			string eaten = board->move(selectedPos.first, selectedPos.second,x,y);
+			board->move(selectedPos.first, selectedPos.second,x,y);
 			theReturn = true;
-			//change player
-			changePlayer();
+			changePlayer(); //change player
 			selected = false;
 		}
 		else
@@ -351,7 +380,7 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 {
 	stringstream ss;
 	int difficulty = difficulty1;
-	
+
 	if(activePlayer == 2)
 		difficulty = difficulty2;
 
@@ -373,7 +402,7 @@ bool Game::pop()
 	if(endOfGame)
 	{
 		endOfGame = false;
-		text->hide();
+		processWinner(false);
 	}
 
 	if(board->pop())
@@ -401,18 +430,24 @@ int Game::checkEndofGame()
 	if(strcmp(abc,"no.") != 0)
 	{
 		stringstream ss1;
-		
+		char abc1[2];
+
 		printf("Won player %s\n", abc);
 		endOfGame = true;
-		char abc1[2];
+		
 		abc1[1] = '\0';
 		abc1[0] = abc[0];
-		int aa =atoi(abc1);
-		
-		ss1 << "Player " << aa << " won!";
+
+		int aa = atoi(abc1);
+
+		/*-ss1 << "Player " << aa << " won!";
 		cout << "-------------> " << ss1.str() << endl;
 		text->setText(ss1.str());
 		text->show();
+		winner = aa;-*/
+		winner = aa;
+		processWinner(true);
+
 		return aa;
 	}
 
@@ -450,10 +485,68 @@ void Game::update (unsigned long t)
 	if(board != NULL)
 		board->performAction(t);
 
-	if(((myClock*)clock)->getTime() >= 30 && started)
+	if(((myClock*)clock)->getTime() >= 30 && started && !endOfGame)
 	{
+		if (selected)
+		{
+			board->removeSelection(selectedPos.first, selectedPos.second);
+			selected = false;
+		}
 		changePlayer();
 		((myClock*)clock)->reset();
 		camera->setPos(activePlayer);
 	}
+}
+
+void Game::setNumberAppearances(vector<CGFappearance *> numberTextures) {
+	this->numberTextures = numberTextures;
+}
+
+
+void Game::processWinner(bool update)
+{
+	int p;
+	if(update)
+	{
+		stringstream ss;
+
+		ss << "Player " << winner << " won!";
+		text->setText(ss.str());
+		text->show();
+
+
+		if(winner == 1) {
+			score1++;
+			p = 1;
+		}
+		else if (winner == 2) {
+			score2++;
+			p = 2;
+		}
+	}
+	else
+	{
+		if(winner == 1) {
+			score1--;
+			p = 1;
+		}
+		else if (winner == 2) {
+			score2--;
+			p = 2;
+		}
+
+		text->hide();
+	}
+
+	if(score1 < 0 || score1 > 9 || score2 < 0 || score2 > 9)
+		return;
+
+	printf("Won player %d\n", winner);
+	printf("Score1: %d  Score2: %d\n",score1, score2);
+
+	/*if(p == 1)
+		score1Appearance->setTexture(f1);
+	else
+		score2Appearance->setTexture(f2);*/
+
 }

@@ -14,11 +14,6 @@ Data::Data()
 	defaultAppearance->setId("default:default");
 	appearancesStack.push(defaultAppearance);
 
-	myTextObj1=new TextObject(1);
-	myTextObj1->setNumber('2');
-	
-	myTextObj2 = new TextObject(2);
-	myTextObj2->setNumber('1');
 
 	game = NULL;
 }
@@ -69,6 +64,27 @@ bool Data::addNodeToMap(char * id, Node * node)
 void Data::setRootStr(string r)
 {
 	rootStr = r;
+}
+
+void Data::setRoot(string r)
+{
+	root = nodesMap.find(r)->second;
+	if(r == "cena")
+	{
+		nodesMap.find("board")->second->setAppearance(appearancesMap.find("ap_board1")->second);
+		nodesMap.find("board_lateral")->second->setAppearance(appearancesMap.find("ap_board_side1")->second);
+		if(game != NULL)
+			game->setAppearances(appearancesMap.find("ap_black_piece")->second, appearancesMap.find("ap_white_piece")->second);
+	}
+	else
+	{
+		nodesMap.find("board")->second->setAppearance(appearancesMap.find("ap_board")->second);
+		nodesMap.find("board_lateral")->second->setAppearance(appearancesMap.find("ap_board_side")->second);
+
+		if(game != NULL)
+			game->setAppearances(appearancesMap.find("ap_black_piece1")->second, appearancesMap.find("ap_white_piece1")->second);
+	}
+
 }
 
 void Data::computeNodePointers()
@@ -145,22 +161,20 @@ void Data::computeNodePointers(Node * node)
 void Data::drawScene()
 {
 	//board->draw();
-	myTextObj1->draw();
-	myTextObj2->draw();
 	game->draw();
 	//glPushMatrix();
 	/*for (int r=0; r < 8; r++)
 	{
-		glPushMatrix();
-		for (int c=0; c < 8; c++)
-		{
-			glPushMatrix();
-			glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
-			glRotatef(-90,1,0,0);
-			obj->draw();
-			glPopMatrix();
-		}
-		glPopMatrix();
+	glPushMatrix();
+	for (int c=0; c < 8; c++)
+	{
+	glPushMatrix();
+	glTranslatef(11.14375+0.1875*r,2.11,11.09375+0.1875*c);
+	glRotatef(-90,1,0,0);
+	obj->draw();
+	glPopMatrix();
+	}
+	glPopMatrix();
 	}*/
 	//glPopMatrix();
 	clearAppearancesStack();
@@ -601,12 +615,12 @@ void Data::initPicking()
 /*
 void Data::initSocket()
 {
-	socket = new Socket();
+socket = new Socket();
 }
 
 Socket * Data::getSocket() const
 {
-	return socket;
+return socket;
 }*/
 
 void Data::setClock(CGFobject* relogio){
@@ -625,6 +639,24 @@ void Data::initGame()
 
 	game = new Game(app2,app1,app3);
 	game->setClock(relogio);
+
+	//send game textures needed for score
+	initGameScore();
+}
+
+void Data::initGameScore()
+{
+
+	vector<CGFappearance * > nums;
+	for (int i = 0 ; i < 10; i++)
+	{
+		stringstream ss;
+		ss << "ap_" << i;
+		cout << "->" << ss.str() << endl;
+		nums.push_back(appearancesMap.find(ss.str())->second);
+	}
+
+	game->setNumberAppearances(nums);
 }
 
 
@@ -633,52 +665,32 @@ Game * Data::getGame()
 	return game;
 }
 
-
-TextObject * Data::getText(int player){
-
-	if (player == 1)
-		return myTextObj1;
-	else
-		return myTextObj2;
-}
-
-void Data::setText(int player,int number){
-
-	if (player == 1){
-		myTextObj1->setNumber(number);
-		myTextObj1->draw();
-	}
-	else{
-		myTextObj2->setNumber(number);
-		myTextObj1->draw();
-	}
-}
 /*
 void Data::initBoard()
 {
-	MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
-	MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
-	cout << "Black: " << app2->getId() << endl;
-	cout << "White: " << app1->getId() << endl;
-	
+MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
+MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
+cout << "Black: " << app2->getId() << endl;
+cout << "White: " << app1->getId() << endl;
 
-	board = new Board(app2,app1);
-	stringstream ss;
-	ss << "play(" <<"1,10,1,6," << board->getFormatted() << ").\n";
-	string val = ss.str();
 
-	cout << "sent: " << val << endl;
-	
+board = new Board(app2,app1);
+stringstream ss;
+ss << "play(" <<"1,10,1,6," << board->getFormatted() << ").\n";
+string val = ss.str();
 
-	socket->sendData((char *)val.c_str(), val.size());
-	char abc[200];
-	socket->receiveData(abc);
-	//cout << "prolog answered: " << abc << endl;
+cout << "sent: " << val << endl;
+
+
+socket->sendData((char *)val.c_str(), val.size());
+char abc[200];
+socket->receiveData(abc);
+//cout << "prolog answered: " << abc << endl;
 }
 
 Board * Data::getBoard()
 {
-	return board;
+return board;
 }
 */
 

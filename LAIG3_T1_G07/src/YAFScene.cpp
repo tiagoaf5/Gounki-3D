@@ -1319,9 +1319,13 @@ void YAFScene::init()
 	//taking care of display lists
 	data->doBfs();
 	data->computeDisplayLists();
+	
+	//compute scene 2 nodes
+	data->setRootStr("cena2");
+	data->computeNodePointers();
 
-	//>init socket
-	//data->initSocket();
+	//set initial string
+	data->setRoot("cena");
 
 	//> Picking
 	data->initPicking();
