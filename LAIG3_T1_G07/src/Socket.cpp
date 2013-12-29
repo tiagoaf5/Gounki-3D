@@ -7,17 +7,10 @@ using namespace std;
 
 Socket::Socket()
 {
-	cout << "Inicializando socket\n";
-	bool value = socketConnect();
-	if (value)
-	{/*
-		char *s = "comando(1, 2).\n";
-		sendData(s, strlen(s));
-		char ans[128];
-		receiveData(ans);*/
-	}
-	//quit();
-	//getchar();
+	cout << "Starting socket\n";
+	
+	if (!socketConnect())
+		exit(1);
 }
 
 bool Socket::socketConnect()
