@@ -27,7 +27,7 @@ class Board
 {
 	//Mobile camera
 	MyMobileCamera * camera;
-	
+
 	//Pieces appearances
 	PieceAppearances  * thePiecesApp;
 
@@ -45,7 +45,7 @@ class Board
 	//saved data mostly for undo and movie purpose
 	stack<Move *> moves;
 	queue<Action *> actions;
-	
+
 	//private functions
 	void generateBoard();
 	vector<Piece *> buildRow(int player, string odd);
@@ -53,7 +53,9 @@ class Board
 	void addAction(int x1,int y1, int x2, int y2);
 public:
 	Board(PieceAppearances * thePiecesApp);
+	//draw
 	void draw();
+	//for prolog
 	string getFormatted() const;
 
 	//Game's options

@@ -1,6 +1,4 @@
 #include "YAFinterface.h"
-#include <sstream>
-
 
 #define BUFSIZE 256
 GLuint selectBuf[BUFSIZE];
@@ -103,7 +101,6 @@ void YAFinterface::processHits (GLint hits, GLuint buffer[])
 			printf("%d ",selected[i]);
 		printf("\n");
 		data->getGame()->play(selected[0],selected[1]);
-		//data->getBoard()->selectPlace(selected[0],selected[1]);
 	}
 	else
 		printf("Nothing selected while picking \n");	
@@ -216,20 +213,11 @@ void YAFinterface::initGUI()
 
 	addColumnToPanel(gamePanel);
 
-	/*GLUI_Panel *emptyPanel= addPanelToPanel(gamePanel,"", 1);
-	emptyPanel->set_w(30);
-	emptyPanel->hide_internal(1);
-	emptyPanel->set_alignment(GLUI_ALIGN_CENTER);*/
 	GLUI_Panel *servidorPanel= addPanelToPanel(gamePanel,"", 1);
 	servidorPanel->set_alignment(GLUI_ALIGN_CENTER);
-	/*GLUI_Panel *emptyPanel2= addPanelToPanel(gamePanel,"", 1);
-	emptyPanel2->set_w(30);
-	emptyPanel2->set_alignment(GLUI_ALIGN_CENTER);
-	emptyPanel2->hide_internal(1);*/
 
 	b5 = addButtonToPanel(servidorPanel,"StartGame",7);
 	b5->set_alignment(GLUI_ALIGN_CENTER);
-	//b4 = addButtonToPanel(servidorPanel,"stop",4);
 	b6 = addButtonToPanel(servidorPanel,"Undo",8);
 	b7 = addButtonToPanel(servidorPanel,"PlayMovie",9);
 
@@ -325,7 +313,7 @@ void YAFinterface::processGUI(GLUI_Control *ctrl)
 			if(list_group->get_int_val() != 3 && list_group->get_int_val() != 2)
 			{
 				list_group->set_int_val(2);
-				((YAFScene*) scene)->setActiveCamera("camerap1");
+				((YAFScene*) scene)->setActiveCamera("Player1");
 			}
 			game->playMovie();
 			break;
@@ -430,13 +418,8 @@ void YAFinterface::updateMode(){
 
 void YAFinterface::updateScene(){
 
-	if(list_group3->get_int_val() == 1){
+	if(list_group3->get_int_val() == 1)
 		data->setRoot("cena");
-		//data->computeNodePointers();
-	}
-	else if(list_group3->get_int_val() == 2){
+	else if(list_group3->get_int_val() == 2)
 		data->setRoot("cena2");
-		//data->computeNodePointers();
-	}
-
 }

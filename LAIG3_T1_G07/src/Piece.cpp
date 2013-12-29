@@ -5,8 +5,6 @@
 
 #include "CGFapplication.h"
 
-//test purpose
-#include <iostream>
 using namespace std;
 
 Piece::Piece(int player, PieceAppearances * thePiecesApp)
@@ -15,7 +13,6 @@ Piece::Piece(int player, PieceAppearances * thePiecesApp)
 	this->thePiecesApp = thePiecesApp;
 	animated = false;
 	selected = false;
-	hidden = 1;
 }
 
 Piece::Piece(int player, PieceBase * piece, PieceAppearances * thePiecesApp)
@@ -25,7 +22,6 @@ Piece::Piece(int player, PieceBase * piece, PieceAppearances * thePiecesApp)
 	pieces.push_back(piece);
 	animated = false;
 	selected = false;
-	hidden = 1;
 }
 
 void Piece::draw()
@@ -37,32 +33,28 @@ void Piece::draw()
 	else
 		thePiecesApp->apply(3);
 
-	if(hidden == 1)
+
+	for (int i = 0; i < pieces.size(); i++)
 	{
-		for (int i = 0; i < pieces.size(); i++)
+		if(!animated)
 		{
-			if(!animated)
-			{
-				glPushMatrix();
-				glTranslatef(0.025*i,0.025*i,0);
-				pieces[i]->draw();
-				glPopMatrix();
-			}
-			else
-			{
-				selected = false;
-				//printf(".");
-				glPopMatrix();
-				glPushMatrix();
-				anim->applyTransforms();
-				glTranslatef(0.025*i,0.025*i,0);
-				pieces[i]->draw();
-				glPopMatrix();
-				glPushMatrix();
-			}
+			glPushMatrix();
+			glTranslatef(0.025*i,0.025*i,0);
+			pieces[i]->draw();
+			glPopMatrix();
 		}
-	}
-	else{
+		else
+		{
+			selected = false;
+			//printf(".");
+			glPopMatrix();
+			glPushMatrix();
+			anim->applyTransforms();
+			glTranslatef(0.025*i,0.025*i,0);
+			pieces[i]->draw();
+			glPopMatrix();
+			glPushMatrix();
+		}
 	}
 }
 
@@ -99,10 +91,7 @@ void Piece::addPieces(vector<PieceBase *> p)
 	reverse(ids.begin(), ids.end());
 
 	for (int i = 0; i < ids.size(); i++) 
-	{
-		//cout << ids[i] << endl;
 		pieces[i] = pecas.find(ids[i])->second;
-	}
 }
 
 vector<PieceBase *> Piece::getPieces()
@@ -128,14 +117,6 @@ void Piece::setAnimation(LinearAnimation * anim)
 		animated = false;
 	}
 
-}
-
-void Piece::setHidden(int number){
-	hidden = number;
-}
-
-int Piece::getHidden(){
-	return hidden;
 }
 
 void Piece::select()

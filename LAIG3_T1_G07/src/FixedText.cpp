@@ -20,7 +20,6 @@ void FixedText::begin2D(bool withDepthTest)
 	// reset the matrix as we must not multiply it with the new projection
 	glLoadIdentity();
 	glOrtho( 0, glutGet(GLUT_WINDOW_WIDTH), 0, glutGet(GLUT_WINDOW_HEIGHT), 0, 1 );
-	//equivalent to: gluOrtho2D(0,screenWidth,0,screenHeight);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -34,7 +33,7 @@ void FixedText::end2D()
 	glEnable(GL_DEPTH_TEST);
 
 	glMatrixMode(GL_PROJECTION);
-	// pop the old matrix which should be the right one if begin2D() is closed by end3D()
+	// pop the old matrix which should be the right one if begin2D() is closed by end2D()
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 }
@@ -55,15 +54,11 @@ void FixedText::draw()
 	glRasterPos2i(glutGet(GLUT_WINDOW_WIDTH)/2 - glutBitmapLength(font,(const unsigned char *)text.c_str())/2, 20);
 
 	glPushMatrix();
-	//glTranslatef(glutGet(GLUT_WINDOW_WIDTH)/2 - 0.2*glutStrokeLength(GLUT_STROKE_ROMAN,(const unsigned char *)"es mesmo nabo")/2,10,0);
-	//	glScalef(0.2, 0.2, 0.2);
 
 	for (std::string::iterator i = text.begin(); i != text.end(); ++i)
 	{
 		char c = *i;
-
 		glutBitmapCharacter(font, c);
-		//glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
 	}
 	glPopMatrix();
 	end2D();

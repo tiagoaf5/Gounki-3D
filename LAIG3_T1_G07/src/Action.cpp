@@ -50,8 +50,8 @@ void Action::generateAnimation()
 	vector<double> p2; //B
 	vector<double> p3; //C
 	vector<double> p4; //D
-	 
-	
+
+
 
 	p1.push_back(BASE_X + HALF_LENGTH * x1); 
 	p1.push_back(BASE_Y);
@@ -75,7 +75,6 @@ void Action::generateAnimation()
 	points.push_back(p4);
 
 	animation = new LinearAnimation(points,2);
-	//start();
 }
 
 
@@ -87,8 +86,6 @@ void Action::start()
 
 void Action::update(unsigned long t)
 {
-	//printf(".");
-
 	if(animation->getAlmostFinished())
 		almostFinished = true;
 
@@ -99,16 +96,13 @@ void Action::update(unsigned long t)
 		piece1->setAnimation(NULL);
 	}
 	else
-	{//added
+	{
 		if(!animation->update(t))
 		{
-			//printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			almostFinished = true;
 			finished = true;
 			piece1->setAnimation(NULL);
 		}
-		//else
-		//	printf("::::::::::::::::::::::::::::::::::::");
 	}
 }
 
@@ -164,39 +158,6 @@ void Action::processEaten()
 		return;
 
 	piece2->getNrPieces(nrCircles1, nrSquares1, nrCircles2, nrSquares2);
-	/*
-	string eaten = piece2->getFormattedPiece();
-	string temp = eaten;
-
-	if (!eaten.empty())
-	{
-		if (eaten.find("2") != -1)
-		{
-			while(temp.find("x") != -1)
-			{
-				nrSquares1++;
-				temp = temp.substr(temp.find("x")+1);
-			}
-			while(temp.find("o") != -1)
-			{
-				nrCircles1++;
-				temp = temp.substr(temp.find("o")+1);
-			}
-		}
-		else
-		{
-			while(temp.find("x") != -1)
-			{
-				nrSquares2++;
-				temp = temp.substr(temp.find("x")+1);
-			}
-			while(temp.find("o") != -1)
-			{
-				nrCircles2++;
-				temp = temp.substr(temp.find("o")+1);
-			}
-		}
-	}*/
 }
 
 void Action::updateBoardEaten(int &c1, int &s1, int &c2, int &s2)

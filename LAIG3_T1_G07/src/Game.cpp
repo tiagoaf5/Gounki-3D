@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "myClock.h"
 #include "MyRectangle.h"
-#include "CGFapplication.h"
+
 
 #define BASE_X 10.9
 #define BASE_Y 2.02
@@ -11,19 +11,10 @@ using namespace std;
 
 Game::Game(CGFappearance * black, CGFappearance * white, CGFappearance * selecteda)
 {
-	/*blackAppearance = black;
-	whiteAppearance = white;
-	selectedAppearance = selecteda;*/
 	piecesAppearances = new PieceAppearances(white,black,selecteda);
-	/*thePiecesApp->black = black;
-	thePiecesApp->white = white;
-	thePiecesApp->selected = selecteda;*/
-
 
 	float color[] = {1.0,1.0,1.0};
 	text = new FixedText("",color);
-	//initSocket();
-	//initBoard();
 
 	board = NULL;
 	mode = 1;
@@ -51,12 +42,6 @@ void Game::initSocket()
 	socket = new Socket();
 }
 
-Socket * Game::getSocket() const
-{
-	return socket;
-}
-
-
 void Game::initBoard()
 {
 	board = new Board(piecesAppearances);
@@ -68,23 +53,17 @@ Board * Game::getBoard()
 	return board;
 }
 
-
 void Game::setDificulty(int difficulty1, int difficulty2)
 {
 	this->difficulty1 = difficulty1;
 	this->difficulty2 = difficulty2;
 }
 
-void Game::setMode(int mode)
-{
+void Game::setMode(int mode) {
 	this->mode = mode;
-
-	//if(mode == 3 && started)
-	//play(-1,-1);
 }
 
-void Game::setAppearances(CGFappearance * black, CGFappearance * white)
-{
+void Game::setAppearances(CGFappearance * black, CGFappearance * white) {
 	piecesAppearances->setAppearances(white,black);
 }
 
@@ -99,11 +78,6 @@ void Game::draw()
 			glRotatef(-90,0,1,0);
 			glScalef(0.2, 0.2, 0.2);
 			glTranslatef(0.5, 0.5, 0.74);
-			/*<translate to="-0.5 0.5 0.74" />
-			<translate to ="12.8 2 11.8"/>
-			<rotate axis="y" angle ="-90" />
-			<scale factor = "0.2 0.2 0.2"/>*/
-			
 			numberTextures[score1%10]->apply();
 			score->draw();
 		glPopMatrix();
@@ -129,13 +103,9 @@ void Game::drawText() {
 
 bool Game::play(int x, int y)
 {
-	printf("Mode: %d\n", mode);
 
 	if(!started || endOfGame)
-	{
-		printf("not started\n");
 		return false;
-	}
 
 	if(!board->getReady())
 		return false;
@@ -161,8 +131,6 @@ bool Game::play(int x, int y)
 		break;
 	}
 
-	/*if(val)
-	checkEndofGame();*/
 	return val;
 }
 
@@ -183,30 +151,8 @@ bool Game::isValidMove(int x, int y)
 	else
 		return false;
 }
-/*
-bool Game::move(int player, int x, int y)
-{
-stringstream ss;
-ss << "play(" <<selectedPos.first << "," << selectedPos.second << "," << x << ","<< y << board->getFormatted() << ").\n";
-string val = ss.str();
 
-cout << "sent: " << val << endl;
-
-
-socket->sendData((char *)val.c_str(), val.size());
-char abc[200];
-socket->receiveData(abc);
-
-if(strcmp(abc,"ok") == 0)
-return true;
-else 
-return false;
-
-board->selectPlace(x,y,player);
-return true;
-}*/
-
-void Game::endGame()
+void Game::endGame() 
 {
 	started = false;
 	socket->quit();
@@ -222,13 +168,9 @@ void Game::startGame()
 	endOfGame = false;
 	started = true;
 	activePlayer = 1;
-	printf("Mode: %d\nDifficulty: %d %d\n", mode,difficulty1,difficulty2);
 
 	((myClock *)(clock))->reset();
 	text->hide();
-	/*
-	if(mode == 3)
-	cVp(-1,-1);*/
 }
 
 bool Game::pVp(int x, int y)
@@ -236,7 +178,6 @@ bool Game::pVp(int x, int y)
 	if( x == -1 && y == -1)
 		return false;
 
-	printf("<pvp>\n");
 	if (!selected)
 		select(x,y);
 	else
@@ -260,12 +201,7 @@ bool Game::pVc(int x, int y)
 		{
 			if(handleSelection(x, y))
 			{
-				/*getPcMove(a,b,c,d);
-				printf("move %d %d to %d %d\n",a,b,c,d);
-				board->selectPlace(a-1,b-1, activePlayer);
-				board->move(a-1,b-1,c-1,d-1);
-				activePlayer = activePlayer % 2 + 1;*/
-				//return pVc(-1,-1);
+				return true; //
 			}
 			else
 				return false;
@@ -275,7 +211,6 @@ bool Game::pVc(int x, int y)
 	else
 	{
 		getPcMove(a,b,c,d);
-		printf("move %d %d to %d %d\n",a,b,c,d);
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
 		changePlayer();
@@ -299,7 +234,7 @@ bool Game::cVp(int x, int y)
 		else
 		{
 			if(handleSelection(x, y))
-				return true;//cVp(-1,-1); // to let the PC play
+				return true;
 			else
 				return false;
 		}
@@ -308,7 +243,6 @@ bool Game::cVp(int x, int y)
 	else
 	{
 		getPcMove(a,b,c,d);
-		printf("move %d %d to %d %d\n",a,b,c,d);
 		board->selectPlace(a-1,b-1, activePlayer);
 		board->move(a-1,b-1,c-1,d-1);
 		changePlayer();
@@ -323,7 +257,6 @@ bool Game::cVc()
 	int a,b,c,d;
 
 	getPcMove(a,b,c,d);
-	printf("move %d %d to %d %d\n",a,b,c,d);
 	board->selectPlace(a-1,b-1, activePlayer);
 	board->move(a-1,b-1,c-1,d-1);
 	changePlayer();
@@ -365,12 +298,7 @@ bool Game::handleSelection(int x, int y)
 			selected = false;
 		}
 		else
-		{
-			/*printf("invalid move %d %d\n",x,y);
-			selected = false;
-			board->removeSelection(x,y); 	//tell board nothing is selected*/
 			theReturn = false;
-		}
 
 	}
 	return theReturn;
@@ -388,7 +316,6 @@ void Game::getPcMove(int &x1, int &y1, int &x2, int &y2)
 
 	socket->sendData((char *)(ss.str().c_str()), ss.str().size());
 
-	cout << "Sent: " << ss.str() << endl;
 	char abc[200];
 	socket->receiveData(abc);
 	sscanf(abc,"%d-%d-%d-%d.",&x1,&y1,&x2,&y2);
@@ -408,7 +335,6 @@ bool Game::pop()
 	if(board->pop())
 	{
 		changePlayer();
-		//play(-1,-1);
 		camera->setPos(activePlayer);
 		return true;
 	}
@@ -432,7 +358,6 @@ int Game::checkEndofGame()
 		stringstream ss1;
 		char abc1[2];
 
-		printf("Won player %s\n", abc);
 		endOfGame = true;
 		
 		abc1[1] = '\0';
@@ -440,11 +365,6 @@ int Game::checkEndofGame()
 
 		int aa = atoi(abc1);
 
-		/*-ss1 << "Player " << aa << " won!";
-		cout << "-------------> " << ss1.str() << endl;
-		text->setText(ss1.str());
-		text->show();
-		winner = aa;-*/
 		winner = aa;
 		processWinner(true);
 
@@ -540,13 +460,4 @@ void Game::processWinner(bool update)
 
 	if(score1 < 0 || score1 > 9 || score2 < 0 || score2 > 9)
 		return;
-
-	printf("Won player %d\n", winner);
-	printf("Score1: %d  Score2: %d\n",score1, score2);
-
-	/*if(p == 1)
-		score1Appearance->setTexture(f1);
-	else
-		score2Appearance->setTexture(f2);*/
-
 }

@@ -612,16 +612,6 @@ void Data::initPicking()
 {
 	pickingRetangle = new MyRectangle(-0.091,-0.091,0.091,0.091,NULL);
 }
-/*
-void Data::initSocket()
-{
-socket = new Socket();
-}
-
-Socket * Data::getSocket() const
-{
-return socket;
-}*/
 
 void Data::setClock(CGFobject* relogio){
 	this->relogio = relogio;
@@ -652,7 +642,6 @@ void Data::initGameScore()
 	{
 		stringstream ss;
 		ss << "ap_" << i;
-		cout << "->" << ss.str() << endl;
 		nums.push_back(appearancesMap.find(ss.str())->second);
 	}
 
@@ -664,37 +653,6 @@ Game * Data::getGame()
 {
 	return game;
 }
-
-/*
-void Data::initBoard()
-{
-MyAppearance * app1 = appearancesMap.find("ap_white_piece")->second;
-MyAppearance * app2 = appearancesMap.find("ap_black_piece")->second;
-cout << "Black: " << app2->getId() << endl;
-cout << "White: " << app1->getId() << endl;
-
-
-board = new Board(app2,app1);
-stringstream ss;
-ss << "play(" <<"1,10,1,6," << board->getFormatted() << ").\n";
-string val = ss.str();
-
-cout << "sent: " << val << endl;
-
-
-socket->sendData((char *)val.c_str(), val.size());
-char abc[200];
-socket->receiveData(abc);
-//cout << "prolog answered: " << abc << endl;
-}
-
-Board * Data::getBoard()
-{
-return board;
-}
-*/
-
-
 
 /*Functions for testing purpose*/
 

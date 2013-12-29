@@ -20,7 +20,4 @@ public:
 	Piece * getResultPiece();
 };
 
-
-
-
 #endif

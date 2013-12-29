@@ -20,21 +20,7 @@ int main(int argc, char* argv[])
 {
 
 	YAFScene *a1;
-	if (argc > 1)
-		a1 = new YAFScene(argv[1]);
-	else
-	{
-		cout << "Nome do ficheiro: " << endl;
-		string s;
-		getline(cin,s);
-
-		char *a=new char[s.size()+1];
-		a[s.size()]=0;
-		memcpy(a,s.c_str(),s.size());
-
-		a1 = new YAFScene(a);
-	}
-
+	a1 = new YAFScene("scene.yaf");
 	CGFapplication app = CGFapplication();
 
 	try {

@@ -28,8 +28,6 @@
 #include "MyMobileCamera.h"
 #include "LinearAnimation.h"
 
-//#include "Socket.h"
-
 
 using namespace std;
 
@@ -44,20 +42,21 @@ public:
 	//Scene
 	void init();				
 	void display();
+	void displaySelect();
 	void update(unsigned long t);
 
 	//Data
 	Data * getData();
 
 	//Camera info
+	void initMobileCamera();
 	void setActiveCamera(CGFcamera * cam);
 	void addCamera(CGFcamera * cam, string camid);
 	bool setActiveCamera(string camid);
 	void applyCamera();
 	CGFcamera * getActiveCamera() const;
 	map<string, CGFcamera *> getCamerasMap() const;
-	void displaySelect();
-
+	
 protected:
 	TiXmlDocument* doc;
 	TiXmlElement* globalsElement; 
@@ -71,6 +70,8 @@ protected:
 private:
 	char * filename;
 	Data * data;
+	CGFcamera * mobileCam;
+	map<string, CGFcamera *> camerasMap;
 	bool stringToBool (char * str, bool & value);
 	bool stringToArray (char * str, int nParam, float values[]);
 	bool readYaf(char *filename);
@@ -81,8 +82,6 @@ private:
 	bool readAppearancesBlock ();
 	bool readGraphBlock ();
 	bool readAnimationsBlock();
-	CGFcamera * mobileCam;
-	map<string, CGFcamera *> camerasMap;
 };
 
 

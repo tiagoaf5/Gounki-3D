@@ -13,26 +13,39 @@ using namespace std;
 
 class Piece
 {
-	PieceAppearances * thePiecesApp;
-	int player;
+	PieceAppearances * thePiecesApp; //appearances
+	int player; //owner
 	bool selected;
-	vector<PieceBase *> pieces;
-	bool animated;
+	vector<PieceBase *> pieces; //simplePieces
+	//animation options
+	bool animated; 
 	LinearAnimation * anim;
-	int hidden;
+	
 public:
 	Piece(int player, PieceAppearances * thePiecesApp);
 	Piece(int player, PieceBase * piece, PieceAppearances * thePiecesApp);
-	string getFormattedPiece(); // piece ready for prolog
+	
+	//piece ready for prolog
+	string getFormattedPiece(); 
+
+	//draw
 	void draw();
+
+	//Base pieces
 	void addPieces(vector<PieceBase *> p);
 	vector<PieceBase *> getPieces();
+
+	//player
 	int getPlayer() const;
+	
+	//animation
 	void setAnimation(LinearAnimation * anim);
-	void setHidden(int number);
-	int getHidden();
+	
+	//(un)select
 	void select();
 	void unselect();
+
+	//get number of each pieces type
 	void getNrPieces(int &c1,int &s1, int &c2, int &s2);
 };
 

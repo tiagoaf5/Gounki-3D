@@ -1114,29 +1114,29 @@ bool YAFScene::readGraphBlock ()
 									vector<vector<float> > vectorPoints;
 									while(controlpoint){
 										float x,y,z;
-	
+
 										if(controlpoint->QueryFloatAttribute("x",&x) == TIXML_SUCCESS &&
-										   controlpoint->QueryFloatAttribute("y",&y) == TIXML_SUCCESS &&
-										   controlpoint->QueryFloatAttribute("z",&z) == TIXML_SUCCESS){
+											controlpoint->QueryFloatAttribute("y",&y) == TIXML_SUCCESS &&
+											controlpoint->QueryFloatAttribute("z",&z) == TIXML_SUCCESS){
 
-											   vector<float> pontos;
-											  
-											   printf("		x:%f",x);
-											   printf("	y:%f",y);
-											   printf("	z:%f\n",z);
+												vector<float> pontos;
 
-											   pontos.push_back(x);
-											   pontos.push_back(y);
-											   pontos.push_back(z);
+												printf("		x:%f",x);
+												printf("	y:%f",y);
+												printf("	z:%f\n",z);
 
-											   vectorPoints.push_back(pontos);
-											   nrPoints++;
+												pontos.push_back(x);
+												pontos.push_back(y);
+												pontos.push_back(z);
+
+												vectorPoints.push_back(pontos);
+												nrPoints++;
 										}
 										else{
 											printf("error parsing Controlpoint coordinates\n");
 											exit(1);
 										}
-										
+
 										controlpoint = controlpoint->NextSiblingElement();
 									}
 
@@ -1319,7 +1319,7 @@ void YAFScene::init()
 	//taking care of display lists
 	data->doBfs();
 	data->computeDisplayLists();
-	
+
 	//compute scene 2 nodes
 	data->setRootStr("cena2");
 	data->computeNodePointers();
@@ -1331,16 +1331,14 @@ void YAFScene::init()
 	data->initPicking();
 
 	//Game camera
-	float target1[] = {11.8, 2.05 ,11.75};
-	float pos1[] = {11.8, 3.8, 13.5};
-	mobileCam = new MyMobileCamera(0.1,50,40,target1,pos1);
+	initMobileCamera();
+
 	MyMobileCamera * mycam = dynamic_cast<MyMobileCamera *>(mobileCam);
-	//mycam->start();
 
 	//Game
 	data->initGame();
 	data->getGame()->setCamera(mycam);
-	
+
 	//Board
 	//data->initBoard();
 
@@ -1353,9 +1351,6 @@ void YAFScene::init()
 	//> Defining globals
 	data->applyGlobals();
 	data->applyLighting(); //apply lighting options, doesn't change during display
-
-	
-	//setActiveCamera(mobileCam);
 
 	glEnable(GL_COLOR_MATERIAL);
 	setUpdatePeriod(30);
@@ -1376,39 +1371,12 @@ void YAFScene::update(unsigned long t)
 
 	for (unsigned int i = 0; i < shaders.size(); i++)
 		shaders[i]->update(t);
-	
+
 	((myClock *)(data->getClock()))->update(t);
-	
-	//if(data->getGame()->getBoard() != NULL)
-		data->getGame()->update(t);
-	
+
+	data->getGame()->update(t);
+
 	dynamic_cast<MyMobileCamera *>(mobileCam)->update(t);
-}
-
-void begin2D(bool withDepthTest){
-	// switch to projection mode
-	glMatrixMode(GL_PROJECTION);
-	// push the current matrix as we need it later to restore the perspective view
-	glPushMatrix();
-	// reset the matrix as we must not multiply it with the new projection
-	glLoadIdentity();
-	glOrtho( 0, glutGet(GLUT_WINDOW_WIDTH), 0, glutGet(GLUT_WINDOW_HEIGHT), 0, 1 );
-	//equivalent to: gluOrtho2D(0,screenWidth,0,screenHeight);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	if(!withDepthTest)
-		//disable the depth test, so everything will now be painted on top
-		glDisable(GL_DEPTH_TEST);
-}
-
-void end2D(){
-	glEnable(GL_DEPTH_TEST);
-
-	glMatrixMode(GL_PROJECTION);
-	// pop the old matrix which should be the right one if begin2D() is closed by end3D()
-		glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
 }
 
 void YAFScene::display()
@@ -1428,44 +1396,12 @@ void YAFScene::display()
 	//set lights
 	data->applyLights();
 
-
-	
-
 	//draw axis
 	axis.draw();
-
 
 	//draw scene
 	data->drawScene();
 
-	//draw text
-
-	/*begin2D(true);
-	glEnable(GL_COLOR);
-	glDisable(GL_LIGHTING);
-	//glColor3f(1,1,1.0);		
-	//glColor3f(1.0f, 1.0f, 1.0f);//needs to be called before RasterPos
-	std::string s = "es mesmo nabo";
-	void * font = GLUT_BITMAP_HELVETICA_18;
-	glPushAttrib(GL_CURRENT_BIT);
-	glColor3f(1.0, 1.0, 1.0);
-	glRasterPos2i(glutGet(GLUT_WINDOW_WIDTH)/2 - glutBitmapLength(font,(const unsigned char *)"es mesmo nabo")/2, 20);
-
-	glPushMatrix();
-	//glTranslatef(glutGet(GLUT_WINDOW_WIDTH)/2 - 0.2*glutStrokeLength(GLUT_STROKE_ROMAN,(const unsigned char *)"es mesmo nabo")/2,10,0);
-	//	glScalef(0.2, 0.2, 0.2);
-	for (std::string::iterator i = s.begin(); i != s.end(); ++i)
-	{
-		char c = *i;
-
-		glutBitmapCharacter(font, c);
-		//glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
-	}
-	glPopMatrix();
-	glPopAttrib();
-	end2D();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_COLOR);*/
 	//////////////////
 	glutSwapBuffers();
 	glFlush();
@@ -1478,7 +1414,6 @@ void YAFScene::displaySelect()
 	applyCamera();
 	data->drawSceneSelect();
 }
-
 
 void YAFScene::addCamera(CGFcamera * cam, string camid)
 {
@@ -1536,4 +1471,11 @@ CGFcamera * YAFScene::getActiveCamera() const
 map<string, CGFcamera *> YAFScene::getCamerasMap() const
 {
 	return camerasMap;
+}
+
+void YAFScene::initMobileCamera()
+{
+	float target1[] = {11.8, 2.05 ,11.75};
+	float pos1[] = {11.8, 3.8, 13.5};
+	mobileCam = new MyMobileCamera(0.1,50,40,target1,pos1);
 }

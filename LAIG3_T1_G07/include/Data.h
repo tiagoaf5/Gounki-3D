@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef _DATA_H_
 #define _DATA_H_
 
@@ -9,7 +7,6 @@
 #include <vector>
 #include <stack>
 #include <iostream>
-//#include <sstream>
 
 #include "cgfapplication.h"
 
@@ -20,11 +17,6 @@
 #include "MyLight.h"
 #include "MyShader.h"
 #include "Game.h"
-
-/*
-#include "Socket.h"
-#include "Board.h"
-*/
 
 using namespace std;
 
@@ -77,20 +69,11 @@ private:
 	//picking
 	CGFobject* pickingRetangle;
 
-	//Sockets
-	//Socket * socket;
-
 	//Watch
 	CGFobject* relogio;
 
 	//Game
 	Game * game;
-
-	//Board
-	//Board * board;
-
-
-
 
 	//private functions
 	void computeNodePointers(Node * node);
@@ -153,10 +136,6 @@ public:
 
 	//picking
 	void initPicking();
-	/*
-	//socket
-	void initSocket();
-	Socket * getSocket() const;*/
 
 	//Watch
 	void setClock(CGFobject* relogio);
@@ -165,13 +144,6 @@ public:
 	//Game
 	void initGame();
 	Game * getGame();
-
-	//text
-
-	/*
-	//board
-	void initBoard();
-	Board * getBoard();*/
 };
 
 #endif

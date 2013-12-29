@@ -10,19 +10,10 @@
 #define BASE_Z2 11.4
 #define HALF_LENGTH2 0.03
 
-//test purpose
-#include <iostream>
 using namespace std;
 
 Board::Board(PieceAppearances * thePiecesApp)
 {
-	/*blackAppearance = black;
-	whiteAppearance = white;
-
-	appearanceBlack = black;
-	appearanceWhite = white;
-	appearanceSelected = selecteda;*/
-	//selectedPiece = NULL;
 	this->thePiecesApp = thePiecesApp;
 	generateBoard();
 
@@ -42,62 +33,6 @@ Board::Board(PieceAppearances * thePiecesApp)
 	pc = new PieceSquare();
 	squarePiece1 = new Piece(1,pc,thePiecesApp);
 	squarePiece2 = new Piece(2,pc,thePiecesApp);
-
-	/*
-	CGFappearance * app;
-
-	for (int i = 0 ; i < 8 ; i++){
-	pc1 = new PieceCircle();
-
-	app = blackAppearance;
-
-	Piece* pie = new Piece(1,pc1,app,selecteda);
-
-	pie->setHidden(0);
-
-	CirclePieces1.push_back(pie);
-	}
-
-
-	//square p1
-	for (int i = 0 ; i < 8 ; i++){
-	ps1 = new PieceSquare();
-
-	app = blackAppearance;
-
-	Piece* pie1 = new Piece(1,ps1,app,selecteda);
-
-	pie1->setHidden(0);
-
-	SquarePieces1.push_back(pie1);
-	}
-
-	//circle p2
-	for (int i = 0 ; i < 8 ; i++){
-	pc2 = new PieceCircle();
-
-	app = whiteAppearance;
-
-	Piece* pie2 = new Piece(1,pc2,app,selecteda);
-
-	pie2->setHidden(0);
-
-	CirclePieces2.push_back(pie2);
-	}
-
-
-	//square p2
-	for (int i = 0 ; i < 8 ; i++){
-	ps2 = new PieceSquare();
-
-	app = whiteAppearance;
-
-	Piece* pie3 = new Piece(1,ps2,app,selecteda);
-
-	pie3->setHidden(0);
-
-	SquarePieces2.push_back(pie3);
-	}*/
 }
 
 void Board::generateBoard()
@@ -129,11 +64,6 @@ vector<Piece *> Board::buildRow(int player, string odd)
 {
 	vector<Piece *> pieces;
 	CGFappearance * app;
-
-	/*if(player == 1)
-	app = appearanceWhite;
-	else
-	app = appearanceBlack;*/
 
 	for(int i = 0; i < SIZE; i++)
 	{
@@ -209,68 +139,10 @@ void Board::draw()
 			glPopMatrix();
 		}
 	}
-	/*
-	for(int i = 0; i < 8; i++)
-	{
-	glPushMatrix();
-	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.9);
-	if(CirclePieces1[i] != NULL)
-	CirclePieces1[i]->draw();
-	glPopMatrix();
-	//printf("hidden: %d\n",CirclePieces1[i]->getHidden());
-	}
-
-
-
-	for(int i = 0; i < 8; i++)
-	{
-	glPushMatrix();
-	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2+0.7);
-	if(SquarePieces1[i] != NULL)
-	SquarePieces1[i]->draw();
-	glPopMatrix();
-	}
-
-
-	for(int i = 0; i < 8; i++)
-	{
-	glPushMatrix();
-	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2-0.2);
-	if(CirclePieces2[i] != NULL)
-	CirclePieces2[i]->draw();
-	glPopMatrix();
-	}
-
-
-
-	for(int i = 0; i < 8; i++)
-	{
-	glPushMatrix();
-	glTranslatef(BASE_X2,BASE_Y2+HALF_LENGTH2*i,BASE_Z2);
-	if(SquarePieces2[i] != NULL)
-	SquarePieces2[i]->draw();
-	glPopMatrix();
-	}*/
 }
 
 bool Board::selectPlace(int y, int x, int player)
 {
-	/*if(selectedPiece != NULL && board[x][y] == NULL)
-	{
-	board[x][y] = selectedPiece;
-	board[selectedX][selectedY] = NULL;
-	selectedPiece = NULL;
-	//printf("Moving %d %d to %d %d  (%s)\n",selectedX,selectedY,x,y,board[x][y]->getFormattedPiece());
-	cout << "Moving " << selectedX << " " << selectedY << " " << x << " " << y << "(" << board[x][y]->getFormattedPiece() << ")" << endl;
-	}
-	else
-	{
-	selectedPiece = board[x][y];
-	selectedX = x;
-	selectedY = y;
-	printf("Selecting %d %d\n",x,y);
-	}
-	return true;*/
 	if(!actions.empty())
 		return false;
 
