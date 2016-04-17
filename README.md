@@ -16,3 +16,12 @@ To run:
 ```
 
 You've to run two executables because they are different programs communicating through sockets. The first one has the game's logic and the second has the graphics and interface.
+
+SnapShots:
+-------
+
+![ Scenario 1 - board 1](pictures/1.png)
+![ Scenario 1 - board 2](pictures/2.png)
+![ Scenario 1 - scene](pictures/5.png)
+![ Scenario 2 - board](pictues/3.png)
+![ Scenario 2 - scene](pictures/4.png)
