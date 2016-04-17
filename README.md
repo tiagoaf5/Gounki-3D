@@ -20,8 +20,14 @@ You've to run two executables because they are different programs communicating 
 SnapShots:
 -------
 
+### Scene 1
+<center>
 ![ Scenario 1 - board 1](pictures/1.PNG)
 ![ Scenario 1 - board 2](pictures/2.PNG)
 ![ Scenario 1 - scene](pictures/5.PNG)
+</center>
+### Scene 2
+<center>
 ![ Scenario 2 - board](pictures/3.PNG)
 ![ Scenario 2 - scene](pictures/4.PNG)
+</center>
